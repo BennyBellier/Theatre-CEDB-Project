@@ -4,7 +4,7 @@ Projet d'informatisation d'un système de réservation de spectacle au cours d'u
 
 # À faire
 
-[ ] - Exercice 1
-[ ] - Exercice 2
-[ ] - Exercice 3
-[ ] - Exercice 4
+- [ ] Exercice 1
+- [ ] Exercice 2
+- [ ] Exercice 3
+- [ ] Exercice 4
