@@ -16,7 +16,7 @@ $LesSpectacles$ _(**noSpec**, nomSpec, prixBaseSpec)_<br/>
 $LesRepresentations$ _(**dateRep**, noSpec, promoRep)_<br/>
 /\*<dR, nS, prR> ∈ LesRepresentations ⇐⇒ Une représentation du spectacle numéro nS a lieu a la date dR et fait l'objet d'une promotion prR. \*/<br/>
 
-$LesPlaces$ _(**noPlace, noRang**, noZone)<br/>
+$LesPlaces$ _(**noPlaces, noRang**, noZone)<br/>
 /\*<noP, noR, noZ> ∈ LesPlaces ⇐⇒ La place noP du rang noR se situe dans la zone noZ. \*/<br/>
 
 $LesZones$ _(**noZone**, catZone, tauxZone)<br/>
