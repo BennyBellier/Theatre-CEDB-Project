@@ -1,6 +1,9 @@
 # Theatre-CEDB-Project
 
-Projet d'informatisation d'un système de réservation de spectacle au cours d'une même saison
+Projet d'informatisation d'un système de réservation de spectacle dans un thêatre.
+
+---
+
 
 
 ---
@@ -12,7 +15,7 @@ Projet d'informatisation d'un système de réservation de spectacle au cours d'u
     - [x] Identifier les DFs
     - [x] Commenter les hypothèses
     - [x] Proposition d'un schéma de relations BCNF
-    - [ ] Justifications soigner
+    - [x] Justifications **soigner**
   - [ ] Question 2
     - [ ] Réalisation du diagramme UML :
       - [ ] Les classes (avec ids)
