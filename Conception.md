@@ -63,6 +63,9 @@ LesReductions(**typePers**, tarifReduit)<br/>
 |     LesVentes      |  X  |  X  |  X  |  X   |
 |    LesDossiers     |  X  |  X  |  X  |  X   |
 
+
+![modèle UML](Theatre_UML.drawio.svg)
+
 $LesSpectacles$ _(**noSpec**, nomSpec, prixBaseSpec)_<br/>
 /\*<nS, nomS, pBS> ∈ LesSpectacles ⇐⇒ Le spectacle nomS est identifié par le numéro nS et à pour prix de base pBS. \*/<br/>
 
@@ -70,9 +73,7 @@ $LesRepresentations$ _(**dateRep**, promoRep, noSpec )_<br/>
 /\*<dR, prR, nS,> ∈ LesRepresentations ⇐⇒ Une représentation du spectacle numéro nS a lieu a la date dR et fait l'objet d'une promotion prR. \*/<br/>
 
 $LesVentes$ _(**noTrans**, dateTrans, PrixTotal, noPlaces, noRang, typeP, noDossier, dateRep)_<br/>
-/\*<noT, dT, pT, noP, noR, tP, noD,  dR> ∈ LesVentes ⇐⇒ Le numéro de transaction noT possède une date de transaction dT. Si une seule place est acheté pour la représentation qui a lieu a la date dR alors noDossier = NULL et le prix de la transaction est le prix pT. Si plusieurs sont achetées alors noD est le numéro du dossier regroupant toutes les places achetées en même temps des placeset noP = NULL. noR correspond au rang de chaque place et tP est le type de personne pour qui la place noP a été acheté.  \*/<br/>
-
-
+/\*<noT, dT, pT, noP, noR, tP, noD,  dR> ∈ LesVentes ⇐⇒ Le numéro de transaction noT possède une date de transaction dT, un numéro de place noP associé a son rang noR. Le prix total de la transaction est calculé en fonction du type de la personne tP, de la potentielle promotion affecté a la représentation qui a lieu a la date dR. Si une vente concerne un seul ticket, celle ci est attribuée a un numéro de dossier noD. Or, si une personne veut effectuer n ventes alors un noD est crée pour ses n ventes.   \*/<br/>
 
 $LesPlaces$ _(**noPlaces, noRang**, noZone)_<br/>
 /\*<noP, noR, noZ> ∈ LesPlaces ⇐⇒ La place noP du rang noR se situe dans la zone noZ. \*/<br/>
@@ -83,24 +84,19 @@ $LesZones$ _(**noZone**, catZone)_<br/>
 $TypesZones$ _(**catZone**, tauxZone)_ <br/>
 /\*<cZ, tZ> ∈ TypesZones ⇐⇒ Chaque taux tZ correspond à une catégorie de zone cZ dans la salle.\*/<br/>
 
-
-
-$LesDossiers$ _(**noDossier**, noTrans)_<br/>
-/\*<noD, noT> ∈ LesDossiers ⇐⇒ La transaction noD \*/<br/>
+$LesDossiers$ _(**noDossier**, prixDossier)_<br/>
+/\*<noD, pD> ∈ LesDossiers ⇐⇒ Le prix du dossier noD est pD. (C'est la somme de toutes les ventes associé au dossier noD. \*/<br/>
 
 $LesReductions$ _(**typePers**, tarifReduit)_<br/>
 /\*<tP, tR> ∈ LesReductions ⇐⇒ Le tarif réduit tR est réservé au personnes du type tP. \*/<br/>
 
-
 LesReprésentation[noSpec] ⊆ LesSpectacles[noSpec]<br/>
 LesVentes[dateRep] ⊆ LesRepresentations[dateRep]<br/>
 LesVentes[noPlaces, noRang] ⊆ LesPlaces[noPlace,noRang]<br/>
-LesDossiers[noDossier] ⊆ LesVentes[noDossier]<br/>
-LesPlaces[noZone] ⊆ LesZones[noZone]<br/>
 LesVentes[typeP] ⊆ LesRéductions[typeP]<br/>
-
-
-![modèle UML](Theatre_UML.drawio.svg)
+LesVentes[noD] = LesDossiers[noD]<br/>
+LesPlaces[noZone] ⊆ LesZones[noZone]<br/>
+LesZones[catZone] = TypeZones[catZone]<br/>
 
 domaine(dateRep) = date(heure) /_ par ex. 24/11/2007 20H _/
 domaine(dateTrans) = date(seconde) /_ par ex. 24/11/2007 19:45:17 _/
