@@ -16,11 +16,11 @@ Projet d'informatisation d'un système de réservation de spectacle dans un thê
     - [x] Commenter les hypothèses
     - [x] Proposition d'un schéma de relations BCNF
     - [x] Justifications **soigner**
-  - [ ] Question 2
-    - [ ] Réalisation du diagramme UML :
-      - [ ] Les classes (avec ids)
-      - [ ] les associations entre classes (noms et cardinalités)
-      - [ ] commentaire (hypothèses / contraintes à prendre en compte pour la transformation)
+  - [x] Question 2
+    - [x] Réalisation du diagramme UML :
+      - [x] Les classes (avec ids)
+      - [x] les associations entre classes (noms et cardinalités)
+      - [x] commentaire (hypothèses / contraintes à prendre en compte pour la transformation)
   - [ ] Question 3
     - [ ] Déductions du schéma relationnel
     - [ ] Précision des :
