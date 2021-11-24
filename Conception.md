@@ -66,8 +66,13 @@ LesReductions(**typePers**, tarifReduit)<br/>
 $LesSpectacles$ _(**noSpec**, nomSpec, prixBaseSpec)_<br/>
 /\*<nS, nomS, pBS> ∈ LesSpectacles ⇐⇒ Le spectacle nomS est identifié par le numéro nS et à pour prix de base pBS. \*/<br/>
 
-$LesRepresentations$ _(**dateRep**, noSpec, promoRep)_<br/>
-/\*<dR, nS, prR> ∈ LesRepresentations ⇐⇒ Une représentation du spectacle numéro nS a lieu a la date dR et fait l'objet d'une promotion prR. \*/<br/>
+$LesRepresentations$ _(**dateRep**, promoRep, noSpec )_<br/>
+/\*<dR, prR, nS,> ∈ LesRepresentations ⇐⇒ Une représentation du spectacle numéro nS a lieu a la date dR et fait l'objet d'une promotion prR. \*/<br/>
+
+$LesVentes$ _(**noTrans**, dateTrans, PrixTotal, noPlaces, noRang, typeP, noDossier, dateRep)_<br/>
+/\*<noT, dT, pT, noP, noR, tP, noD,  dR> ∈ LesVentes ⇐⇒ Le numéro de transaction noT possède une date de transaction dT. Si une seule place est acheté pour la représentation qui a lieu a la date dR alors noDossier = NULL et le prix de la transaction est le prix pT. Si plusieurs sont achetées alors noD est le numéro du dossier regroupant toutes les places achetées en même temps des placeset noP = NULL. noR correspond au rang de chaque place et tP est le type de personne pour qui la place noP a été acheté.  \*/<br/>
+
+
 
 $LesPlaces$ _(**noPlaces, noRang**, noZone)_<br/>
 /\*<noP, noR, noZ> ∈ LesPlaces ⇐⇒ La place noP du rang noR se situe dans la zone noZ. \*/<br/>
@@ -75,14 +80,33 @@ $LesPlaces$ _(**noPlaces, noRang**, noZone)_<br/>
 $LesZones$ _(**noZone**, catZone)_<br/>
 /\*<noZ, cZ> ∈ LesZones ⇐⇒ Chaque catégorie cZ est représenté par un numéro de zone noZ dans la salle.\*/<br/>
 
-$TypesZones$ _(**catZon**, tauxZone)_ <br/>
+$TypesZones$ _(**catZone**, tauxZone)_ <br/>
 /\*<cZ, tZ> ∈ TypesZones ⇐⇒ Chaque taux tZ correspond à une catégorie de zone cZ dans la salle.\*/<br/>
 
-$LesVentes$ _(**noTrans**, dateTrans, noPlaces, noDossier, PrixTotal)_<br/>
-/\*<noT, dT, noP, noD, pT> ∈ LesVentes ⇐⇒ Le numéro de transaction noT possède une date de transaction dT. Si une seule place est acheté alors noDossier = NULL et le prix de la transaction est le prix pT. Si plusieurs sont achetées alors noD est le numéro du dossier regroupant toutes les places achetées et noP = NULL \*/<br/>
 
-$LesDossiers$ _(**noDossier**, noPlaces)_<br/>
-/\*<noT, noP> ∈ LesDossiers ⇐⇒ Le dossier noT contient toutes les places noP d'une transaction. \*/<br/>
+
+$LesDossiers$ _(**noDossier**, noTrans)_<br/>
+/\*<noD, noT> ∈ LesDossiers ⇐⇒ La transaction noD \*/<br/>
 
 $LesReductions$ _(**typePers**, tarifReduit)_<br/>
 /\*<tP, tR> ∈ LesReductions ⇐⇒ Le tarif réduit tR est réservé au personnes du type tP. \*/<br/>
+
+
+LesReprésentation[noSpec] ⊆ LesSpectacles[noSpec]<br/>
+LesVentes[dateRep] ⊆ LesRepresentations[dateRep]<br/>
+LesVentes[noPlaces, noRang] ⊆ LesPlaces[noPlace,noRang]<br/>
+LesDossiers[noDossier] ⊆ LesVentes[noDossier]<br/>
+LesPlaces[noZone] ⊆ LesZones[noZone]<br/>
+LesVentes[typeP] ⊆ LesRéductions[typeP]<br/>
+
+
+![modèle UML](Theatre_UML.drawio.svg)
+
+domaine(dateRep) = date(heure) /_ par ex. 24/11/2007 20H _/
+domaine(dateTrans) = date(seconde) /_ par ex. 24/11/2007 19:45:17 _/
+domaine(typePers) = {’ordinaire’, ’adhérent’, ’étudiant’, ’scolaire’, ’militaire’, ’sénior’}
+domaine(catZone) = {’orchestre’, ’balcon’, ’poulailler’}
+domaine(nomSpec) = chaînes de caractères
+domaine(noZone) = domaine (noPlace) = domaine (noRang) = domaine (noSpec) = doamine(noTrans) = entier > 0
+domaine(prixBaseSpec) = domaine (prixRep) = réels > 0
+domaine(promoRep) = domaine (tauxZone) = réels dans l’intervalle [0;1]
