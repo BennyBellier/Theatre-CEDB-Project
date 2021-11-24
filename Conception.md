@@ -98,11 +98,16 @@ LesVentes[noD] = LesDossiers[noD]<br/>
 LesPlaces[noZone] ⊆ LesZones[noZone]<br/>
 LesZones[catZone] = TypeZones[catZone]<br/>
 
-domaine(dateRep) = date(heure) /_ par ex. 24/11/2007 20H _/
-domaine(dateTrans) = date(seconde) /_ par ex. 24/11/2007 19:45:17 _/
-domaine(typePers) = {’ordinaire’, ’adhérent’, ’étudiant’, ’scolaire’, ’militaire’, ’sénior’}
-domaine(catZone) = {’orchestre’, ’balcon’, ’poulailler’}
-domaine(nomSpec) = chaînes de caractères
-domaine(noZone) = domaine (noPlace) = domaine (noRang) = domaine (noSpec) = doamine(noTrans) = entier > 0
-domaine(prixBaseSpec) = domaine (prixRep) = réels > 0
-domaine(promoRep) = domaine (tauxZone) = réels dans l’intervalle [0;1]
+domaine(dateRep) = date(heure) par ex. 24/11/2007 20H <br/>
+domaine(dateTrans) = date(seconde) /_ par ex. 24/11/2007 19:45:17 <br/>
+domaine(typePers) = {’ordinaire’, ’adhérent’, ’étudiant’, ’scolaire’, ’militaire’, ’sénior’} <br/>
+domaine(catZone) = {’orchestre’, ’balcon’, ’poulailler’} <br/>
+domaine(nomSpec) = chaînes de caractères <br/>
+domaine(noZone) = domaine (noPlace) = domaine (noRang) = domaine (noSpec) = doamine(noTrans) = entier > 0 <br/>
+domaine(prixBaseSpec) = domaine (prixRep) = réels > 0 <br/>
+domaine(promoRep) = domaine (tauxZone) = réels dans l’intervalle [0;1] <br/>
+
+Vues possibles : <br/>
+LesDossiers car PrixDossier = Somme des prix des tickets correspondant au bon dossier <br/>
+Les Ventes car PrixTicket = prix de base du spectacles avec le promotion de ce spectacles, le tarif réduit en fonction de la personne et le taux de la zone.<br/>
+
