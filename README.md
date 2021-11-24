@@ -10,7 +10,7 @@ Projet d'informatisation d'un système de réservation de spectacle dans un thê
 
 # Todo List
 
-- [ ] CONCEPTION
+- [x] CONCEPTION
   - [x] Question 1
     - [x] Identifier les DFs
     - [x] Commenter les hypothèses
