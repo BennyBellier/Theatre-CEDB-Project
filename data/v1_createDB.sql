@@ -50,7 +50,7 @@ create table LesPlaces (
     references LesZones(noZone)
 );
 
-create table NumeroDosssiers (
+create table NumeroDosssier (
     noDossier integer,
     constraint pk_pl_noP_noR primary key (noDossier)
 );
