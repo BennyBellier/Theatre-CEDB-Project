@@ -55,7 +55,7 @@ create table NumeroDosssier (
     constraint pk_pl_noP_noR primary key (noDossier)
 );
 
-create table LesRéductions (
+create table LesReductions (
     typePers varchar (50) not null,
     tarifReduit decimal (4,2) not null,
     constraint pk_pl_LesReducs primary key (typePers),
@@ -65,7 +65,7 @@ create table LesRéductions (
 create table LesVentes (
     noTrans integer,
     dateTrans date not null,
-    prixTotal integer,
+    prixTotal decimal (4,2) not null,
     noPlace integer,
     noRang integer,
     typePers varchar (50) not null,
