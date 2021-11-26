@@ -1,4 +1,13 @@
--- TODO 1.3 : Créer les tables manquantes et modifier celles ci-dessous
+-- FAIS 1.3 : Créer les tables manquantes et modifier celles ci-dessous
+DROP TABLE IF EXISTS LesSpectacles ;
+DROP TABLE IF EXISTS LesRepresentations ;
+DROP TABLE IF EXISTS LesZones ;
+DROP TABLE IF EXISTS TypeZones ;
+DROP TABLE IF EXISTS LesPlaces ;
+DROP TABLE IF EXISTS LesDosssiers ;
+DROP TABLE IF EXISTS LesRéductions ;
+DROP TABLE IF EXISTS LesVentes ;
+
 create table LesSpectacles (
     noSpec integer not null,
     nomSpec varchar(50) not null,
@@ -6,7 +15,6 @@ create table LesSpectacles (
     constraint pk_rep_noSpec primary key (noSpec),
     constraint ck_rep_noSpec check (noSpec > 0),
     constraint ck_spec_prixBaseSpec check (prixBaseSpec >= 0)
-
 );
 
 create table LesRepresentations (
@@ -23,7 +31,7 @@ create table LesRepresentations (
 create table LesZones (
     noZone integer not null,
     catZone varchar (50) not null,
-    constraint pk_pl_noZ primary key (noZone),,
+    constraint pk_pl_noZ primary key (noZone),
     constraint ck_pl_noZone check (noZone > 0),
     constraint ck_pl_cat check (catZone in ('orchestre', 'balcon', 'poulailler'))
 );
@@ -31,7 +39,7 @@ create table LesZones (
 create table TypeZones (
     catZone varchar (50) not null,
     tauxZone decimal (4,2) not null,
-    constraint pk_pl_catZ primary key (catZone),,
+    constraint pk_pl_catZ primary key (catZone),
     constraint ck_pl_tauxZone check (tauxZone >= 0),
     constraint ck_pl_cat check (catZone in ('orchestre', 'balcon', 'poulailler')),
     constraint fk_typZ foreign key (catZone)
@@ -48,7 +56,6 @@ create table LesPlaces (
     constraint ck_pl_noZone check (noZone > 0), --PAS FORCEMENT NECESSAIRE ?
     constraint fk_LesPlaces foreign key (noZone)
     references LesZones(noZone)
-
 );
 
 create table LesDosssiers (
@@ -62,11 +69,7 @@ create table LesRéductions (
     typePers varchar (50) not null,
     tarifReduit decimal (4,2) not null,
     constraint pk_pl_LesReducs primary key (typePers),
-    constraint ck_rep_tarifReduit check (promoRep >= 0 and promoRep <=1),
-    constraint ck_pl_typeP check (typePers in ('ordinaire', 'adhérent', 'étudiant','scolaire', 'militaire', 'sénior')),
-    constraint fk_LesPlaces foreign key (noZone)
-    references LesZones(noZone)
-
+    constraint ck_pl_typeP check (typePers in ('ordinaire', 'adhérent', 'étudiant','scolaire', 'militaire', 'sénior'))
 );
 
 
