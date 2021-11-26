@@ -10,7 +10,7 @@ Projet d'informatisation d'un système de réservation de spectacle dans un thê
 
 # Todo List
 
-- [ ] CONCEPTION
+- [x] CONCEPTION
   - [x] Question 1
     - [x] Identifier les DFs
     - [x] Commenter les hypothèses
@@ -21,13 +21,13 @@ Projet d'informatisation d'un système de réservation de spectacle dans un thê
       - [x] Les classes (avec ids)
       - [x] les associations entre classes (noms et cardinalités)
       - [x] commentaire (hypothèses / contraintes à prendre en compte pour la transformation)
-  - [ ] Question 3
-    - [ ] Déductions du schéma relationnel
-    - [ ] Précision des :
-      - [ ] Relations
-      - [ ] Domaines
-      - [ ] Contraintes d'intégrités
-      - [ ] Possibles vues
+  - [x] Question 3
+    - [x] Déductions du schéma relationnel
+    - [x] Précision des :
+      - [x] Relations
+      - [x] Domaines
+      - [x] Contraintes d'intégrités
+      - [x] Possibles vues
 - [ ] IMPLÉMENTATION
   - [ ] Question 4
     - [ ] Partie 0
