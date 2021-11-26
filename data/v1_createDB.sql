@@ -87,12 +87,12 @@ create table LesVentes (
     references LesDosssiers(noD)
 );
 -- TODO 1.4 : Créer une vue LesRepresentations ajoutant le nombre de places disponible et d'autres possibles attributs calculés.
-create or replace view Salle as
+create view Salle as
 select nomSpec, dateRep, (500 - count(noTrans)) as nbPlaceDisponibles, count(noTrans) as nbPlacesOccupe
 from lesVentes join LesRepresentations using (dateRep)
                join LesSpectacles using (noSpec);
 -- TODO 1.5 : Créer une vue  avec le noDos et le montant total correspondant.
-create or replace view LesDossiers as
+create view LesDossiers as
 select noDossier, sum(prixTotal) as prixDossier
 from numeroDossier join LesVentes using (noDossier);
 
