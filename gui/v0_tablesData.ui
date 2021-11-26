@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>BD Théâtre (V0)</string>
+   <string>BD Théâtre (V1)</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -33,7 +33,7 @@
      </property>
      <widget class="QWidget" name="tabRepresentations">
       <attribute name="title">
-       <string>V0_LesRepresentations</string>
+       <string>LesRepresentations</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
@@ -163,7 +163,7 @@
      </widget>
      <widget class="QWidget" name="tabPlaces">
       <attribute name="title">
-       <string>V0_LesPlaces</string>
+       <string>LesPlaces</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
