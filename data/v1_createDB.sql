@@ -65,7 +65,7 @@ create table LesReductions (
 create table LesVentes (
     noTrans integer,
     dateTrans date not null,
-    prixTotal integer,
+    prixTotal decimal (4,2) not null,
     noPlace integer,
     noRang integer,
     typePers varchar (50) not null,
