@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>300</height>
+    <height>366</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,7 +59,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_fct_comp_1">
+      <widget class="QPushButton" name="refreshCategPlaces">
        <property name="text">
         <string>Valider</string>
        </property>
@@ -69,6 +69,18 @@
    </item>
    <item>
     <widget class="QTableWidget" name="table_fct_comp_1">
+     <property name="dragEnabled">
+      <bool>false</bool>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>false</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::ExtendedSelection</enum>
+     </property>
+     <property name="sortingEnabled">
+      <bool>false</bool>
+     </property>
      <attribute name="horizontalHeaderMinimumSectionSize">
       <number>50</number>
      </attribute>
@@ -80,17 +92,22 @@
      </attribute>
      <column>
       <property name="text">
-       <string>noPlace</string>
+       <string>Place</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>noRang</string>
+       <string>Rang</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>noZone</string>
+       <string>Zone</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Taux</string>
       </property>
      </column>
     </widget>
@@ -110,14 +127,14 @@
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton_fct_comp_1</sender>
+   <sender>refreshCategPlaces</sender>
    <signal>clicked()</signal>
    <receiver>fct_comp_1</receiver>
    <slot>refreshResult()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>351</x>
-     <y>51</y>
+     <x>495</x>
+     <y>60</y>
     </hint>
     <hint type="destinationlabel">
      <x>444</x>
