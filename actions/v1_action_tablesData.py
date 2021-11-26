@@ -38,12 +38,24 @@ class AppTablesDataV1(QDialog):
     @pyqtSlot()
     def refreshAllTablesV1(self):
 
-        # TODO 1.3 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
-        # TODO 1.4 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
-        # TODO 1.5 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
+        # TODOFAIS 1.3 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
+        # TODOFAIS 1.4 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
+        # TODOFAIS 1.5 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
         self.refreshTable(self.ui.label_representations, self.ui.tableSpectacles,
                           "SELECT noSpec, nomSpec, prixBaseSpec "
                           "FROM LesSpectacles")
+        self.refreshTable(self.ui.label_representations, self.ui.tableRepresentations,
+                          "SELECT dateRep, promoRep , noSpec "
+                          "FROM LesRepresentations")
         self.refreshTable(self.ui.label_places, self.ui.tablePlaces,
                           "SELECT noPlace, noRang, noZone "
                           "FROM LesPlaces")
+        self.refreshTable(self.ui.label_places, self.ui.tableZones,
+                          "SELECT noZone, catZone "
+                          "FROM LesZones")
+        self.refreshTable(self.ui.label_places, self.ui.tableTypeZones,
+                          "SELECT catZone, tauxZone "
+                          "FROM TypeZones")
+        self.refreshTable(self.ui.label_places, self.ui.tableReductions,
+                          "SELECT typePers, tarifReduit "
+                          "FROM LesReductions")
