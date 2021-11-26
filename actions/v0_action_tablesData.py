@@ -38,7 +38,7 @@ class AppTablesDataV0(QDialog):
     @pyqtSlot()
     def refreshAllTablesV0(self):
 
-        # TODO 1.3 : modifier pour afficher les nouveaux éléments
+        # TODOFAIS 1.3 : modifier pour afficher les nouveaux éléments
         self.refreshTable(self.ui.label_representations, self.ui.tableRepresentations,
                           "SELECT noSpec, nomSpec, dateRep, promoRep, prixBaseSpec, prixRep "
                           "FROM V0_LesRepresentations")

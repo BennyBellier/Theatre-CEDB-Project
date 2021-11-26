@@ -185,7 +185,7 @@ class AppWindow(QMainWindow):
         if self.fct_fournie_1_dialog is not None:
             self.fct_fournie_1_dialog.close()
         self.fct_fournie_1_dialog = AppFctFournie1Partie0(self.data)
-        self.fct_fournie_1_dialog.show()
+        self.fct_fournie_1_dialog.show() #PERMET DOUVRIR LA FENETRE
         self.changedValue.connect(self.fct_fournie_1_dialog.refreshResult)
 
     # En cas de clic sur la fonction fournie 2
