@@ -13,6 +13,8 @@ from actions.v0_action_fct_comp_1_partie_1 import AppFctComp1Partie1
 from actions.v0_action_fct_comp_2_partie_1 import AppFctComp2Partie1
 from actions.action_fct_rep_vide import AppFctRepVide
 from actions.v1_action_fct_2_2 import AppFct2Partie2
+from actions.action_gest_rep import AppGestRep
+
 
 
 # Classe utilisée pour lancer la fenêtre principale de l'application et définir ses actions
@@ -33,6 +35,7 @@ class AppWindow(QMainWindow):
     fct_comp_2_dialog = None
     fct_rep_vide_dialog = None
     fct_2_2_dialog = None
+    gest_rep_dialog = None
 
 
     # Constructeur
@@ -235,6 +238,13 @@ class AppWindow(QMainWindow):
         self.fct_2_2_dialog.show()
         self.changedValue.connect(self.fct_2_2_dialog.refreshResult)
 
+    def open_gest_rep(self):
+        if self.gest_rep_dialog is not None:
+            self.gest_rep_dialog.close()
+
+        self.gest_rep_dialog = AppGestRep(self.data)
+        self.gest_rep_dialog.show()
+
 
     ####################################################################################################################
     # Fonctions liées aux évènements (signal/slot/event)
@@ -261,6 +271,8 @@ class AppWindow(QMainWindow):
             self.fct_rep_vide_dialog.close()
         if (self.fct_2_2_dialog is not None):
             self.fct_2_2_dialog.close()
+        if (self.gest_rep_dialog is not  None):
+            self.gest_rep_dialog.close()
 
 
         # On ferme proprement la base de données

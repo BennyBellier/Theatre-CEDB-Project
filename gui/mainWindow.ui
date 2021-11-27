@@ -1012,7 +1012,7 @@
      <x>447</x>
      <y>428</y>
     </hint>
-    </hints>
+   </hints>
   </connection>
   <connection>
    <sender>pushButton_11</sender>
@@ -1023,6 +1023,22 @@
     <hint type="sourcelabel">
      <x>447</x>
      <y>574</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>447</x>
+     <y>412</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_13</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>open_gest_rep()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>447</x>
+     <y>672</y>
     </hint>
     <hint type="destinationlabel">
      <x>447</x>
@@ -1048,5 +1064,6 @@
   <slot>openDataV1()</slot>
   <slot>open_fct_rep_vide()</slot>
   <slot>open_fct_2_2()</slot>
+  <slot>open_gest_rep()</slot>
  </slots>
 </ui>
