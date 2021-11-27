@@ -44,7 +44,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="LesSpectacles">
       <property name="maximumSize">
@@ -688,6 +688,51 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="Salle">
+      <attribute name="title">
+       <string>Salle</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_10">
+       <item>
+        <widget class="QTableWidget" name="tableSalle">
+         <property name="sortingEnabled">
+          <bool>true</bool>
+         </property>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>200</number>
+         </attribute>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Spectacle</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Date</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Nombre de places vide</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_salle">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="LesDossiers">
       <attribute name="title">
        <string>LesDossiers</string>
@@ -724,51 +769,6 @@
        </item>
        <item>
         <widget class="QLabel" name="label_dossiers">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="Salle">
-      <attribute name="title">
-       <string>Salle</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_10">
-       <item>
-        <widget class="QTableWidget" name="tableSalle">
-         <property name="sortingEnabled">
-          <bool>true</bool>
-         </property>
-         <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>200</number>
-         </attribute>
-         <attribute name="horizontalHeaderStretchLastSection">
-          <bool>true</bool>
-         </attribute>
-         <column>
-          <property name="text">
-           <string>Spectacle</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Date</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Nombre de places vide</string>
-          </property>
-         </column>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_salle">
          <property name="text">
           <string/>
          </property>

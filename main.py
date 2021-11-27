@@ -11,6 +11,7 @@ from actions.v0_action_fct_fournie_1_partie_0 import AppFctFournie1Partie0
 from actions.v0_action_fct_fournie_2_partie_0 import AppFctFournie2Partie0
 from actions.v0_action_fct_comp_1_partie_1 import AppFctComp1Partie1
 from actions.v0_action_fct_comp_2_partie_1 import AppFctComp2Partie1
+from actions.action_fct_rep_vide import AppFctRepVide
 
 # Classe utilisée pour lancer la fenêtre principale de l'application et définir ses actions
 class AppWindow(QMainWindow):
@@ -28,6 +29,7 @@ class AppWindow(QMainWindow):
     fct_fournie_2_dialog = None
     fct_comp_1_dialog = None
     fct_comp_2_dialog = None
+    fct_rep_vide_dialog = None
 
     # Constructeur
     def __init__(self):
@@ -209,6 +211,12 @@ class AppWindow(QMainWindow):
         self.fct_comp_2_dialog = AppFctComp2Partie1(self.data)
         self.fct_comp_2_dialog.show()
 
+    def open_fct_rep_vide(self):
+        if self.fct_rep_vide_dialog is not None:
+            self.fct_rep_vide_dialog.close()
+        self.fct_rep_vide_dialog = AppFctRepVide(self.data)
+        self.fct_rep_vide_dialog.show()
+
     ####################################################################################################################
     # Fonctions liées aux évènements (signal/slot/event)
     ####################################################################################################################
@@ -230,6 +238,8 @@ class AppWindow(QMainWindow):
             self.fct_comp_1_dialog.close()
         if (self.fct_comp_2_dialog is not None):
             self.fct_comp_2_dialog.close()
+        if (self.fct_rep_vide_dialog is not None):
+            self.fct_rep_vide_dialog.close()
 
         # On ferme proprement la base de données
         self.data.close()
