@@ -39,7 +39,7 @@ class AppTablesDataV1(QDialog):
     def refreshAllTablesV1(self):
 
         # TODO 1.3 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
-        self.refreshTable(self.ui.label_representations, self.ui.tableSpectacles,
+        self.refreshTable(self.ui.label_spectacles, self.ui.tableSpectacles,
                           "SELECT noSpec, nomSpec, prixBaseSpec "
                           "FROM LesSpectacles")
         self.refreshTable(self.ui.label_representations, self.ui.tableRepresentations,
@@ -65,3 +65,21 @@ class AppTablesDataV1(QDialog):
                           "SELECT  nomSpec, dateRep, nbPlaceDisponibles "
                           "FROM Salle")
         # TODO 1.5 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
+
+    def refreshSpectaclesData(self):
+        display.refreshLabel(self.ui.label_spectacles, "")
+        try:
+            cursor = self.data.cursor()
+            if not self.ui.lineEditSpectacles.text().strip():
+                result = cursor.execute("SELECT noSpec, nomSpec, prixBaseSpec FROM LesSpectacles")
+            else:
+                result = cursor.execute("SELECT noSpec, nomSpec, prixBaseSpec FROM LesSpectacles WHERE nomSpec = ?",
+            [self.ui.lineEditSpectacles.text().strip()])
+
+        except Exception as e:
+            self.ui.tableSpectacles.setRowCount(0)
+            display.refreshLabel(self.ui.label_spectacles, "Impossible d'afficher les données de la table : " + repr(e))
+        else:
+            i = display.refreshGenericData(self.ui.tableSpectacles, result)
+            if i == 0:
+                display.refreshLabel(self.ui.label_fct_fournie_2, "Aucun résultat")

@@ -44,7 +44,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>7</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="LesSpectacles">
       <property name="maximumSize">
@@ -57,6 +57,42 @@
        <string>LesSpectacles</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <layout class="QHBoxLayout" name="recherche_spectacles">
+         <property name="topMargin">
+          <number>10</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditSpectacles"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="recherche_spectacles_2">
+           <property name="text">
+            <string>Rechercher</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
        <item>
         <widget class="QTableWidget" name="tableSpectacles">
          <property name="sortingEnabled">
@@ -761,7 +797,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="CloseButton">
        <property name="text">
         <string>Fermer</string>
        </property>
@@ -787,18 +823,34 @@
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton</sender>
+   <sender>recherche_spectacles_2</sender>
+   <signal>clicked()</signal>
+   <receiver>tablesData</receiver>
+   <slot>refreshSpectaclesData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>968</x>
+     <y>69</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>515</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CloseButton</sender>
    <signal>clicked()</signal>
    <receiver>tablesData</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>565</x>
-     <y>588</y>
+     <x>515</x>
+     <y>576</y>
     </hint>
     <hint type="destinationlabel">
-     <x>323</x>
-     <y>169</y>
+     <x>515</x>
+     <y>299</y>
     </hint>
    </hints>
   </connection>
