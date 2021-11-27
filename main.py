@@ -176,6 +176,7 @@ class AppWindow(QMainWindow):
     def openDataV1(self):
         if self.tablesDataDialogV1 is not None:
             self.tablesDataDialogV1.close()
+
         self.tablesDataDialogV1 = AppTablesDataV1(self.data)
         self.tablesDataDialogV1.show()
         self.changedValue.connect(self.tablesDataDialogV1.refreshAllTablesV1)
@@ -199,13 +200,16 @@ class AppWindow(QMainWindow):
     def open_fct_comp_1(self):
         if self.fct_comp_1_dialog is not None:
             self.fct_comp_1_dialog.close()
+
         self.fct_comp_1_dialog = AppFctComp1Partie1(self.data)
+
         self.fct_comp_1_dialog.show()
 
     # En cas de clic sur la fonction à compléter 3
     def open_fct_comp_2(self):
         if self.fct_comp_2_dialog is not None:
             self.fct_comp_2_dialog.close()
+
         self.fct_comp_2_dialog = AppFctComp2Partie1(self.data)
         self.fct_comp_2_dialog.show()
 

@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>fct_comp_2</class>
  <widget class="QDialog" name="fct_comp_2">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -9,6 +12,12 @@
     <width>600</width>
     <height>300</height>
    </rect>
+  </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
+  </property>
+  <property name="acceptDrops">
+   <bool>false</bool>
   </property>
   <property name="windowTitle">
    <string>Liste des places d'une catégorie (version 2)</string>
@@ -37,7 +46,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_fct_comp_2"/>
+      <widget class="QComboBox" name="comboBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton">
