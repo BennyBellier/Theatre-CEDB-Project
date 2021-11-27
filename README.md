@@ -30,11 +30,11 @@ Projet d'informatisation d'un système de réservation de spectacle dans un thê
       - [x] Possibles vues
 - [ ] IMPLÉMENTATION
   - [ ] Question 4
-    - [ ] Partie 0
-      - [ ] Génération du projet
-      - [ ] Vérification code fournie
+    - [x] Partie 0
+      - [x] Génération du projet
+      - [x] Vérification code fournie
     - [ ] Partie 1
-      - [ ] Réalisation des extensions du code fournie
+      - [x] Réalisation des extensions du code fournie
       - [ ] Créations des vues (avec attribues calculés + maj interface)
     - [ ] Partie 2
       - [ ] Créations nouvelles fenêtres dans l'interface
