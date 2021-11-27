@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>896</width>
-    <height>857</height>
+    <height>825</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -998,6 +998,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_11</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>open_fct_2_2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>447</x>
+     <y>574</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>447</x>
+     <y>412</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>createDBV0()</slot>
@@ -1014,6 +1030,6 @@
   <slot>insertDBV1()</slot>
   <slot>deleteDBV1()</slot>
   <slot>openDataV1()</slot>
-  <slot>slot1()</slot>
+  <slot>open_fct_2_2()</slot>
  </slots>
 </ui>
