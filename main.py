@@ -36,7 +36,7 @@ class AppWindow(QMainWindow):
     fct_rep_vide_dialog = None
     fct_2_2_dialog = None
     gest_rep_dialog = None
-
+    # gest_rep_add_dialog = None
 
     # Constructeur
     def __init__(self):
@@ -244,6 +244,13 @@ class AppWindow(QMainWindow):
 
         self.gest_rep_dialog = AppGestRep(self.data)
         self.gest_rep_dialog.show()
+
+    # def open_gest_rep_add(self):
+    #     if self.gest_rep_add_dialog is not None:
+    #         self.gest_rep_add_dialog.close()
+    #
+    #     self.gest_rep_add_dialog = AppGestRep(self.data)
+    #     self.gest_rep_add_dialog.show()
 
 
     ####################################################################################################################
