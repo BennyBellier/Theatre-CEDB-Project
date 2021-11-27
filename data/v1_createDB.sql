@@ -50,7 +50,7 @@ create table LesPlaces (
     references LesZones(noZone)
 );
 
-create table NumeroDosssier (
+create table NumeroDossier (
     noDossier integer,
     constraint pk_pl_noP_noR primary key (noDossier)
 );
@@ -90,11 +90,12 @@ create table LesVentes (
 create view Salle as
 select nomSpec, dateRep, (500 - count(noTrans)) as nbPlaceDisponibles, count(noTrans) as nbPlacesOccupe
 from lesVentes join LesRepresentations using (dateRep)
-               join LesSpectacles using (noSpec);
+               join LesSpectacles using (noSpec)
+group by nomSpec, dateRep;
 -- TODO 1.5 : Créer une vue  avec le noDos et le montant total correspondant.
 create view LesDossiers as
 select noDossier, sum(prixTotal) as prixDossier
-from numeroDossier join LesVentes using (noDossier);
+from NumeroDossier join LesVentes using (noDossier);
 
 
 -- TODO 3.3 : Ajouter les éléments nécessaires pour créer le trigger (attention, syntaxe SQLite différent qu'Oracle)

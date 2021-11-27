@@ -38,9 +38,7 @@ class AppTablesDataV1(QDialog):
     @pyqtSlot()
     def refreshAllTablesV1(self):
 
-        # TODOFAIS 1.3 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
-        # TODOFAIS 1.4 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
-        # TODOFAIS 1.5 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
+        # TODO 1.3 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
         self.refreshTable(self.ui.label_representations, self.ui.tableSpectacles,
                           "SELECT noSpec, nomSpec, prixBaseSpec "
                           "FROM LesSpectacles")
@@ -50,12 +48,20 @@ class AppTablesDataV1(QDialog):
         self.refreshTable(self.ui.label_places, self.ui.tablePlaces,
                           "SELECT noPlace, noRang, noZone "
                           "FROM LesPlaces")
-        self.refreshTable(self.ui.label_places, self.ui.tableZones,
+        self.refreshTable(self.ui.label_zones, self.ui.tableZones,
                           "SELECT noZone, catZone "
                           "FROM LesZones")
-        self.refreshTable(self.ui.label_places, self.ui.tableTypeZones,
+        self.refreshTable(self.ui.label_typzones, self.ui.tableTypeZones,
                           "SELECT catZone, tauxZone "
                           "FROM TypeZones")
-        self.refreshTable(self.ui.label_places, self.ui.tableReductions,
+        self.refreshTable(self.ui.label_lesreducs, self.ui.tableReductions,
                           "SELECT typePers, tarifReduit "
                           "FROM LesReductions")
+        # TODO 1.4 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
+        self.refreshTable(self.ui.label_dossiers, self.ui.tableDossiers,
+                          "SELECT noDossier, round(prixDossier, 2) "
+                          "FROM LesDossiers")
+        self.refreshTable(self.ui.label_salle, self.ui.tableSalle,
+                          "SELECT  nomSpec, dateRep, nbPlaceDisponibles "
+                          "FROM Salle")
+        # TODO 1.5 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)

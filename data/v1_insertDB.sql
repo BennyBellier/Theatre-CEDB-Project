@@ -24,12 +24,12 @@ insert into LesReductions (typePers, tarifReduit) values ('scolaire', 0.10);
 insert into LesReductions (typePers, tarifReduit) values ('militaire', 0.05);
 insert into LesReductions (typePers, tarifReduit) values ('sénior', 0.15);
 
-insert into NumeroDosssier (noDossier) values (1);
-insert into NumeroDosssier (noDossier) values (2);
-insert into NumeroDosssier (noDossier) values (3);
-insert into NumeroDosssier (noDossier) values (4);
-insert into NumeroDosssier (noDossier) values (5);
-insert into NumeroDosssier (noDossier) values (6);
+insert into NumeroDossier (noDossier) values (1);
+insert into NumeroDossier (noDossier) values (2);
+insert into NumeroDossier (noDossier) values (3);
+insert into NumeroDossier (noDossier) values (4);
+insert into NumeroDossier (noDossier) values (5);
+insert into NumeroDossier (noDossier) values (6);
 
 insert into LesVentes (noTrans, dateTrans, prixTotal, noPlace, noRang, typePers, noDossier, dateRep) values (1, '24/12/2019 16:45:15', 5.34, 14, 1, 'adhérent', 1, '24/12/2019 17:00');
 insert into LesVentes (noTrans, dateTrans, prixTotal, noPlace, noRang, typePers, noDossier, dateRep) values (2, '24/12/2019 16:45:15', 6.05, 13, 1, 'sénior', 1, '24/12/2019 17:00');
