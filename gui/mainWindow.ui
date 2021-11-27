@@ -1011,6 +1011,10 @@
     <hint type="destinationlabel">
      <x>447</x>
      <y>428</y>
+    </hint>
+    </hints>
+  </connection>
+  <connection>
    <sender>pushButton_11</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
