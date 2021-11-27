@@ -3,11 +3,14 @@ insert into LesSpectacles(noSpec, nomSpec, prixBaseSpec) values (1, 'Vérino', 9
 insert into LesSpectacles(noSpec, nomSpec, prixBaseSpec) values (2, 'Artus', 12.30);
 insert into LesSpectacles(noSpec, nomSpec, prixBaseSpec) values (3, 'Guillaume Batz', 5);
 insert into LesSpectacles(noSpec, nomSpec, prixBaseSpec) values (4, 'Paul Mirabel', 11);
+insert into LesSpectacles(noSpec, nomSpec, prixBaseSpec) values (5, 'Laura Laune', 8.45);
 
 insert into LesRepresentations(dateRep, promoRep, noSpec) values ('24/12/2019 17:00', 0.5, 1);
 insert into LesRepresentations(dateRep, promoRep, noSpec) values ('24/12/2019 20:00', 0.3, 2);
 insert into LesRepresentations(dateRep, promoRep, noSpec) values ('25/12/2019 20:00', 0, 4);
 insert into LesRepresentations(dateRep, promoRep, noSpec) values ('21/12/2019 20:00', 0.2, 3);
+insert into LesRepresentations(dateRep, promoRep, noSpec) values ('22/12/2019 20:00', 0.05, 5);
+insert into LesRepresentations(dateRep, promoRep, noSpec) values ('05/01/2020 20:00', 0, 1);
 
 insert into LesZones (noZone, catZone) values (1, 'orchestre');
 insert into LesZones (noZone, catZone) values (2, 'poulailler');

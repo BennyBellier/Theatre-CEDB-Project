@@ -770,7 +770,7 @@
      <x>0</x>
      <y>0</y>
      <width>896</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFiles">
@@ -999,6 +999,18 @@
    </hints>
   </connection>
   <connection>
+   <sender>pushButton_10</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>open_fct_rep_vide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>448</x>
+     <y>582</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>447</x>
+     <y>428</y>
    <sender>pushButton_11</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
@@ -1030,6 +1042,7 @@
   <slot>insertDBV1()</slot>
   <slot>deleteDBV1()</slot>
   <slot>openDataV1()</slot>
+  <slot>open_fct_rep_vide()</slot>
   <slot>open_fct_2_2()</slot>
  </slots>
 </ui>
