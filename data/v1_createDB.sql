@@ -95,7 +95,8 @@ group by nomSpec, dateRep;
 -- TODO 1.5 : Créer une vue  avec le noDos et le montant total correspondant.
 create view LesDossiers as
 select noDossier, sum(prixTotal) as prixDossier
-from NumeroDossier join LesVentes using (noDossier);
+from NumeroDossier join LesVentes using (noDossier)
+GROUP BY noDossier;
 
 
 -- TODO 3.3 : Ajouter les éléments nécessaires pour créer le trigger (attention, syntaxe SQLite différent qu'Oracle)
