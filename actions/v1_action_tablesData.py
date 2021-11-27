@@ -82,4 +82,4 @@ class AppTablesDataV1(QDialog):
         else:
             i = display.refreshGenericData(self.ui.tableSpectacles, result)
             if i == 0:
-                display.refreshLabel(self.ui.label_fct_fournie_2, "Aucun résultat")
+                display.refreshLabel(self.ui.label_spectacles, "Aucun résultat")

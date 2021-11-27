@@ -12,6 +12,8 @@ from actions.v0_action_fct_fournie_2_partie_0 import AppFctFournie2Partie0
 from actions.v0_action_fct_comp_1_partie_1 import AppFctComp1Partie1
 from actions.v0_action_fct_comp_2_partie_1 import AppFctComp2Partie1
 from actions.action_fct_rep_vide import AppFctRepVide
+from actions.v1_action_fct_2_2 import AppFct2Partie2
+
 
 # Classe utilisée pour lancer la fenêtre principale de l'application et définir ses actions
 class AppWindow(QMainWindow):
@@ -30,6 +32,8 @@ class AppWindow(QMainWindow):
     fct_comp_1_dialog = None
     fct_comp_2_dialog = None
     fct_rep_vide_dialog = None
+    fct_2_2_dialog = None
+
 
     # Constructeur
     def __init__(self):
@@ -178,6 +182,7 @@ class AppWindow(QMainWindow):
     def openDataV1(self):
         if self.tablesDataDialogV1 is not None:
             self.tablesDataDialogV1.close()
+
         self.tablesDataDialogV1 = AppTablesDataV1(self.data)
         self.tablesDataDialogV1.show()
         self.changedValue.connect(self.tablesDataDialogV1.refreshAllTablesV1)
@@ -187,7 +192,7 @@ class AppWindow(QMainWindow):
         if self.fct_fournie_1_dialog is not None:
             self.fct_fournie_1_dialog.close()
         self.fct_fournie_1_dialog = AppFctFournie1Partie0(self.data)
-        self.fct_fournie_1_dialog.show()
+        self.fct_fournie_1_dialog.show() #PERMET DOUVRIR LA FENETRE
         self.changedValue.connect(self.fct_fournie_1_dialog.refreshResult)
 
     # En cas de clic sur la fonction fournie 2
@@ -201,21 +206,35 @@ class AppWindow(QMainWindow):
     def open_fct_comp_1(self):
         if self.fct_comp_1_dialog is not None:
             self.fct_comp_1_dialog.close()
+
         self.fct_comp_1_dialog = AppFctComp1Partie1(self.data)
+
         self.fct_comp_1_dialog.show()
 
     # En cas de clic sur la fonction à compléter 3
     def open_fct_comp_2(self):
         if self.fct_comp_2_dialog is not None:
             self.fct_comp_2_dialog.close()
+
         self.fct_comp_2_dialog = AppFctComp2Partie1(self.data)
         self.fct_comp_2_dialog.show()
+
 
     def open_fct_rep_vide(self):
         if self.fct_rep_vide_dialog is not None:
             self.fct_rep_vide_dialog.close()
+
         self.fct_rep_vide_dialog = AppFctRepVide(self.data)
         self.fct_rep_vide_dialog.show()
+
+    def open_fct_2_2(self):
+        if self.fct_2_2_dialog is not None:
+            self.fct_2_2_dialog.close()
+
+        self.fct_2_2_dialog = AppFct2Partie2(self.data)
+        self.fct_2_2_dialog.show()
+        self.changedValue.connect(self.fct_2_2_dialog.refreshResult)
+
 
     ####################################################################################################################
     # Fonctions liées aux évènements (signal/slot/event)
@@ -240,6 +259,9 @@ class AppWindow(QMainWindow):
             self.fct_comp_2_dialog.close()
         if (self.fct_rep_vide_dialog is not None):
             self.fct_rep_vide_dialog.close()
+        if (self.fct_2_2_dialog is not None):
+            self.fct_2_2_dialog.close()
+
 
         # On ferme proprement la base de données
         self.data.close()
