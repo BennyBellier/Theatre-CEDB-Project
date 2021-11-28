@@ -461,6 +461,17 @@
     </layout>
    </item>
   </layout>
+  <action name="actionAnnuler">
+   <property name="text">
+    <string>Annuler</string>
+   </property>
+   <property name="toolTip">
+    <string>Annuler</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
@@ -544,11 +555,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionAnnuler</sender>
+   <signal>triggered()</signal>
+   <receiver>GestRep</receiver>
+   <slot>CtrlZ()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>517</x>
+     <y>209</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addRep()</slot>
   <slot>deleteRep()</slot>
   <slot>modifRep()</slot>
   <slot>selectedLine()</slot>
+  <slot>CtrlZ()</slot>
  </slots>
 </ui>

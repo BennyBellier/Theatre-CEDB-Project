@@ -13,6 +13,15 @@ class AppGestRep(QDialog):
     Fenêtre de gestion des représentations : ajout, modification, suppression
     """
 
+    # on prévoit les variables pour acceuillir les fenetres supplementaires
+    fct_verif_supp = None
+
+    # valeur pour effectuer le Ctrl + z
+    ancientNom = ""
+    ancientDate = ""
+    ancientPrix = 0
+    ancientPromo = 0
+
     def __init__(self, data: sqlite3.Connection):
         super(QDialog, self).__init__()
         self.ui = uic.loadUi("gui/Gest_Rep.ui", self)
@@ -39,7 +48,9 @@ class AppGestRep(QDialog):
             i = display.refreshGenericData(self.ui.tableGestRep, result)
             self.initComboBox()
             if i == 0:
-                display.refreshLabel(self.ui.label_gest_rep, "Aucun représentation n'est programmé")
+                display.refreshLabel(
+                    self.ui.label_gest_rep, "Aucun représentation n'est programmé"
+                )
 
     # initialisation du menu deroulant
     def initComboBox(self):
@@ -56,23 +67,27 @@ class AppGestRep(QDialog):
 
     # lorsque qu'une case est selectionner alors on recupere les elements de la ligne
     def selectedLine(self):
-        rows = sorted(set(index.row() for index in self.ui.tableGestRep.selectedIndexes()))
-        self.nom = self.ui.tableGestRep.item(rows[0], 0).text()
-        self.date = self.ui.tableGestRep.item(rows[0], 1).text()
-        self.prix = self.ui.tableGestRep.item(rows[0], 2).text()
-        self.promo = self.ui.tableGestRep.item(rows[0], 3).text()
+        rows = sorted(
+            set(index.row() for index in self.ui.tableGestRep.selectedIndexes())
+        )
+        self.selectedNom = self.ui.tableGestRep.item(rows[0], 0).text()
+        self.selectedDate = self.ui.tableGestRep.item(rows[0], 1).text()
+        self.selectedPrix = self.ui.tableGestRep.item(rows[0], 2).text()
+        self.selectedPromo = self.ui.tableGestRep.item(rows[0], 3).text()
         self.refreshModif()
 
     def refreshModif(self):
-        self.CurrentName.setCurrentIndex(self.NameList.index(self.nom))
-        timedate = self.date.split(' ')
-        date = timedate[0].split('/')
-        time = timedate[1].split(':')
-        self.CurrentTimeEdit.setDateTime(datetime.datetime(int(date[2]), int(date[1]), int(date[0]), int(time[0]), int(time[1])))
-        self.CurrentPrice.setValue(float(self.prix))
-        self.CurrentPromotion.setValue(float(self.promo))
-
-
+        self.CurrentName.setCurrentIndex(self.NameList.index(self.selectedNom))
+        timedate = self.selectedDate.split(" ")
+        date = timedate[0].split("/")
+        time = timedate[1].split(":")
+        self.CurrentTimeEdit.setDateTime(
+            datetime.datetime(
+                int(date[2]), int(date[1]), int(date[0]), int(time[0]), int(time[1])
+            )
+        )
+        self.CurrentPrice.setValue(float(self.selectedPrix))
+        self.CurrentPromotion.setValue(float(self.selectedPromo))
 
     #################################################################################################
     # gestion des bouton
@@ -83,11 +98,15 @@ class AppGestRep(QDialog):
         pass
 
     # en cas de clic sur le bouton modifier
-    def modifRep():
+    def modifRep(self):
         pass
 
     # en cas de clic sur le bouton supprimer
-    def deleteRep():
+    def deleteRep(self):
+        pass
+
+    # en cas d'appuie sur les toucher Ctrl + z
+    def CtrlZ(self):
         pass
 
     #################################################################################################
@@ -97,6 +116,8 @@ class AppGestRep(QDialog):
     def closeEvent(self, event):
 
         # On ferme les éventuelles fenêtres encore ouvertes
+        if self.fct_verif_supp is not None:
+            self.fct_verif_supp.close()
 
         # On laisse l'évènement de clôture se terminer normalement
         event.accept()
