@@ -17,6 +17,7 @@ from actions.action_gest_rep import AppGestRep
 
 
 
+
 # Classe utilisée pour lancer la fenêtre principale de l'application et définir ses actions
 class AppWindow(QMainWindow):
 
@@ -36,7 +37,7 @@ class AppWindow(QMainWindow):
     fct_rep_vide_dialog = None
     fct_2_2_dialog = None
     gest_rep_dialog = None
-    # gest_rep_add_dialog = None
+
 
     # Constructeur
     def __init__(self):
@@ -280,6 +281,8 @@ class AppWindow(QMainWindow):
             self.fct_2_2_dialog.close()
         if (self.gest_rep_dialog is not  None):
             self.gest_rep_dialog.close()
+        if (self.gest_rep_add_dialog is not None):
+            self.gest_rep_add_dialog.close()
 
 
         # On ferme proprement la base de données
