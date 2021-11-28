@@ -245,6 +245,7 @@ class AppWindow(QMainWindow):
 
         self.gest_rep_dialog = AppGestRep(self.data)
         self.gest_rep_dialog.show()
+        self.changedValue.connect(self.gest_rep_dialog.refreshResult)
 
     # def open_gest_rep_add(self):
     #     if self.gest_rep_add_dialog is not None:
@@ -281,8 +282,6 @@ class AppWindow(QMainWindow):
             self.fct_2_2_dialog.close()
         if (self.gest_rep_dialog is not  None):
             self.gest_rep_dialog.close()
-        if (self.gest_rep_add_dialog is not None):
-            self.gest_rep_add_dialog.close()
 
 
         # On ferme proprement la base de données

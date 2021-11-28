@@ -18,8 +18,9 @@ class AppGestRep_add(QDialog):
             cursor = self.data.cursor()
             if not self.ui.lineEdit_date.text().strip() or not self.ui.lineEdit_promo.text().strip() or not self.ui.lineEdit_num.text().strip() :
                 i = 1
-            result = cursor.execute("INSERT INTO LesRepresentations VALUES ( ?, ?, ?)",
+            result = cursor.execute("INSERT INTO LesRepresentations(dateRep, promoRep, noSpec) VALUES ( ?, ?, ?)",
                        [self.ui.lineEdit_date.text().strip(), self.ui.lineEdit_promo.text().strip(), self.ui.lineEdit_num.text().strip()])
+            self.data.commit()
         except Exception as e:
             if (i):
                 display.refreshLabel(self.ui.label_res, "Les champs ne sont pas tous renseignés")
@@ -27,7 +28,3 @@ class AppGestRep_add(QDialog):
             else: display.refreshLabel(self.ui.label_res, "Impossible d'ajouter la représentation : " + repr(e))
         else:
             display.refreshLabel(self.ui.label_res, "Représentation ajoutée.")
-            #display.refreshGenericData(self.ui.tableGestRep, result)
-            # i = display.refreshGenericData(self.ui.tableSpectacles, result)
-            # if i == 0:
-            #      display.refreshLabel(self.ui.label_spectacles, "Aucun résultat")
