@@ -279,7 +279,14 @@
               </spacer>
              </item>
              <item>
-              <widget class="QDateTimeEdit" name="CurrentTimeEdit"/>
+              <widget class="QDateTimeEdit" name="CurrentTimeEdit">
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+               <property name="currentSectionIndex">
+                <number>0</number>
+               </property>
+              </widget>
              </item>
              <item>
               <spacer name="verticalSpacer_4">

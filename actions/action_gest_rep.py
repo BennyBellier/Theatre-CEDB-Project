@@ -3,7 +3,8 @@ from utils import display
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtCore import QTime
+from PyQt5.QtCore import QDateTime
+import datetime
 from PyQt5 import uic
 
 
@@ -60,16 +61,16 @@ class AppGestRep(QDialog):
         self.date = self.ui.tableGestRep.item(rows[0], 1).text()
         self.prix = self.ui.tableGestRep.item(rows[0], 2).text()
         self.promo = self.ui.tableGestRep.item(rows[0], 3).text()
-        print(self.nom, self.date, self.prix, self.promo)
         self.refreshModif()
 
     def refreshModif(self):
         self.CurrentName.setCurrentIndex(self.NameList.index(self.nom))
-        # datetime = self.date.split(' ')
-        self.CurrentTimeEdit.setDateTime(QTime.fromString(self.date, "dd/mm/yyyy hh:mm"))
-        # self.currentDate.setTime(QTime.fromString(datetime[1], "hh:00"))
-        self.CurrentPrice.setValue(self.prix)
-        self.CurrentPromotion.setValue(self.promo)
+        timedate = self.date.split(' ')
+        date = timedate[0].split('/')
+        time = timedate[1].split(':')
+        self.CurrentTimeEdit.setDateTime(datetime.datetime(int(date[2]), int(date[1]), int(date[0]), int(time[0]), int(time[1])))
+        self.CurrentPrice.setValue(float(self.prix))
+        self.CurrentPromotion.setValue(float(self.promo))
 
 
 
