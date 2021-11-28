@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>888</width>
-    <height>584</height>
+    <width>1035</width>
+    <height>420</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,12 +22,34 @@
         <number>0</number>
        </property>
        <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Les Représentations</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QTableWidget" name="tableGestRep">
+         <property name="tabletTracking">
+          <bool>true</bool>
+         </property>
+         <property name="contextMenuPolicy">
+          <enum>Qt::ActionsContextMenu</enum>
+         </property>
+         <property name="inputMethodHints">
+          <set>Qt::ImhPreferNumbers</set>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::SelectedClicked</set>
+         </property>
          <property name="sortingEnabled">
           <bool>true</bool>
          </property>
          <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>150</number>
+          <number>130</number>
          </attribute>
          <attribute name="horizontalHeaderStretchLastSection">
           <bool>true</bool>
@@ -39,7 +61,7 @@
          </column>
          <column>
           <property name="text">
-           <string>Date</string>
+           <string>Programmation</string>
           </property>
          </column>
          <column>
@@ -49,7 +71,7 @@
          </column>
          <column>
           <property name="text">
-           <string>Promo</string>
+           <string>Promotion</string>
           </property>
          </column>
         </widget>
@@ -72,36 +94,318 @@
         <number>10</number>
        </property>
        <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+        <widget class="QLabel" name="label_7">
+         <property name="contextMenuPolicy">
+          <enum>Qt::DefaultContextMenu</enum>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="Add_button">
          <property name="text">
-          <string>Ajouter</string>
+          <string>Gestion des représentations</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="Modif_button">
-         <property name="text">
-          <string>Modifier</string>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="topMargin">
+          <number>0</number>
          </property>
-        </widget>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <item>
+            <spacer name="verticalSpacer_11">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>Nom :</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Programmation :</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Prix :</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::AutoText</enum>
+               </property>
+               <property name="scaledContents">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>Promotion :</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_10">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_7">
+             <property name="rightMargin">
+              <number>10</number>
+             </property>
+             <item>
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QComboBox" name="CurrentName"/>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QDateTimeEdit" name="CurrentTimeEdit"/>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="CurrentPrice">
+               <property name="prefix">
+                <string/>
+               </property>
+               <property name="suffix">
+                <string> €</string>
+               </property>
+               <property name="maximum">
+                <double>10000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="CurrentPromotion"/>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Maximum</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>50</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <property name="topMargin">
+            <number>10</number>
+           </property>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Add_button">
+             <property name="text">
+              <string>Ajouter</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Modif_button">
+             <property name="text">
+              <string>Modifier</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Delete_button">
+             <property name="text">
+              <string>Supprimer</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QPushButton" name="Delete_button">
+        <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Supprimer</string>
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -160,8 +464,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>431</x>
-     <y>583</y>
+     <x>557</x>
+     <y>409</y>
     </hint>
     <hint type="destinationlabel">
      <x>431</x>
@@ -173,11 +477,11 @@
    <sender>Add_button</sender>
    <signal>clicked()</signal>
    <receiver>GestRep</receiver>
-   <slot>add_rep()</slot>
+   <slot>addRep()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>802</x>
-     <y>487</y>
+     <x>1012</x>
+     <y>288</y>
     </hint>
     <hint type="destinationlabel">
      <x>431</x>
@@ -189,11 +493,11 @@
    <sender>Delete_button</sender>
    <signal>clicked()</signal>
    <receiver>GestRep</receiver>
-   <slot>delete_rep()</slot>
+   <slot>deleteRep()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>802</x>
-     <y>549</y>
+     <x>1012</x>
+     <y>350</y>
     </hint>
     <hint type="destinationlabel">
      <x>431</x>
@@ -205,11 +509,11 @@
    <sender>Modif_button</sender>
    <signal>clicked()</signal>
    <receiver>GestRep</receiver>
-   <slot>modif_rep()</slot>
+   <slot>modifRep()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>802</x>
-     <y>518</y>
+     <x>1012</x>
+     <y>319</y>
     </hint>
     <hint type="destinationlabel">
      <x>431</x>
@@ -217,10 +521,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tableGestRep</sender>
+   <signal>pressed(QModelIndex)</signal>
+   <receiver>GestRep</receiver>
+   <slot>selectedLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>267</x>
+     <y>194</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>496</x>
+     <y>209</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>add_rep()</slot>
-  <slot>delete_rep()</slot>
-  <slot>modif_rep()</slot>
+  <slot>addRep()</slot>
+  <slot>deleteRep()</slot>
+  <slot>modifRep()</slot>
+  <slot>selectedLine()</slot>
  </slots>
 </ui>

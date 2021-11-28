@@ -223,7 +223,7 @@ class AppWindow(QMainWindow):
         self.fct_comp_2_dialog = AppFctComp2Partie1(self.data)
         self.fct_comp_2_dialog.show()
 
-
+    # En cas de clic sur le bouton
     def open_fct_rep_vide(self):
         if self.fct_rep_vide_dialog is not None:
             self.fct_rep_vide_dialog.close()
@@ -246,13 +246,6 @@ class AppWindow(QMainWindow):
         self.gest_rep_dialog = AppGestRep(self.data)
         self.gest_rep_dialog.show()
         self.changedValue.connect(self.gest_rep_dialog.refreshResult)
-
-    # def open_gest_rep_add(self):
-    #     if self.gest_rep_add_dialog is not None:
-    #         self.gest_rep_add_dialog.close()
-    #
-    #     self.gest_rep_add_dialog = AppGestRep(self.data)
-    #     self.gest_rep_add_dialog.show()
 
 
     ####################################################################################################################
