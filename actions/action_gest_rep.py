@@ -31,7 +31,7 @@ class AppGestRep(QDialog):
     # Fonction de mise à joru de l'affichage
     @pyqtSlot()
     def refreshResult(self):
-        display.refreshLabel(self.ui.label_gest_rep, "")
+        display.refreshLabel(self.ui.label_table, "")
         try:
             cursor = self.data.cursor()
             result = cursor.execute(
@@ -39,7 +39,7 @@ class AppGestRep(QDialog):
               FROM LesSpectacles JOIN LesRepresentations USING (noSpec)"
             )
         except Exception as e:
-            self.ui.tableRepVide.setRowCount(0)
+            self.ui.tableGestRep.setRowCount(0)
             display.refreshLabel(
                 self.ui.label_gest_rep,
                 "Impossible d'afficher les résultats : " + repr(e),
@@ -49,7 +49,7 @@ class AppGestRep(QDialog):
             self.initComboBox()
             if i == 0:
                 display.refreshLabel(
-                    self.ui.label_gest_rep, "Aucun représentation n'est programmé"
+                    self.ui.label_table, "Aucun représentation n'est programmé"
                 )
 
     # initialisation du menu deroulant
@@ -58,12 +58,10 @@ class AppGestRep(QDialog):
         cursor = self.data.cursor()
         cursor.execute("SELECT DISTINCT nomSpec FROM LesSpectacles")
         res = cursor.fetchall()
-        print(res)
         res.insert(0, ("",))
         for item in res:
             self.NameList.append(item[0])
             self.CurrentName.addItem(item[0])
-        print(self.NameList)
 
     # lorsque qu'une case est selectionner alors on recupere les elements de la ligne
     def selectedLine(self):
@@ -103,7 +101,18 @@ class AppGestRep(QDialog):
 
     # en cas de clic sur le bouton supprimer
     def deleteRep(self):
-        pass
+        display.refreshLabel(self.ui.label_modif, "")
+        if (self.selectedNom == None and self.selectedDate == None and self.selectedPrix == None and self.selectedPromo == None):
+            display.refreshLabel(self.ui.label_modif, "Veuillez selectionner la ligne à supprimer !")
+        else:
+            cursor = self.data.cursor()
+            cursor.execute("SELECT noSpec FROM LesSpectacles WHERE nomSpec = ?", (self.selectedNom, ))
+            delete_number = cursor.fetchall()
+            result = cursor.execute(
+                "DELETE FROM LesRepresentations WHERE noSpec = ? and dateRep = ? and promorep = ?", [delete_number[0][0], self.selectedDate, self.selectedPromo]
+            )
+            self.data.commit()
+            self.refreshResult()
 
     # en cas d'appuie sur les toucher Ctrl + z
     def CtrlZ(self):
