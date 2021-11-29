@@ -77,11 +77,12 @@ class AppGestRep(QDialog):
                 for index in self.ui.tableGestRep.selectionModel().selectedIndexes()
             )
         )
-        self.selectedNom = self.ui.tableGestRep.item(self.selectedLines[0], 0).text()
-        self.selectedDate = self.ui.tableGestRep.item(self.selectedLines[0], 1).text()
-        self.selectedPrix = self.ui.tableGestRep.item(self.selectedLines[0], 2).text()
-        self.selectedPromo = self.ui.tableGestRep.item(self.selectedLines[0], 3).text()
-        self.refreshModif()
+        if len(self.selectedLines) > 0 :
+            self.selectedNom = self.ui.tableGestRep.item(self.selectedLines[0], 0).text()
+            self.selectedDate = self.ui.tableGestRep.item(self.selectedLines[0], 1).text()
+            self.selectedPrix = self.ui.tableGestRep.item(self.selectedLines[0], 2).text()
+            self.selectedPromo = self.ui.tableGestRep.item(self.selectedLines[0], 3).text()
+            self.refreshModif()
 
     def refreshModif(self):
         self.CurrentName.setCurrentIndex(self.NameList.index(self.selectedNom))
@@ -159,8 +160,6 @@ class AppGestRep(QDialog):
         self.fct_verif_supp_dialog.exec_()
         self.response = self.fct_verif_supp_dialog.response
         self.prevent_delete = self.fct_verif_supp_dialog.prevent_delete
-        print(self.response, self.prevent_delete)
-
 
     # en cas d'appuie sur les toucher Ctrl + z
     def CtrlZ(self):
@@ -207,4 +206,7 @@ class AppVerifSupp(QDialog):
         self.close()
 
     def always_delete(self):
-        self.prevent_delete = False
+        if self.prevent_delete:
+            self.prevent_delete = False
+        else:
+            self.prevent_delete = True

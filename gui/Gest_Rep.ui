@@ -337,7 +337,26 @@
               </spacer>
              </item>
              <item>
-              <widget class="QDoubleSpinBox" name="CurrentPromotion"/>
+              <widget class="QDoubleSpinBox" name="CurrentPromotion">
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>false</bool>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::UpDownArrows</enum>
+               </property>
+               <property name="suffix">
+                <string/>
+               </property>
+               <property name="maximum">
+                <double>1.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>0.010000000000000</double>
+               </property>
+              </widget>
              </item>
              <item>
               <spacer name="verticalSpacer_6">
