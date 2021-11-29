@@ -254,7 +254,7 @@ class AppWindow(QMainWindow):
 
         self.gest_res_dialog = AppGestRes(self.data)
         self.gest_res_dialog.show()
-        self.changedValue.connect(self.gest_res_dialog.refreshResult)
+        # self.changedValue.connect(self.gest_res_dialog.refreshResult)
 
 
     ####################################################################################################################

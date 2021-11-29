@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import QDateTime
-import datetime
+# import datetime
 from PyQt5 import uic
 
 
@@ -36,25 +36,25 @@ class AppGestRes(QDialog):
     def refreshResult(self):
         display.refreshLabel(self.ui.label_table_erreur, "")
         display.refreshLabel(self.ui.label_erreur_gest_res, "")
-        # try:
-        #     cursor = self.data.cursor()
-        #     result = cursor.execute(
-        #         "SELECT nomSpec, DateRep, PrixBaseSpec, promoRep \
-        #       FROM LesSpectacles JOIN LesRepresentations USING (noSpec)"
-        #     )
-        # except Exception as e:
-        #     self.ui.tableGestRep.setRowCount(0)
-        #     display.refreshLabel(
-        #         self.ui.label_table,
-        #         "Impossible d'afficher les résultats : " + repr(e),
-        #     )
-        # else:
-        #     i = display.refreshGenericData(self.ui.tableGestRep, result)
-        #     self.initComboBox()
-        #     if i == 0:
-        #         display.refreshLabel(
-        #             self.ui.label_table, "Aucun représentation n'est programmé"
-        #         )
+        try:
+            cursor = self.data.cursor()
+            result = cursor.execute(
+                "SELECT nomSpec, DateRep, nbPlaceDisponibles \
+              FROM Salle"
+            )
+        except Exception as e:
+            self.ui.tableGestRes.setRowCount(0)
+            display.refreshLabel(
+                self.ui.label_table_erreur,
+                "Impossible d'afficher les résultats : " + repr(e),
+            )
+        else:
+            i = display.refreshGenericData(self.ui.tableGestRes, result)
+            # self.initComboBox()
+            if i == 0:
+                display.refreshLabel(
+                    self.ui.label_table_erreur, "Aucune représentation n'est programmé"
+                )
 
     # initialisation du menu deroulant
 #     def initComboBox(self):
