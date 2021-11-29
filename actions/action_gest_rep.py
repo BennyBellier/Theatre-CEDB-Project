@@ -55,7 +55,7 @@ class AppGestRep(QDialog):
             self.initComboBox()
             if i == 0:
                 display.refreshLabel(
-                    self.ui.label_table, "Aucun représentation n'est programmé"
+                    self.ui.label_table, "Aucune représentation n'est programmé"
                 )
 
     # initialisation du menu deroulant
@@ -77,11 +77,19 @@ class AppGestRep(QDialog):
                 for index in self.ui.tableGestRep.selectionModel().selectedIndexes()
             )
         )
-        if len(self.selectedLines) > 0 :
-            self.selectedNom = self.ui.tableGestRep.item(self.selectedLines[0], 0).text()
-            self.selectedDate = self.ui.tableGestRep.item(self.selectedLines[0], 1).text()
-            self.selectedPrix = self.ui.tableGestRep.item(self.selectedLines[0], 2).text()
-            self.selectedPromo = self.ui.tableGestRep.item(self.selectedLines[0], 3).text()
+        if len(self.selectedLines) > 0:
+            self.selectedNom = self.ui.tableGestRep.item(
+                self.selectedLines[0], 0
+            ).text()
+            self.selectedDate = self.ui.tableGestRep.item(
+                self.selectedLines[0], 1
+            ).text()
+            self.selectedPrix = self.ui.tableGestRep.item(
+                self.selectedLines[0], 2
+            ).text()
+            self.selectedPromo = self.ui.tableGestRep.item(
+                self.selectedLines[0], 3
+            ).text()
             self.refreshModif()
 
     def refreshModif(self):
