@@ -3,7 +3,7 @@ from utils import display
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtCore import QDateTime
+from PyQt5.QtCore import QDateTime, QEventLoop
 import datetime
 from PyQt5 import uic
 
@@ -22,8 +22,11 @@ class AppGestRep(QDialog):
     ancientPrix = 0
     ancientPromo = 0
 
+    # On initialise la selection des lignes pour affiche une erreur si aucune ligne n'est slectionner
+    selectedLines = None
+
     # booleen si on ne veut plus afficher la fenêtre de prevention avant suppression
-    prevent_delete = 1
+    prevent_delete = True
 
     def __init__(self, data: sqlite3.Connection):
         super(QDialog, self).__init__()
@@ -108,13 +111,12 @@ class AppGestRep(QDialog):
     # en cas de clic sur le bouton supprimer
     def deleteRep(self):
         display.refreshLabel(self.ui.label_modif, "")
-        if self.selectedLines == None:
+        if self.selectedLines is None:
             display.refreshLabel(
                 self.ui.label_modif,
                 "Veuillez selectionner une ou plusieurs ligne(s) à supprimer !",
             )
         else:
-            print(self.selectedLines)
             for row in self.selectedLines:
                 cursor = self.data.cursor()
                 cursor.execute(
@@ -124,28 +126,41 @@ class AppGestRep(QDialog):
                 delete_number = cursor.fetchall()
                 if self.prevent_delete:
                     self.openVerifSupp(
-                        delete_number[0][0],
+                        self.ui.tableGestRep.item(row, 0).text(),
                         self.ui.tableGestRep.item(row, 1).text(),
                         self.ui.tableGestRep.item(row, 3).text(),
                     )
-                result = cursor.execute(
-                    "DELETE FROM LesRepresentations WHERE noSpec = ? and dateRep = ? and promorep = ?",
-                    [
-                        delete_number[0][0],
-                        self.ui.tableGestRep.item(row, 1).text(),
-                        self.ui.tableGestRep.item(row, 3).text(),
-                    ],
-                )
+                    if self.response == 1:
+                        result = cursor.execute(
+                            "DELETE FROM LesRepresentations WHERE noSpec = ? and dateRep = ? and promorep = ?",
+                            [
+                                delete_number[0][0],
+                                self.ui.tableGestRep.item(row, 1).text(),
+                                self.ui.tableGestRep.item(row, 3).text(),
+                            ],
+                        )
+                else:
+                    result = cursor.execute(
+                        "DELETE FROM LesRepresentations WHERE noSpec = ? and dateRep = ? and promorep = ?",
+                        [
+                            delete_number[0][0],
+                            self.ui.tableGestRep.item(row, 1).text(),
+                            self.ui.tableGestRep.item(row, 3).text(),
+                        ],
+                    )
             self.data.commit()
             self.refreshResult()
+            self.selectedLines = None  # On vient de supprimer la ligne donc, elle n'est plus selectionnée
 
     def openVerifSupp(self, nomSpec, dateRep, promo):
         if self.fct_verif_supp_dialog is not None:
             self.fct_verif_supp_dialog.close()
         self.fct_verif_supp_dialog = AppVerifSupp(nomSpec, dateRep, promo)
-        self.response, self.prevent_delete = AppVerifSupp().value()
-        print(prevent_delete)
-        self.fct_verif_supp_dialog.show()
+        self.fct_verif_supp_dialog.exec_()
+        self.response = self.fct_verif_supp_dialog.response
+        self.prevent_delete = self.fct_verif_supp_dialog.prevent_delete
+        print(self.response, self.prevent_delete)
+
 
     # en cas d'appuie sur les toucher Ctrl + z
     def CtrlZ(self):
@@ -165,16 +180,19 @@ class AppGestRep(QDialog):
         event.accept()
 
 
-class AppVerifSupp(AppGestRep):
+class AppVerifSupp(QDialog):
     """
     Fenêtre d'avertissement avant suppression
     """
 
-    response = 0
-    prevent_delete = 1
+    prevent_delete = True
+    response = False
 
     def __init__(self, nomSpec, dateRep, promo):
-        self.ui = uic.loadUI("gui/dialogue_verif.ui", self)
+        super(QDialog, self).__init__()
+        self.ui = uic.loadUi("gui/dialogue_verif.ui", self)
+        self.response = False
+        self.answered = False
         display.refreshLabel(self.ui.label_nomRep, nomSpec)
         display.refreshLabel(
             self.ui.label_dateRep, "Date de la Représentation : " + dateRep
@@ -183,11 +201,10 @@ class AppVerifSupp(AppGestRep):
             self.ui.label_promoRep, "Promotion de la représentation : " + promo
         )
 
-    def value(self):
-        return self.response, self.prevent_delete
-
     def delete(self):
-        self.response = 1
+        self.response = True
+        self.answered = True
+        self.close()
 
     def always_delete(self):
-        self.prevent_delete = 0
+        self.prevent_delete = False

@@ -244,6 +244,7 @@ class AppWindow(QMainWindow):
             self.gest_rep_dialog.close()
 
         self.gest_rep_dialog = AppGestRep(self.data)
+        print(type(self.gest_rep_dialog), self.gest_rep_dialog)
         self.gest_rep_dialog.show()
         self.changedValue.connect(self.gest_rep_dialog.refreshResult)
 
