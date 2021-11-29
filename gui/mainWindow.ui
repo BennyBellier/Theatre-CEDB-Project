@@ -1046,6 +1046,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_14</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>open_gest_res()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>448</x>
+     <y>652</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>447</x>
+     <y>391</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>createDBV0()</slot>
@@ -1065,5 +1081,6 @@
   <slot>open_fct_rep_vide()</slot>
   <slot>open_fct_2_2()</slot>
   <slot>open_gest_rep()</slot>
+  <slot>open_gest_res()</slot>
  </slots>
 </ui>
