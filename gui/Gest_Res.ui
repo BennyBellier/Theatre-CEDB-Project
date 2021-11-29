@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>998</width>
-    <height>545</height>
+    <height>508</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -257,7 +257,7 @@
                 </spacer>
                </item>
                <item>
-                <widget class="QComboBox" name="comboBox_rang"/>
+                <widget class="QComboBox" name="CurrentRow"/>
                </item>
                <item>
                 <spacer name="verticalSpacer_9">
@@ -273,7 +273,7 @@
                 </spacer>
                </item>
                <item>
-                <widget class="QComboBox" name="comboBox_place"/>
+                <widget class="QComboBox" name="CurrentPlace"/>
                </item>
                <item>
                 <spacer name="verticalSpacer_10">
@@ -289,38 +289,7 @@
                 </spacer>
                </item>
                <item>
-                <widget class="QComboBox" name="comboBox_typePers">
-                 <item>
-                  <property name="text">
-                   <string>ordinaire</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>adhérent</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>étudiant</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>scolaire</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>militaire</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>sénior</string>
-                  </property>
-                 </item>
-                </widget>
+                <widget class="QComboBox" name="CurrentGender"/>
                </item>
                <item>
                 <spacer name="verticalSpacer_12">

@@ -50,22 +50,49 @@ class AppGestRes(QDialog):
             )
         else:
             i = display.refreshGenericData(self.ui.tableGestRes, result)
-            # self.initComboBox()
+            self.initComboBox()
             if i == 0:
                 display.refreshLabel(
                     self.ui.label_table_erreur, "Aucune représentation n'est programmé"
                 )
 
     # initialisation du menu deroulant
-#     def initComboBox(self):
-#         self.NameList = []
-#         cursor = self.data.cursor()
-#         cursor.execute("SELECT DISTINCT nomSpec FROM LesSpectacles")
-#         res = cursor.fetchall()
-#         res.insert(0, ("",))
-#         for item in res:
-#             self.NameList.append(item[0])
-#             self.CurrentName.addItem(item[0])
+    def initComboBox(self):
+        self.GenderList = []
+        self.PlaceList = []
+        self.RowList = []
+        cursor = self.data.cursor()
+        # Pour le genre :
+        cursor.execute("SELECT DISTINCT typePers FROM LesReductions ")
+        res = cursor.fetchall()
+        # res.insert(0, ("",))
+        for item in res:
+            self.GenderList.append(item[0])
+            self.CurrentGender.addItem(item[0])
+
+        # cursor = self.data.cursor()
+        # Pour le rang
+        l_tout_rang = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        cursor.execute("SELECT DISTINCT noRang FROM LesVentes "
+                        "GROUP BY noRang, dateRep HAVING dateRep = '24/12/2019 20:00' and (25 - count(noPlace)) = 0 ")
+        res = cursor.fetchall()
+        print(res)
+        for item in res:
+            l_tout_rang.remove(item[0])
+        # res.insert(0, ("",))
+        for item in l_tout_rang:
+            self.RowList.append(item)
+            self.CurrentRow.addItem(str(item))
+        # Pour la place
+        cursor.execute("SELECT noPlace FROM LesPlaces "
+                       "WHERE noRang = 1 and noPlace not in"
+                       "(SELECT noPlace FROM LesVentes WHERE noRang = 1 and dateRep = '21/12/2019 20:00')")
+        res = cursor.fetchall()
+        # res.insert(0, ("",))
+        for item in res:
+            self.PlaceList.append(str(item[0]))
+            self.CurrentPlace.addItem(str(item[0]))
+
 #
 #     # lorsque qu'une case est selectionner alors on recupere les elements de la ligne
 #     def selectedLine(self):
