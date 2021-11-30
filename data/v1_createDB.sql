@@ -13,7 +13,7 @@ create table LesRepresentations (
     dateRep date not null,
     promoRep decimal (4,2) not null,
     noSpec integer not null,
-    constraint pk_rep_dateRep primary key ( dateRep),
+    constraint pk_rep_dateRep primary key (dateRep),
     constraint ck_rep_noSpec check (noSpec > 0), --pas forcement nécessaire puisqu'il doit verifier qu'il est dans LesSpectacles mais au moins erreur plus précise
     constraint ck_rep_promoRep check (promoRep >= 0 and promoRep <=1),
     constraint fk_noSpec foreign key (noSpec)
@@ -98,5 +98,4 @@ select noDossier, sum(prixTotal) as prixDossier
 from NumeroDossier join LesVentes using (noDossier)
 GROUP BY noDossier;
 
-
--- TODO 3.3 : Ajouter les éléments nécessaires pour créer le trigger (attention, syntaxe SQLite différent qu'Oracle)
+-- TODO 3.3 : Ajouter les éléments nécessaires pour créer le trigger (attention, syntaxeview SQLite différent qu'Oracle)

@@ -15,6 +15,7 @@ class AppGestRep(QDialog):
 
     # on prévoit les variables pour acceuillir les fenetres supplementaires
     fct_verif_supp_dialog = None
+    fct_ajout_spectacle_dialog = None
 
     # valeur pour effectuer le Ctrl + z
     ancientNom = ""
@@ -37,7 +38,6 @@ class AppGestRep(QDialog):
     # Fonction de mise à joru de l'affichage
     @pyqtSlot()
     def refreshResult(self):
-        display.refreshLabel(self.ui.label_table, "")
         try:
             cursor = self.data.cursor()
             result = cursor.execute(
@@ -65,6 +65,7 @@ class AppGestRep(QDialog):
         cursor.execute("SELECT DISTINCT nomSpec FROM LesSpectacles")
         res = cursor.fetchall()
         res.insert(0, ("",))
+        self.CurrentName.clear()
         for item in res:
             self.NameList.append(item[0])
             self.CurrentName.addItem(item[0])
@@ -111,11 +112,72 @@ class AppGestRep(QDialog):
 
     # en cas de clic sur le bouton ajouter
     def addRep(self):
-        pass
+        # Recuperation des valeurs à ajouter
+        self.newNom = self.ui.CurrentName.currentText().strip()
+        self.newDate = self.ui.CurrentTimeEdit.dateTime().toString(self.CurrentTimeEdit.displayFormat())
+        self.newPromo = self.ui.CurrentPromotion.value()
+
+        # Verifications des contraintes pour les nouvelles valeurs
+        # Spectacles
+        if not self.newNom:
+            self.Creation_Spectacle()
+
+        # Date de la Representation
+        if self.newDate != self.selectedDate:
+            if self.VerifDateRep(self):
+                if self.insertSQL(self.newDate, str(self.newPromo), self.newNoSpec):
+                    self.selectedLines = None # deselection des lignes
+                    self.refreshResult() # on met à jour la fenetre pour avoir la nouvelle entree d'afficher
+
+    def insertSQL(self, date = None, promo = None, noSpec = None, add = True):
+        display.refreshLabel(self.ui.label_modif, "")
+        try:
+            cursor = self.data.cursor()
+            cursor.execute("INSERT INTO LesRepresentations(?, ?, ?)", [date, promo, noSpec])
+        except Exception as e:
+            if add:
+                display.refreshLabel(self.ui.label_modif, "Erreur lors de l'insertion dans la table")
+                print(repr(e))
+            else:
+                display.refreshLabel(self.ui.label_modif, "Impossible de modifier cette représentation")
+                print(repr(e))
+            return False
+        else:
+            self.data.commit()
+            return True
 
     # en cas de clic sur le bouton modifier
     def modifRep(self):
-        pass
+        if self.selectedLines is not None:
+            # Recuperation des valeurs à ajouter
+            self.newNom = self.ui.CurrentName.currentText().strip()
+            self.newDate = self.ui.CurrentTimeEdit.dateTime().toString(self.CurrentTimeEdit.displayFormat())
+            self.newPromo = self.ui.CurrentPromotion.value()
+
+            if self.Modification():
+                if not self.newNom:
+                    self.newNom = self.Creation_Spectacles()
+                try:
+                    cursor = self.data.cursor()
+                    cursor.execute("DELETE FROM LesRepresentations WHERE noSpec = ? and dateRep = ? and promoRep = ?", [self.getNoSpec(self.selectedNom), self.selectedDate, str(self.selectedPromo)])
+                except Exception as e:
+                    display.refreshLabel(self.ui.label_modif, "Impossible de modifier cette représentation, veuillez réessayer !")
+                    print(repr(e))
+                    return
+                else:
+                    self.data.commit() # on commit la suppression
+                    try:
+                        cursor.execute("INSERT INTO LesRepresentations VALUES (?, ?, ?)", [self.newDate, str(self.newPromo), self.getNoSpec(self.newNom)])
+                    except Exception as e:
+                        display.refreshLabel(self.ui.label_modif, "Impossible de modifier cette représentation")
+                        cursor.execute("INSERT INTO LesRepresentations VALUES (?, ?, ?)", [self.selectedDate, str(self.selectedPromo), self.getNoSpec(self.selectedNom)])
+                        self.data.commit()
+                    else:
+                        self.data.commit()
+                        self.selectedLines = None
+                        self.refreshResult()
+            else:
+                display.refreshLabel(self.ui.label_modif, "Aucunes modifications à faire")
 
     # en cas de clic sur le bouton supprimer
     def deleteRep(self):
@@ -161,6 +223,39 @@ class AppGestRep(QDialog):
             self.refreshResult()
             self.selectedLines = None  # On vient de supprimer la ligne donc, elle n'est plus selectionnée
 
+    # Recuperation du numero du spectacle en fontion du nom a ajouter
+    def getNoSpec(self, nom = None):
+        if nom is not None:
+            cursor = self.data.cursor()
+            cursor.execute(
+                "SELECT noSpec FROM LesSpectacles WHERE nomSpec = ?", (nom,))
+            return sorted(set(index[0] for index in cursor.fetchall()))[0]
+
+    # Verification de la date de representation
+    def VerifDateRep(self):
+        cursor = self.data.cursor()
+        cursor.execute("SELECT dateRep FROM LesRepresentations WHERE dateRep = ?", str(self.newDate))
+        if len(sorted(set(item[0] for item in cursor.fetchall()))) != 0:
+            display.refreshLabel(self.ui.label_modif, "Cette programmation est déjà utilisé par un autre spectacle")
+            return False
+        # Recuperation des date de representations pour un meme spectacles
+        cursor.execute("SELECT dateRep FROM lesRepresentation WHERE noSpec = ?", self.getNoSpec())
+        for day in sorted(set(item[0] for item in cursor.fetchall())):
+            if day.split(' ')[0] == self.newDate.split(' ')[0]:
+                display.refreshLabel(self.ui.label_modif, "Ce spectacle ne peut avoir plus d'une représetation le même jour")
+                return False
+        # Si les dates respectent les conditions pour etre ajouter dans la table
+        return True
+
+    # Si comboBox vide lors de la modification ou ajout d'une entree
+    def Creation_Spectacles(self):
+        if self.fct_ajout_spectacle_dialog is not None:
+            self.fct_ajout_spectacle_dialog.close()
+        self.fct_ajout_spectacle_dialog = AppAjoutSpectacle(self.data)
+        self.fct_ajout_spectacle_dialog.exec_()
+        return self.fct_ajout_spectacle_dialog.spec
+
+    # Affichage de la fenetre lors de la suppression
     def openVerifSupp(self, nomSpec, dateRep, promo):
         if self.fct_verif_supp_dialog is not None:
             self.fct_verif_supp_dialog.close()
@@ -174,6 +269,26 @@ class AppGestRep(QDialog):
         pass
 
     #################################################################################################
+    # Fonctions Conditionnel
+    #################################################################################################
+
+    def line_selected(self):
+        return self.selectedNom is not None and self.selectedDate is not None and self.selectedPromo is not None
+
+    def Modification(self):
+        return self.NameNotPromo() or self.DateNotName() or self.PromoNotDate()
+
+    def NameNotPromo(self):
+        return (self.newNom != self.selectedNom) and not(self.newPromo != self.selectedPromo)
+
+    def DateNotName(self):
+        return not(self.newNom != self.selectedNom) and (self.newDate != self.selectedDate)
+
+    def PromoNotDate(self):
+        return not(self.newDate != self.selectedDate) and (self.newPromo != self.selectedPromo)
+
+
+    #################################################################################################
     # Cloture des fenetres
     #################################################################################################
 
@@ -182,10 +297,46 @@ class AppGestRep(QDialog):
         # On ferme les éventuelles fenêtres encore ouvertes
         if self.fct_verif_supp_dialog is not None:
             self.fct_verif_supp_dialog.close()
+        if self.fct_ajout_spectacle_dialog is not None:
+            self.fct_ajout_spectacle_dialog.close()
 
         # On laisse l'évènement de clôture se terminer normalement
         event.accept()
 
+class AppAjoutSpectacle(QDialog):
+    """
+    Fenêtre de creation d'un nouveau spectacle
+    """
+
+    spec = ""
+
+    def __init__(self, data:sqlite3.Connection):
+        super(QDialog, self).__init__()
+        self.ui = uic.loadUi("gui/fct_add_spec.ui", self)
+        self.data = data
+        display.refreshLabel(self.ui.label_error, "")
+
+    @pyqtSlot()
+    def addSpec(self):
+        self.spec = self.ui.lineEditSpec.text().strip()
+        self.prix = self.ui.doubleSpinBoxPrix.value()
+        if not self.alreadyExist():
+            try:
+                cursor = self.data.cursor()
+                cursor.execute("INSERT INTO LesSpectacles(nomSpec, prixBaseSpec) VALUES(?, ?)", [self.spec, str(self.prix)])
+            except Exception as e:
+                display.refreshLabel(self.ui.label_error, "Erreur lors de l'ajout du spectacle, veuillez réessayer !")
+                print(repr(e))
+            else:
+                display.refreshLabel(self.ui.label_error, "Spectacle ajouté avec succés")
+                self.data.commit()
+                self.close()
+
+    def alreadyExist():
+        cursor = self.data.cursor()
+        cursor.execute("SELECT nomSpec, prixBaseSpec FROM LesSpectacles")
+        for item in cursor.fetchall():
+            return item == (self.spec, str(self.prix))
 
 class AppVerifSupp(QDialog):
     """
