@@ -98,5 +98,4 @@ select noDossier, sum(prixTotal) as prixDossier
 from NumeroDossier join LesVentes using (noDossier)
 GROUP BY noDossier;
 
-
--- TODO 3.3 : Ajouter les éléments nécessaires pour créer le trigger (attention, syntaxe SQLite différent qu'Oracle)
+-- TODO 3.3 : Ajouter les éléments nécessaires pour créer le trigger (attention, syntaxeview SQLite différent qu'Oracle)

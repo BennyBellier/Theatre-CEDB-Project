@@ -113,9 +113,60 @@ class AppGestRep(QDialog):
     def addRep(self):
         pass
 
+    def line_selected(self):
+        return (
+            self.selectedNom is not None
+            and self.selectedDate is not None
+            and self.selectedPromo is not None
+        )
+
     # en cas de clic sur le bouton modifier
     def modifRep(self):
-        pass
+        if not self.ui.CurrentName.currentText().strip():
+            pass
+        else:
+            if self.line_selected():
+                self.modifiedNom = self.ui.CurrentName.currentText().strip()
+                self.modifiedDate = self.ui.CurrentTimeEdit.dateTime().toString(
+                    self.CurrentTimeEdit.displayFormat()
+                )
+                self.modifiedPromo = self.ui.CurrentPromotion.value()
+                if (
+                    self.modifiedNom != self.selectedNom
+                    or self.modifiedDate != self.selectedDate
+                    or self.modifiedPromo != self.selectedPromo
+                ):
+                    cursor = self.data.cursor()
+                    cursor.execute(
+                        "SELECT noSpec FROM LesSpectacles WHERE nomSpec = ?",
+                        (self.selectedNom,),
+                    )
+                    self.modifiedNoSpec = cursor.fetchall()
+
+                    result = cursor.execute(
+                        "DELETE FROM LesRepresentations WHERE noSpec = ? and dateRep = ? and promorep = ?",
+                        [
+                            self.modifiedNoSpec[0][0],
+                            str(self.selectedDate),
+                            str(self.selectedPromo),
+                        ],
+                    )
+                    self.data.commit()
+                    cursor.execute(
+                        "SELECT noSpec FROM LesSpectacles WHERE nomSpec = ?",
+                        (self.modifiedNom,),
+                    )
+                    result = cursor.execute(
+                        "INSERT INTO LesRepresentations(noSpec, dateRep, promoRep) VALUES (?, ?, ?)",
+                        [
+                            self.modifiedNoSpec[0][0],
+                            str(self.modifiedDate),
+                            str(round(self.modifiedPromo, 2)),
+                        ],
+                    )
+                    self.data.commit()
+                    self.refreshResult()
+                    self.selectedLines = None  # On vient de supprimer la ligne donc, elle n'est plus selectionnée
 
     # en cas de clic sur le bouton supprimer
     def deleteRep(self):

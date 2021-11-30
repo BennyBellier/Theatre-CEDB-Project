@@ -312,6 +312,12 @@
              </item>
              <item>
               <widget class="QDoubleSpinBox" name="CurrentPrice">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
                <property name="prefix">
                 <string/>
                </property>
