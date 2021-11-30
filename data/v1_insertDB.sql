@@ -20,7 +20,7 @@ insert into TypeZones (catZone, tauxZone) values ('orchestre', 1.5);
 insert into TypeZones (catZone, tauxZone) values ('balcon', 2);
 insert into TypeZones (catZone, tauxZone) values ('poulailler', 1);
 
-insert into LesReductions (typePers, tarifReduit) values ('ordinaire', 1);
+insert into LesReductions (typePers, tarifReduit) values ('ordinaire', 0);
 insert into LesReductions (typePers, tarifReduit) values ('adhérent', 0.25);
 insert into LesReductions (typePers, tarifReduit) values ('étudiant', 0.20);
 insert into LesReductions (typePers, tarifReduit) values ('scolaire', 0.10);

@@ -4,26 +4,11 @@ from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import QDateTime
-# import datetime
+import datetime
 from PyQt5 import uic
 
 
 class AppGestRes(QDialog):
-    """
-    Fenêtre de gestion des représentations : ajout, modification, suppression
-    """
-
-    # on prévoit les variables pour acceuillir les fenetres supplementaires
-    # fct_verif_supp_dialog = None
-
-    # valeur pour effectuer le Ctrl + z
-    # ancientNom = ""
-    # ancientDate = ""
-    # ancientPrix = 0
-    # ancientPromo = 0
-    #
-    # # booleen si on ne veut plus afficher la fenêtre de prevention avant suppression
-    # prevent_delete = 1
 
     def __init__(self, data: sqlite3.Connection):
         super(QDialog, self).__init__()
@@ -65,62 +50,88 @@ class AppGestRes(QDialog):
         # Pour le genre :
         cursor.execute("SELECT DISTINCT typePers FROM LesReductions ")
         res = cursor.fetchall()
-        # res.insert(0, ("",))
+        res.insert(0, ("",))
         for item in res:
             self.GenderList.append(item[0])
             self.CurrentGender.addItem(item[0])
 
-        # cursor = self.data.cursor()
-        # Pour le rang
+    def selectedLine(self):
+        self.selectedLines = sorted(
+            set(
+                index.row()
+                for index in self.ui.tableGestRes.selectionModel().selectedIndexes()
+            )
+        )
+        # self.selectedNom = self.ui.tableGestRep.item(self.selectedLines[0], 0).text()
+        self.selectedDate = self.ui.tableGestRes.item(self.selectedLines[0], 1).text()
+        timedate = self.selectedDate.split(" ")
+        date = timedate[0].split("/")
+        time = timedate[1].split(":")
+        self.CurrentTimeEdit.setDateTime(
+            datetime.datetime(
+                int(date[2]), int(date[1]), int(date[0]), int(time[0]), int(time[1])
+            )
+        )
+
+    def refreshnbRang(self):
         l_tout_rang = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        cursor = self.data.cursor()
         cursor.execute("SELECT DISTINCT noRang FROM LesVentes "
-                        "GROUP BY noRang, dateRep HAVING dateRep = '24/12/2019 20:00' and (25 - count(noPlace)) = 0 ")
+                        "GROUP BY noRang, dateRep HAVING dateRep = ? and (25 - count(noPlace)) = 0 ", [self.CurrentTimeEdit.text()])
         res = cursor.fetchall()
-        print(res)
         for item in res:
             l_tout_rang.remove(item[0])
-        # res.insert(0, ("",))
+        self.CurrentRow.clear();
         for item in l_tout_rang:
             self.RowList.append(item)
             self.CurrentRow.addItem(str(item))
-        # Pour la place
-        cursor.execute("SELECT noPlace FROM LesPlaces "
-                       "WHERE noRang = 1 and noPlace not in"
-                       "(SELECT noPlace FROM LesVentes WHERE noRang = 1 and dateRep = '21/12/2019 20:00')")
+
+    def refreshnbPlace(self):
+        self.CurrentPlace.clear();
+        cursor = self.data.cursor()
+        cursor.execute("SELECT noPlace FROM LesPlaces WHERE noRang = ? "
+                       "and noPlace not in (SELECT noPlace FROM LesVentes "
+                        "WHERE noRang = ? and dateRep = ?)",
+                       [self.ui.CurrentRow.currentText().strip(),
+                        self.ui.CurrentRow.currentText().strip(),self.CurrentTimeEdit.text()])
         res = cursor.fetchall()
-        # res.insert(0, ("",))
         for item in res:
             self.PlaceList.append(str(item[0]))
             self.CurrentPlace.addItem(str(item[0]))
+        # self.calcul_prix()
 
-#
-#     # lorsque qu'une case est selectionner alors on recupere les elements de la ligne
-#     def selectedLine(self):
-#         self.selectedLines = sorted(
-#             set(
-#                 index.row()
-#                 for index in self.ui.tableGestRep.selectionModel().selectedIndexes()
-#             )
-#         )
-#         self.selectedNom = self.ui.tableGestRep.item(self.selectedLines[0], 0).text()
-#         self.selectedDate = self.ui.tableGestRep.item(self.selectedLines[0], 1).text()
-#         self.selectedPrix = self.ui.tableGestRep.item(self.selectedLines[0], 2).text()
-#         self.selectedPromo = self.ui.tableGestRep.item(self.selectedLines[0], 3).text()
-#         self.refreshModif()
-#
-#     def refreshModif(self):
-#         self.CurrentName.setCurrentIndex(self.NameList.index(self.selectedNom))
-#         timedate = self.selectedDate.split(" ")
-#         date = timedate[0].split("/")
-#         time = timedate[1].split(":")
-#         self.CurrentTimeEdit.setDateTime(
-#             datetime.datetime(
-#                 int(date[2]), int(date[1]), int(date[0]), int(time[0]), int(time[1])
-#             )
-#         )
-#         self.CurrentPrice.setValue(float(self.selectedPrix))
-#         self.CurrentPromotion.setValue(float(self.selectedPromo))
-#
+    def calcul_prix(self):
+        cursor = self.data.cursor()
+        cursor.execute("SELECT prixBaseSpec, promoRep FROM LesSpectacles JOIN LesRepresentations USING(noSpec) WHERE dateRep = ? ",
+                       [self.CurrentTimeEdit.text()])
+        prix_spec_et_promo_rep = cursor.fetchall()
+        if not prix_spec_et_promo_rep:
+            return
+        prixBaseRep = prix_spec_et_promo_rep[0][0]
+        promo_rep = (prix_spec_et_promo_rep[0][1])
+
+        # rang <= 4 -> orchestre donc *1,5
+        # rang >= 16 balcon donc *2
+        print("yo", self.CurrentRow.currentText().strip())
+        if not self.CurrentRow.currentText().strip() :
+            return
+        if int(self.CurrentRow.currentText().strip()) <= 4:
+            tauxZone = 1.5
+        elif int(self.CurrentRow.currentText().strip()) >= 16:
+            tauxZone = 2
+        else:
+            tauxZone = 1
+
+        cursor.execute(
+            "SELECT tarifReduit FROM LesReductions WHERE typePers = ? ",
+            [self.CurrentGender.currentText().strip()])
+        tarif_reduit = cursor.fetchall()
+        if not tarif_reduit:
+            return
+        prix = prixBaseRep * (1-promo_rep) * (1-tarif_reduit[0][0]) * tauxZone
+        self.CurrentPrice.setValue(float(prix))
+
+
 #     #################################################################################################
 #     # gestion des bouton
 #     #################################################################################################

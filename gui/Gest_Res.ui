@@ -33,6 +33,9 @@
        </item>
        <item>
         <widget class="QTableWidget" name="tableGestRes">
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
          <column>
           <property name="text">
            <string>Nom</string>
@@ -136,7 +139,7 @@
                <item>
                 <widget class="QLabel" name="label_4">
                  <property name="text">
-                  <string>Rang :</string>
+                  <string>Rang disponible :</string>
                  </property>
                 </widget>
                </item>
@@ -156,7 +159,7 @@
                <item>
                 <widget class="QLabel" name="label_5">
                  <property name="text">
-                  <string>Place :</string>
+                  <string>Place disponible :</string>
                  </property>
                 </widget>
                </item>
@@ -176,7 +179,7 @@
                <item>
                 <widget class="QLabel" name="label_6">
                  <property name="text">
-                  <string>Genre :</string>
+                  <string>Votre genre ?</string>
                  </property>
                 </widget>
                </item>
@@ -237,7 +240,7 @@
                 </spacer>
                </item>
                <item>
-                <widget class="QDateTimeEdit" name="dateTimeEdit_programmation">
+                <widget class="QDateTimeEdit" name="CurrentTimeEdit">
                  <property name="calendarPopup">
                   <bool>true</bool>
                  </property>
@@ -305,7 +308,7 @@
                 </spacer>
                </item>
                <item>
-                <widget class="QDoubleSpinBox" name="doubleSpinBox_prixplace">
+                <widget class="QDoubleSpinBox" name="CurrentPrice">
                  <property name="readOnly">
                   <bool>true</bool>
                  </property>
@@ -497,5 +500,76 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tableGestRes</sender>
+   <signal>pressed(QModelIndex)</signal>
+   <receiver>GestRes</receiver>
+   <slot>selectedLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>172</x>
+     <y>238</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>498</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CurrentRow</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>GestRes</receiver>
+   <slot>refreshnbPlace()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>515</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>498</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CurrentTimeEdit</sender>
+   <signal>dateTimeChanged(QDateTime)</signal>
+   <receiver>GestRes</receiver>
+   <slot>refreshnbRang()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>515</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>498</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CurrentGender</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>GestRes</receiver>
+   <slot>calcul_prix()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>515</x>
+     <y>311</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>498</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>selectedLine()</slot>
+  <slot>refreshnbPlace()</slot>
+  <slot>refreshnbRang()</slot>
+  <slot>refreshGenre()</slot>
+  <slot>calcul_prix()</slot>
+ </slots>
 </ui>
