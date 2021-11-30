@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>998</width>
-    <height>545</height>
+    <width>1478</width>
+    <height>508</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,11 +20,98 @@
       <number>0</number>
      </property>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <widget class="QWidget" name="ContainerTableRep" native="true">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>450</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>5</number>
+        </property>
+        <property name="sizeConstraint">
+         <enum>QLayout::SetFixedSize</enum>
+        </property>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="maximumSize">
+           <size>
+            <width>450</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Les Représentations</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableGestRes">
+          <property name="maximumSize">
+           <size>
+            <width>450</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>140</number>
+          </attribute>
+          <attribute name="horizontalHeaderStretchLastSection">
+           <bool>true</bool>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>Nom</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Programmation</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Places vide</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_table_erreur">
+          <property name="maximumSize">
+           <size>
+            <width>450</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>Les Représentations</string>
+          <string>Gestion des réservations</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -32,437 +119,355 @@
         </widget>
        </item>
        <item>
-        <widget class="QTableWidget" name="tableWidget">
-         <column>
-          <property name="text">
-           <string>Nom</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Programmation</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Nb Places dipo </string>
-          </property>
-         </column>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_table_erreur">
+        <widget class="QLabel" name="label_erreur_gest_res">
          <property name="text">
           <string/>
          </property>
         </widget>
        </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
          <property name="rightMargin">
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Gestion des réservations</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
            <property name="rightMargin">
-            <number>10</number>
+            <number>0</number>
            </property>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <property name="leftMargin">
+              <number>10</number>
+             </property>
              <property name="rightMargin">
-              <number>0</number>
+              <number>10</number>
              </property>
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_5">
-               <property name="leftMargin">
-                <number>10</number>
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
                </property>
-               <property name="rightMargin">
-                <number>10</number>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
                </property>
-               <item>
-                <spacer name="verticalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_2">
-                 <property name="text">
-                  <string>Programmation :</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_3">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_4">
-                 <property name="text">
-                  <string>Rang :</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_4">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_5">
-                 <property name="text">
-                  <string>Place :</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_5">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_6">
-                 <property name="text">
-                  <string>Genre :</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_6">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_7">
-                 <property name="text">
-                  <string>Prix de la place :</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_8">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
+              </spacer>
              </item>
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_6">
-               <property name="leftMargin">
-                <number>10</number>
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Programmation :</string>
                </property>
-               <property name="rightMargin">
-                <number>10</number>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                </property>
-               <item>
-                <spacer name="verticalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QDateTimeEdit" name="dateTimeEdit_programmation">
-                 <property name="calendarPopup">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_7">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QComboBox" name="comboBox_rang"/>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_9">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QComboBox" name="comboBox_place"/>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_10">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QComboBox" name="comboBox_typePers">
-                 <item>
-                  <property name="text">
-                   <string>ordinaire</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>adhérent</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>étudiant</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>scolaire</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>militaire</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>sénior</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_12">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QDoubleSpinBox" name="doubleSpinBox_prixplace">
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                 <property name="buttonSymbols">
-                  <enum>QAbstractSpinBox::NoButtons</enum>
-                 </property>
-                 <property name="suffix">
-                  <string> €</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_11">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
+              </widget>
              </item>
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout">
-               <property name="leftMargin">
-                <number>10</number>
+              <spacer name="verticalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
                </property>
-               <property name="rightMargin">
-                <number>10</number>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
                </property>
-               <property name="bottomMargin">
-                <number>15</number>
-               </property>
-               <item>
-                <spacer name="verticalSpacer_14">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QPushButton" name="pushButton_ajouter">
-                 <property name="text">
-                  <string>Ajouter</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="pushButton_confirmez">
-                 <property name="text">
-                  <string>Confirmez et Payez</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              </spacer>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_6">
-               <property name="rightMargin">
-                <number>0</number>
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Rang disponible :</string>
                </property>
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_7">
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="label_8">
-                   <property name="text">
-                    <string>Dossier en cours</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QTableWidget" name="tableWidget_2">
-                   <column>
-                    <property name="text">
-                     <string>NuméroTransaction</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>NuméroRang</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>NuméroPlace</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>Genre </string>
-                    </property>
-                   </column>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Place disponible :</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>Votre genre ?</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>Prix de la place :</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <property name="leftMargin">
+              <number>10</number>
+             </property>
+             <property name="rightMargin">
+              <number>10</number>
+             </property>
+             <item>
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QDateTimeEdit" name="CurrentTimeEdit">
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_7">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QComboBox" name="CurrentRow"/>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QComboBox" name="CurrentPlace"/>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_10">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QComboBox" name="CurrentGender"/>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_12">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="CurrentPrice">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
+               <property name="suffix">
+                <string> €</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_11">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <property name="leftMargin">
+              <number>10</number>
+             </property>
+             <property name="rightMargin">
+              <number>10</number>
+             </property>
+             <property name="bottomMargin">
+              <number>15</number>
+             </property>
+             <item>
+              <spacer name="verticalSpacer_14">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_ajouter">
+               <property name="text">
+                <string>Ajouter</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_confirmez">
+               <property name="text">
+                <string>Confirmez et Payez</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
           </layout>
          </item>
-         <item>
-          <widget class="QLabel" name="label_erreur_gest_res">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
         </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Dossier en cours</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTableWidget" name="tableWidget_2">
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>140</number>
+         </attribute>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>NuméroTransaction</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>NuméroRang</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>NuméroPlace</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Genre </string>
+          </property>
+         </column>
+        </widget>
        </item>
       </layout>
      </item>
@@ -528,5 +533,60 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>CurrentRow</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>GestRes</receiver>
+   <slot>refreshnbPlace()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>515</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>498</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CurrentTimeEdit</sender>
+   <signal>dateTimeChanged(QDateTime)</signal>
+   <receiver>GestRes</receiver>
+   <slot>refreshnbRang()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>515</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>498</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CurrentGender</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>GestRes</receiver>
+   <slot>calcul_prix()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>515</x>
+     <y>311</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>498</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>selectedLine()</slot>
+  <slot>refreshnbPlace()</slot>
+  <slot>refreshnbRang()</slot>
+  <slot>refreshGenre()</slot>
+  <slot>calcul_prix()</slot>
+ </slots>
 </ui>
