@@ -77,7 +77,7 @@
      </attribute>
      <column>
       <property name="text">
-       <string>noPlace</string>
+       <string>NuméroPlace</string>
       </property>
      </column>
      <column>

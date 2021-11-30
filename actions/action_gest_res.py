@@ -6,14 +6,19 @@ from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import QDateTime
 import datetime
 from PyQt5 import uic
+from datetime import datetime
+from time import strftime
 
 
 class AppGestRes(QDialog):
+    reponse = False
 
     def __init__(self, data: sqlite3.Connection):
         super(QDialog, self).__init__()
         self.ui = uic.loadUi("gui/Gest_Res.ui", self)
         self.data = data
+        self.l = []
+        # self.initComboBox()
         self.refreshResult()
 
     # Fonction de mise à joru de l'affichage
@@ -25,8 +30,10 @@ class AppGestRes(QDialog):
             cursor = self.data.cursor()
             result = cursor.execute(
                 "SELECT nomSpec, DateRep, nbPlaceDisponibles \
-              FROM Salle"
-            )
+              FROM Salle")
+            cursor = self.data.cursor()
+            cursor.execute("SELECT max(noDossier) FROM LesVentes ")
+            self.compte_dossier.setValue(cursor.fetchall()[0][0])
         except Exception as e:
             self.ui.tableGestRes.setRowCount(0)
             display.refreshLabel(
@@ -34,28 +41,27 @@ class AppGestRes(QDialog):
                 "Impossible d'afficher les résultats : " + repr(e),
             )
         else:
-            i = display.refreshGenericData(self.ui.tableGestRes, result)
             self.initComboBox()
+            i = display.refreshGenericData(self.ui.tableGestRes, result)
             if i == 0:
                 display.refreshLabel(
                     self.ui.label_table_erreur, "Aucune représentation n'est programmé"
                 )
 
+            #self.calcul_prix()
+
     # initialisation du menu deroulant
     def initComboBox(self):
-        self.GenderList = []
-        self.PlaceList = []
-        self.RowList = []
+
         cursor = self.data.cursor()
-        # Pour le genre :
         cursor.execute("SELECT DISTINCT typePers FROM LesReductions ")
         res = cursor.fetchall()
         res.insert(0, ("",))
         for item in res:
-            self.GenderList.append(item[0])
             self.CurrentGender.addItem(item[0])
 
     def selectedLine(self):
+        display.refreshLabel(self.ui.label_erreur_gest_res, "")
         self.selectedLines = sorted(
             set(
                 index.row()
@@ -68,12 +74,13 @@ class AppGestRes(QDialog):
         date = timedate[0].split("/")
         time = timedate[1].split(":")
         self.CurrentTimeEdit.setDateTime(
-            datetime.datetime(
+            datetime(
                 int(date[2]), int(date[1]), int(date[0]), int(time[0]), int(time[1])
             )
         )
 
     def refreshnbRang(self):
+        # display.refreshLabel(self.ui.label_erreur_gest_res, "")
         l_tout_rang = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
         cursor = self.data.cursor()
         cursor.execute("SELECT DISTINCT noRang FROM LesVentes "
@@ -83,8 +90,8 @@ class AppGestRes(QDialog):
             l_tout_rang.remove(item[0])
         self.CurrentRow.clear();
         for item in l_tout_rang:
-            self.RowList.append(item)
             self.CurrentRow.addItem(str(item))
+        self.refreshnbPlace()
 
     def refreshnbPlace(self):
         self.CurrentPlace.clear();
@@ -96,46 +103,103 @@ class AppGestRes(QDialog):
                         self.ui.CurrentRow.currentText().strip(),self.CurrentTimeEdit.text()])
         res = cursor.fetchall()
         for item in res:
-            self.PlaceList.append(str(item[0]))
             self.CurrentPlace.addItem(str(item[0]))
-        # self.calcul_prix()
+        print("YOO")
+
+        #self.calcul_prix()
 
     def calcul_prix(self):
-        cursor = self.data.cursor()
-        cursor.execute("SELECT prixBaseSpec, promoRep FROM LesSpectacles JOIN LesRepresentations USING(noSpec) WHERE dateRep = ? ",
-                       [self.CurrentTimeEdit.text()])
-        prix_spec_et_promo_rep = cursor.fetchall()
-        if not prix_spec_et_promo_rep:
-            return
-        prixBaseRep = prix_spec_et_promo_rep[0][0]
-        promo_rep = (prix_spec_et_promo_rep[0][1])
+        if self.CurrentRow.currentText().strip() \
+                and self.CurrentPlace.currentText().strip() \
+                and self.CurrentGender.currentText().strip():
+            #if self.CurrentTimeEdit.text()
+            cursor = self.data.cursor()
+            cursor.execute("SELECT prixBaseSpec, promoRep FROM LesSpectacles JOIN LesRepresentations USING(noSpec) WHERE dateRep = ? ",
+                           [self.CurrentTimeEdit.text()])
+            prix_spec_et_promo_rep = cursor.fetchall()
+            if not prix_spec_et_promo_rep:
+                return
+            prixBaseRep = prix_spec_et_promo_rep[0][0]
+            promo_rep = (prix_spec_et_promo_rep[0][1])
 
-        # rang <= 4 -> orchestre donc *1,5
-        # rang >= 16 balcon donc *2
-        print("yo", self.CurrentRow.currentText().strip())
-        if not self.CurrentRow.currentText().strip() :
-            return
-        if int(self.CurrentRow.currentText().strip()) <= 4:
-            tauxZone = 1.5
-        elif int(self.CurrentRow.currentText().strip()) >= 16:
-            tauxZone = 2
+            # rang <= 4 -> orchestre donc *1,5
+            # rang >= 16 balcon donc *2
+            if not self.CurrentRow.currentText().strip() :
+                return
+            if int(self.CurrentRow.currentText().strip()) <= 4:
+                tauxZone = 1.5
+            elif int(self.CurrentRow.currentText().strip()) >= 16:
+                tauxZone = 2
+            else:
+                tauxZone = 1
+
+            cursor.execute(
+                "SELECT tarifReduit FROM LesReductions WHERE typePers = ? ",
+                [self.CurrentGender.currentText().strip()])
+            tarif_reduit = cursor.fetchall()
+            if not tarif_reduit:
+                return
+            prix = prixBaseRep * (1-promo_rep) * (1-tarif_reduit[0][0]) * tauxZone
+            self.CurrentPrice.setValue(float(prix))
         else:
-            tauxZone = 1
-
-        cursor.execute(
-            "SELECT tarifReduit FROM LesReductions WHERE typePers = ? ",
-            [self.CurrentGender.currentText().strip()])
-        tarif_reduit = cursor.fetchall()
-        if not tarif_reduit:
-            return
-        prix = prixBaseRep * (1-promo_rep) * (1-tarif_reduit[0][0]) * tauxZone
-        self.CurrentPrice.setValue(float(prix))
-
+            self.CurrentPrice.setValue(float(0))
 
 #     #################################################################################################
-#     # gestion des bouton
+#     # gestion du dossiers
 #     #################################################################################################
 #
+    def add_doss(self):
+        dateRep = self.CurrentTimeEdit.text()
+        noRang = "NULL"
+        noPlace = "NULL"
+
+        #PROBLEME ICI
+        try:
+            noRang = int(self.CurrentRow.currentText().strip())
+            noPlace = int(self.CurrentPlace.currentText().strip())
+        except Exception as e:
+            ##ICCIII CA SERT A RIEN TODO a reparer, jsais pas qui mettre puisque ca saffiche pas
+            display.refreshLabel(
+                self.ui.label_erreur_gest_res,
+                "Remplissez les champs",
+            )
+        else:
+            noRang = int(self.CurrentRow.currentText().strip())
+            noPlace = int(self.CurrentPlace.currentText().strip())
+        typePers = self.CurrentGender.currentText().strip()
+        PrixPlace = self.ui.CurrentPrice.value()
+        datePreTrans = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+        cursor = self.data.cursor()
+        cursor.execute("SELECT max(noDossier) FROM LesVentes ")
+        numDossier = cursor.fetchall()[0][0]
+        if not self.reponse:
+            numDossier += 1
+            self.reponse = True
+        #PEUT ETRE INUTILE
+        # l_doss = []
+        # l_doss.append((datePreTrans, PrixPlace, noPlace, noRang, typePers, numDossier, dateRep))
+        try :
+            cursor.execute("INSERT INTO LesVentes (dateTrans, prixTotal, noPlace, noRang, typePers, noDossier, dateRep)"
+                           "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                           [datePreTrans, PrixPlace, noPlace, noRang, typePers, numDossier, dateRep])
+            self.data.commit()
+        except Exception as e:
+            #NE DEVRAIT PAS ARRIVER
+            display.refreshLabel(
+                self.ui.label_erreur_gest_res,
+                "Impossible d'achetez ce ticket. ",
+            )
+        else:
+            self.l.append((datePreTrans, PrixPlace, noPlace, noRang, typePers, numDossier, dateRep))
+            print(self.l)
+            cursor = self.data.cursor()
+            result = cursor.execute("SELECT noTrans, noRang, noPlace, typePers "
+                                    "FROM LesVentes WHERE noDossier = ?",
+                                    [numDossier])
+            i = display.refreshGenericData(self.ui.table_currentDoss, result)
+            if i == 0:
+                display.refreshLabel(self.ui.erreur_gest_res, "Aucun ajout dans le dossier")
+
 #     # en cas de clic sur le bouton ajouter
 #     def addRep(self):
 #         pass

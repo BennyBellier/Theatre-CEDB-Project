@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1478</width>
-    <height>508</height>
+    <width>1059</width>
+    <height>514</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -115,13 +115,6 @@
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_erreur_gest_res">
-         <property name="text">
-          <string/>
          </property>
         </widget>
        </item>
@@ -390,6 +383,78 @@
               <number>15</number>
              </property>
              <item>
+              <spacer name="verticalSpacer_13">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_date_erreur">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_18">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_17">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_16">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_15">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
               <spacer name="verticalSpacer_14">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -422,6 +487,13 @@
          </item>
         </layout>
        </item>
+       <item>
+        <widget class="QLabel" name="label_erreur_gest_res">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item>
@@ -430,17 +502,40 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Dossier en cours</string>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="topMargin">
+          <number>0</number>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
+         <item alignment="Qt::AlignRight">
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>Dossier en cours:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignLeft|Qt::AlignTop">
+          <widget class="QSpinBox" name="compte_dossier">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QTableWidget" name="tableWidget_2">
+        <widget class="QTableWidget" name="table_currentDoss">
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>140</number>
          </attribute>
@@ -449,7 +544,7 @@
          </attribute>
          <column>
           <property name="text">
-           <string>NuméroTransaction</string>
+           <string>NoTrans</string>
           </property>
          </column>
          <column>
@@ -534,18 +629,50 @@
    </hints>
   </connection>
   <connection>
-   <sender>CurrentRow</sender>
-   <signal>currentIndexChanged(int)</signal>
+   <sender>pushButton_ajouter</sender>
+   <signal>clicked()</signal>
    <receiver>GestRes</receiver>
-   <slot>refreshnbPlace()</slot>
+   <slot>add_doss()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>515</x>
-     <y>164</y>
+     <x>652</x>
+     <y>414</y>
     </hint>
     <hint type="destinationlabel">
-     <x>498</x>
-     <y>253</y>
+     <x>529</x>
+     <y>256</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tableGestRes</sender>
+   <signal>pressed(QModelIndex)</signal>
+   <receiver>GestRes</receiver>
+   <slot>selectedLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>173</x>
+     <y>241</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>529</x>
+     <y>256</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_ajouter</sender>
+   <signal>clicked()</signal>
+   <receiver>GestRes</receiver>
+   <slot>refreshnbRang()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>652</x>
+     <y>395</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>529</x>
+     <y>256</y>
     </hint>
    </hints>
   </connection>
@@ -556,28 +683,44 @@
    <slot>refreshnbRang()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>515</x>
+     <x>519</x>
      <y>91</y>
     </hint>
     <hint type="destinationlabel">
-     <x>498</x>
-     <y>253</y>
+     <x>529</x>
+     <y>256</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>CurrentGender</sender>
-   <signal>currentIndexChanged(int)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>GestRes</receiver>
    <slot>calcul_prix()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>515</x>
-     <y>311</y>
+     <x>519</x>
+     <y>315</y>
     </hint>
     <hint type="destinationlabel">
-     <x>498</x>
-     <y>253</y>
+     <x>529</x>
+     <y>256</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CurrentRow</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>GestRes</receiver>
+   <slot>calcul_prix()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>519</x>
+     <y>166</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>529</x>
+     <y>256</y>
     </hint>
    </hints>
   </connection>
@@ -588,5 +731,7 @@
   <slot>refreshnbRang()</slot>
   <slot>refreshGenre()</slot>
   <slot>calcul_prix()</slot>
+  <slot>add_doss()</slot>
+  <slot>refreshResult()</slot>
  </slots>
 </ui>

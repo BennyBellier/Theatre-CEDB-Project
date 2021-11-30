@@ -31,7 +31,6 @@ class AppFctComp2Partie1(QDialog):
             )
         else:
             try:
-
                 cursor = self.data.cursor()
                 result = cursor.execute(
                     "SELECT noPlace, noRang, noZone, tauxZone FROM LesPlaces JOIN LesZones USING (noZone) JOIN TypeZones USING (catZone) WHERE catZone = ?",
