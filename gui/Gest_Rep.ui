@@ -347,13 +347,16 @@
                 <enum>QAbstractSpinBox::UpDownArrows</enum>
                </property>
                <property name="suffix">
-                <string/>
+                <string> %</string>
+               </property>
+               <property name="decimals">
+                <number>0</number>
                </property>
                <property name="maximum">
-                <double>1.000000000000000</double>
+                <double>100.000000000000000</double>
                </property>
                <property name="singleStep">
-                <double>0.010000000000000</double>
+                <double>1.000000000000000</double>
                </property>
               </widget>
              </item>
