@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>GestRes</class>
+ <widget class="QWidget" name="GestRes">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -344,6 +344,9 @@
            </item>
            <item>
             <widget class="QDoubleSpinBox" name="CurrentPrice">
+             <property name="inputMethodHints">
+              <set>Qt::ImhFormattedNumbersOnly</set>
+             </property>
              <property name="readOnly">
               <bool>true</bool>
              </property>
@@ -352,6 +355,9 @@
              </property>
              <property name="suffix">
               <string> €</string>
+             </property>
+             <property name="maximum">
+              <double>999.990000000000009</double>
              </property>
             </widget>
            </item>
@@ -382,7 +388,20 @@
             <number>15</number>
            </property>
            <item>
-            <spacer name="verticalSpacer_13">
+            <spacer name="verticalSpacer_18">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_20">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
@@ -399,10 +418,26 @@
              <property name="text">
               <string/>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+             </property>
             </widget>
            </item>
            <item>
-            <spacer name="verticalSpacer_18">
+            <spacer name="verticalSpacer_21">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_22">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
@@ -419,10 +454,26 @@
              <property name="text">
               <string/>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
             </widget>
            </item>
            <item>
-            <spacer name="verticalSpacer_17">
+            <spacer name="verticalSpacer_24">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_23">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
@@ -439,7 +490,23 @@
              <property name="text">
               <string/>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
             </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_17">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
            </item>
            <item>
             <spacer name="verticalSpacer_15">
@@ -459,10 +526,46 @@
              <property name="text">
               <string/>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
             </widget>
            </item>
            <item>
             <spacer name="verticalSpacer_14">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_11">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_13">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_16">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
@@ -533,7 +636,7 @@
             <string>Dossier en cours:</string>
            </property>
            <property name="alignment">
-            <set>Qt::AlignHCenter|Qt::AlignTop</set>
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -549,7 +652,7 @@
             <enum>QAbstractSpinBox::NoButtons</enum>
            </property>
            <property name="maximum">
-            <number>3000</number>
+            <number>9999</number>
            </property>
           </widget>
          </item>
@@ -608,6 +711,74 @@
         </widget>
        </item>
        <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>Prix total du dossier en cours :</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="prix_total_doss">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="suffix">
+            <string>€</string>
+           </property>
+           <property name="maximum">
+            <double>9999.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::MinimumExpanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
         <widget class="QLabel" name="label_erreur_dossier">
          <property name="text">
           <string/>
@@ -661,5 +832,175 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>tableGestRes</sender>
+   <signal>pressed(QModelIndex)</signal>
+   <receiver>GestRes</receiver>
+   <slot>active_select_ligne()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>343</x>
+     <y>373</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>859</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_confirmez</sender>
+   <signal>clicked()</signal>
+   <receiver>GestRes</receiver>
+   <slot>confirmez_payez()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>973</x>
+     <y>689</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>859</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_ajouter</sender>
+   <signal>clicked()</signal>
+   <receiver>GestRes</receiver>
+   <slot>add_doss()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>973</x>
+     <y>660</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>859</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CurrentTimeEdit</sender>
+   <signal>dateTimeChanged(QDateTime)</signal>
+   <receiver>GestRes</receiver>
+   <slot>refreshnbRang()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>840</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>859</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CurrentTimeEdit</sender>
+   <signal>dateTimeChanged(QDateTime)</signal>
+   <receiver>GestRes</receiver>
+   <slot>calcul_prix()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>840</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>859</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CurrentRow</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>GestRes</receiver>
+   <slot>calcul_prix()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>840</x>
+     <y>253</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>859</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CurrentRow</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>GestRes</receiver>
+   <slot>refreshnbPlace()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>840</x>
+     <y>253</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>859</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CurrentPlace</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>GestRes</receiver>
+   <slot>calcul_prix()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>840</x>
+     <y>372</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>859</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CurrentGender</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>GestRes</receiver>
+   <slot>calcul_prix()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>840</x>
+     <y>492</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>859</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CloseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>GestRes</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>859</x>
+     <y>756</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>859</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>active_select_ligne()</slot>
+  <slot>slot2()</slot>
+  <slot>add_doss()</slot>
+  <slot>refreshnbRang()</slot>
+  <slot>calcul_prix()</slot>
+  <slot>refreshnbPlace()</slot>
+  <slot>confirmez_payez()</slot>
+ </slots>
 </ui>

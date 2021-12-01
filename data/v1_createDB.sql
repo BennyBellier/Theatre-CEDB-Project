@@ -86,7 +86,7 @@ create table LesTickets (
 
 -- TODO 1.4 : Créer une vue LesRepresentations ajoutant le nombre de places disponible et d'autres possibles attributs calculés.
 create view [Salle] as
-select nomSpec, dateRep, (500 - count(noTrans)) as nbPlaceDisponibles, count(noTrans) as nbPlacesOccupe
+select nomSpec, dateRep, (20 - count(noTrans)) as nbPlaceDisponibles, count(noTrans) as nbPlacesOccupe
 from LesSpectacles left join LesRepresentations using (noSpec)
 left join LesVentes using (dateRep)
 group by nomSpec, dateRep;
