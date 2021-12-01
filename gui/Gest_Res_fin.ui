@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>page_fin</class>
+ <widget class="QWidget" name="page_fin">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>250</width>
+    <height>140</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Au revoir</string>
+  </property>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>207</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>DOSSIER </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spinBox">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>crée avec succès</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item alignment="Qt::AlignHCenter">
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Fermer</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>page_fin</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>122</x>
+     <y>76</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>124</x>
+     <y>69</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
