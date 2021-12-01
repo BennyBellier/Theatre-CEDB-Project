@@ -33,12 +33,12 @@ Projet d'informatisation d'un système de réservation de spectacle dans un thê
     - [x] Partie 0
       - [x] Génération du projet
       - [x] Vérification code fournie
-    - [ ] Partie 1
+    - [x] Partie 1
       - [x] Réalisation des extensions du code fournie
-      - [ ] Créations des vues (avec attribues calculés + maj interface)
-    - [ ] Partie 2
-      - [ ] Créations nouvelles fenêtres dans l'interface
-      - [ ] Prise en compte des évenements associés à des nouvelles actions
-    - [ ] Partie 3
-      - [ ] Imaginations de nouvelles fonctionnalités de l'applications
+      - [x] Créations des vues (avec attribues calculés + maj interface)
+    - [x] Partie 2
+      - [x] Créations nouvelles fenêtres dans l'interface
+      - [x] Prise en compte des évenements associés à des nouvelles actions
+    - [x] Partie 3
+      - [x] Imaginations de nouvelles fonctionnalités de l'applications
       - [ ] Proposition d'un **Trigger pertinent**

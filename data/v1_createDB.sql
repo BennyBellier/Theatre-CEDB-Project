@@ -1,10 +1,9 @@
 -- FAIS 1.3 : Créer les tables manquantes et modifier celles ci-dessous
 
 create table LesSpectacles (
-    noSpec integer not null,
+    noSpec integer primary key autoincrement not null,
     nomSpec varchar(50) not null,
     prixBaseSpec decimal (6,2) not null,
-    constraint pk_rep_noSpec primary key (noSpec),
     constraint ck_rep_noSpec check (noSpec > 0),
     constraint ck_spec_prixBaseSpec check (prixBaseSpec >= 0)
 );
@@ -13,7 +12,7 @@ create table LesRepresentations (
     dateRep date not null,
     promoRep decimal (4,2) not null,
     noSpec integer not null,
-    constraint pk_rep_dateRep primary key ( dateRep),
+    constraint pk_rep_dateRep primary key (dateRep),
     constraint ck_rep_noSpec check (noSpec > 0), --pas forcement nécessaire puisqu'il doit verifier qu'il est dans LesSpectacles mais au moins erreur plus précise
     constraint ck_rep_promoRep check (promoRep >= 0 and promoRep <=1),
     constraint fk_noSpec foreign key (noSpec)
@@ -62,17 +61,14 @@ create table LesReductions (
     constraint ck_pl_typeP check (typePers in ('ordinaire', 'adhérent', 'étudiant','scolaire', 'militaire', 'sénior'))
 );
 
-create table LesVentes (
-    noTrans integer primary key autoincrement not null ,
+create table LesTickets (
+    noTrans integer primary key autoincrement not null,
     dateTrans date not null,
-    prixTotal decimal (4,2) not null,
     noPlace integer not null,
     noRang integer not null,
     typePers varchar (50) not null,
     noDossier integer,
     dateRep date not null,
---    PRIMARY KEY(id)
-    constraint ck_pl_PrixTot check (prixTotal > 0),
     constraint ck_pl_noP check (noPlace > 0),
     constraint ck_pl_noR check (noRang > 0),
     constraint ck_pl_typeP check (typePers in ('ordinaire', 'adhérent', 'étudiant','scolaire', 'militaire', 'sénior')), --PAS FORCEMENT
@@ -89,16 +85,24 @@ create table LesVentes (
 
 
 -- TODO 1.4 : Créer une vue LesRepresentations ajoutant le nombre de places disponible et d'autres possibles attributs calculés.
-create view Salle as
+create view [Salle] as
 select nomSpec, dateRep, (500 - count(noTrans)) as nbPlaceDisponibles, count(noTrans) as nbPlacesOccupe
 from LesSpectacles left join LesRepresentations using (noSpec)
 left join LesVentes using (dateRep)
 group by nomSpec, dateRep;
+
 -- TODO 1.5 : Créer une vue  avec le noDos et le montant total correspondant.
-create view LesDossiers as
-select noDossier, sum(prixTotal) as prixDossier
-from NumeroDossier join LesVentes using (noDossier)
+create view [LesDossiers] as
+select noDossier, sum(prixTicket) as prixDossier
+from NumeroDossier join [LesVentes] using (noDossier)
 GROUP BY noDossier;
 
+-- Creation de la vue Vente avec le prix du ticket calculer
+create view [LesVentes] as
+SELECT noTrans, dateTrans, noPlace, noRang, typePers, noDossier, dateRep, (prixBaseRep * (1-promoRep) * (1-tarifReduit) * TauxZone) as prixTicket
+FROM LesTickets LEFT JOIN LesRepresentations USING (dateRep)
+LEFT JOIN LesPlaces USING (noplace, norang)
+LEFT JOIN LesReductions USING (typePers)
+LEFT JOIN LesSpectacles USING (noSpec)
 
 -- TODO 3.3 : Ajouter les éléments nécessaires pour créer le trigger (attention, syntaxe SQLite différent qu'Oracle)

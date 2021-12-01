@@ -120,11 +120,11 @@ class AppGestRep(QDialog):
         # Verifications des contraintes pour les nouvelles valeurs
         # Spectacles
         if not self.newNom:
-            self.Creation_Spectacle()
+            self.Creation_Spectacles()
 
         # Date de la Representation
         if self.newDate != self.selectedDate:
-            if self.VerifDateRep(self):
+            if self.VerifDateRep():
                 if self.insertSQL(self.newDate, str(self.newPromo), self.newNoSpec):
                     self.selectedLines = None # deselection des lignes
                     self.refreshResult() # on met à jour la fenetre pour avoir la nouvelle entree d'afficher
@@ -332,7 +332,7 @@ class AppAjoutSpectacle(QDialog):
                 self.data.commit()
                 self.close()
 
-    def alreadyExist():
+    def alreadyExist(self):
         cursor = self.data.cursor()
         cursor.execute("SELECT nomSpec, prixBaseSpec FROM LesSpectacles")
         for item in cursor.fetchall():
