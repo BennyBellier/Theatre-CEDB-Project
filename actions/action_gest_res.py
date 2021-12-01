@@ -16,6 +16,7 @@ class AppGestRes(QDialog):
     add_doss_table = True
     CurrentDossier = 0
     select_ligne = False
+    l_rang = []
 
     # Création d'un signal destiné à être émis lorsque la taFble est modifiée
     changedValue = pyqtSignal()
@@ -97,21 +98,26 @@ class AppGestRes(QDialog):
                 int(date[2]), int(date[1]), int(date[0]), int(time[0]), int(time[1])
             )
         )
-    def refreshnbRang(self):
-        # display.refreshLabel(self.ui.label_erreur_gest_res, "")
-        self.CurrentRow.clear()
+    def init_list_rang(self):
+        self.l_rang = []
         cursor = self.data.cursor()
-        l_tout_rang = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-
-        cursor.execute("SELECT DISTINCT noRang FROM LesVentes "
-                        "GROUP BY noRang, dateRep HAVING dateRep = ? and (25 - count(noPlace)) = 0 ", [self.CurrentTimeEdit.text()])
+        cursor.execute("SELECT DISTINCT noRang FROM LesPlaces ")
         res = cursor.fetchall()
         for item in res:
-            l_tout_rang.remove(item[0])
+            self.l_rang.append(item[0])
 
-        for item in l_tout_rang:
+    def refreshnbRang(self):
+        self.CurrentRow.clear()
+        self.init_list_rang()
+        cursor = self.data.cursor()
+        cursor.execute("SELECT DISTINCT noRang FROM LesTickets "
+                        "GROUP BY noRang, dateRep HAVING dateRep = ? and (5 - count(noPlace)) = 0 ", [self.CurrentTimeEdit.text()])
+        res = cursor.fetchall()
+        for item in res:
+            self.l_rang.remove(item[0])
+        for item in self.l_rang:
             self.CurrentRow.addItem(str(item))
-        # self.refreshnbPlace()
+        self.l_rang = []
 
     def refreshnbPlace(self):
         self.CurrentPlace.clear()
@@ -122,8 +128,13 @@ class AppGestRes(QDialog):
                        [self.ui.CurrentRow.currentText().strip(),
                         self.ui.CurrentRow.currentText().strip(),self.CurrentTimeEdit.text()])
         res = cursor.fetchall()
-        for item in res:
-            self.CurrentPlace.addItem(str(item[0]))
+        if res == []:
+            #CE CAS N'ARRIVE JAMAIS GRACE A LA FCT refreshnbRANG
+            display.refreshLabel(self.ui.label_rang_erreur, "Rang complet ou indisponible")
+        else :
+            display.refreshLabel(self.ui.label_rang_erreur, "")
+            for item in res:
+                self.CurrentPlace.addItem(str(item[0]))
 
     def calcul_possible(self):
         # ICI SEUL LE CAS DU GENRE EST POSSIBLE, le choix des places et des rangs est obligé par l'appli quand on choisi une date.
@@ -156,27 +167,13 @@ class AppGestRes(QDialog):
         cursor = self.data.cursor()
         if self.calcul_possible():
             if self.date_OK():
-                cursor.execute("SELECT prixBaseSpec, promoRep FROM LesSpectacles JOIN LesRepresentations USING(noSpec) WHERE dateRep = ? ",
-                               [self.CurrentTimeEdit.text()])
-                prix_spec_et_promo_rep = cursor.fetchall()
-                if not prix_spec_et_promo_rep:
-                    return
-                prixBaseRep = prix_spec_et_promo_rep[0][0]
-                promo_rep = (prix_spec_et_promo_rep[0][1])
-                if int(self.CurrentRow.currentText().strip()) <= 4:
-                    tauxZone = 1.5
-                elif int(self.CurrentRow.currentText().strip()) >= 16:
-                    tauxZone = 2
-                else:
-                    tauxZone = 1
-                cursor.execute(
-                    "SELECT tarifReduit FROM LesReductions WHERE typePers = ? ",
-                    [self.CurrentGender.currentText().strip()])
-                tarif_reduit = cursor.fetchall()
-                if not tarif_reduit:
-                    return
-                prix = prixBaseRep * (1-promo_rep) * (1-tarif_reduit[0][0]) * tauxZone
-                self.CurrentPrice.setValue(float(prix))
+                prix = cursor.execute("SELECT prixTicket FROM LesVentes WHERE noPlace = ? AND "
+                               "noRang = ? AND typePers = ? AND dateRep = ?  ",
+                    [self.CurrentPlace.currentText().strip(), self.CurrentRow.currentText().strip(),
+                     self.CurrentGender.currentText().strip(), self.CurrentTimeEdit.text()])
+                prix = cursor.fetchall()
+                print(prix)
+                # self.CurrentPrice.setValue(float(prix[0][0]))
         else:
             self.CurrentPrice.setValue(float(0))
 
