@@ -11,19 +11,47 @@ from time import strftime
 
 
 class AppGestRes(QDialog):
+    page_fin_dialog = None
     reponse = False
+    add_doss_table = True
+    CurrentDossier = 0
+
+    # Création d'un signal destiné à être émis lorsque la taFble est modifiée
+    changedValue = pyqtSignal()
 
     def __init__(self, data: sqlite3.Connection):
         super(QDialog, self).__init__()
         self.ui = uic.loadUi("gui/Gest_Res.ui", self)
         self.data = data
-        self.l = []
-        # self.initComboBox()
-        self.refreshResult()
+        self.ouvre_gest_res_window()
 
     # Fonction de mise à joru de l'affichage
     @pyqtSlot()
+    def ouvre_gest_res_window(self):
+        self.l = []
+        # self.initComboBox()
+        print("HELOO")
+        self.get_current_dossier()
+        self.compte_dossier.setValue(self.CurrentDossier)
+        self.initComboBox()
+        self.refreshResult()
+
+
+    def get_current_dossier(self):
+        cursor = self.data.cursor()
+        cursor.execute("SELECT max(noDossier) FROM LesVentes")
+        self.CurrentDossier = cursor.fetchall()[0][0] + 1
+        # print(self.CurrentDossier)
+    def incremente_dossier(self):
+        self.get_current_dossier()
+        if not self.reponse:
+            # numDossier = self.CurrentDossier
+            self.reponse = True
+        else:
+            self.CurrentDossier -= 1
+
     def refreshResult(self):
+        print("COUCOU")
         display.refreshLabel(self.ui.label_table_erreur, "")
         display.refreshLabel(self.ui.label_erreur_gest_res, "")
         try:
@@ -31,9 +59,6 @@ class AppGestRes(QDialog):
             result = cursor.execute(
                 "SELECT nomSpec, DateRep, nbPlaceDisponibles \
               FROM Salle")
-            cursor = self.data.cursor()
-            cursor.execute("SELECT max(noDossier) FROM LesVentes ")
-            self.compte_dossier.setValue(cursor.fetchall()[0][0])
         except Exception as e:
             self.ui.tableGestRes.setRowCount(0)
             display.refreshLabel(
@@ -41,7 +66,7 @@ class AppGestRes(QDialog):
                 "Impossible d'afficher les résultats : " + repr(e),
             )
         else:
-            self.initComboBox()
+
             i = display.refreshGenericData(self.ui.tableGestRes, result)
             if i == 0:
                 display.refreshLabel(
@@ -52,7 +77,6 @@ class AppGestRes(QDialog):
 
     # initialisation du menu deroulant
     def initComboBox(self):
-
         cursor = self.data.cursor()
         cursor.execute("SELECT DISTINCT typePers FROM LesReductions ")
         res = cursor.fetchall()
@@ -104,43 +128,46 @@ class AppGestRes(QDialog):
         res = cursor.fetchall()
         for item in res:
             self.CurrentPlace.addItem(str(item[0]))
-        print("YOO")
 
         #self.calcul_prix()
 
     def calcul_prix(self):
+        cursor = self.data.cursor()
         if self.CurrentRow.currentText().strip() \
                 and self.CurrentPlace.currentText().strip() \
                 and self.CurrentGender.currentText().strip():
-            #if self.CurrentTimeEdit.text()
-            cursor = self.data.cursor()
-            cursor.execute("SELECT prixBaseSpec, promoRep FROM LesSpectacles JOIN LesRepresentations USING(noSpec) WHERE dateRep = ? ",
-                           [self.CurrentTimeEdit.text()])
-            prix_spec_et_promo_rep = cursor.fetchall()
-            if not prix_spec_et_promo_rep:
-                return
-            prixBaseRep = prix_spec_et_promo_rep[0][0]
-            promo_rep = (prix_spec_et_promo_rep[0][1])
+            cursor.execute("SELECT dateRep FROM LesRepresentations")
+            res = cursor.fetchall()
+            for item in res:
+                if item[0] == self.CurrentTimeEdit.text():
 
-            # rang <= 4 -> orchestre donc *1,5
-            # rang >= 16 balcon donc *2
-            if not self.CurrentRow.currentText().strip() :
-                return
-            if int(self.CurrentRow.currentText().strip()) <= 4:
-                tauxZone = 1.5
-            elif int(self.CurrentRow.currentText().strip()) >= 16:
-                tauxZone = 2
-            else:
-                tauxZone = 1
-
-            cursor.execute(
-                "SELECT tarifReduit FROM LesReductions WHERE typePers = ? ",
-                [self.CurrentGender.currentText().strip()])
-            tarif_reduit = cursor.fetchall()
-            if not tarif_reduit:
-                return
-            prix = prixBaseRep * (1-promo_rep) * (1-tarif_reduit[0][0]) * tauxZone
-            self.CurrentPrice.setValue(float(prix))
+                    display.refreshLabel(self.ui.label_date_erreur, "Date correcte")
+                    cursor.execute("SELECT prixBaseSpec, promoRep FROM LesSpectacles JOIN LesRepresentations USING(noSpec) WHERE dateRep = ? ",
+                                   [self.CurrentTimeEdit.text()])
+                    prix_spec_et_promo_rep = cursor.fetchall()
+                    if not prix_spec_et_promo_rep:
+                        return
+                    prixBaseRep = prix_spec_et_promo_rep[0][0]
+                    promo_rep = (prix_spec_et_promo_rep[0][1])
+                    if not self.CurrentRow.currentText().strip() :
+                        return
+                    if int(self.CurrentRow.currentText().strip()) <= 4:
+                        tauxZone = 1.5
+                    elif int(self.CurrentRow.currentText().strip()) >= 16:
+                        tauxZone = 2
+                    else:
+                        tauxZone = 1
+                    cursor.execute(
+                        "SELECT tarifReduit FROM LesReductions WHERE typePers = ? ",
+                        [self.CurrentGender.currentText().strip()])
+                    tarif_reduit = cursor.fetchall()
+                    if not tarif_reduit:
+                        return
+                    prix = prixBaseRep * (1-promo_rep) * (1-tarif_reduit[0][0]) * tauxZone
+                    self.CurrentPrice.setValue(float(prix))
+                    break
+                else:
+                    display.refreshLabel(self.ui.label_date_erreur, "Date incorrecte")
         else:
             self.CurrentPrice.setValue(float(0))
 
@@ -171,27 +198,31 @@ class AppGestRes(QDialog):
         datePreTrans = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
         cursor = self.data.cursor()
         cursor.execute("SELECT max(noDossier) FROM LesVentes ")
-        numDossier = cursor.fetchall()[0][0]
-        if not self.reponse:
-            numDossier += 1
-            self.reponse = True
+        self.incremente_dossier()
+        numDossier = self.CurrentDossier
         #PEUT ETRE INUTILE
         # l_doss = []
         # l_doss.append((datePreTrans, PrixPlace, noPlace, noRang, typePers, numDossier, dateRep))
         try :
+            if self.add_doss_table:
+                cursor.execute("INSERT INTO NumeroDossier (noDossier) VALUES (?)",[numDossier])
+                self.add_doss_table = False
+                self.data.commit()
             cursor.execute("INSERT INTO LesVentes (dateTrans, prixTotal, noPlace, noRang, typePers, noDossier, dateRep)"
                            "VALUES (?, ?, ?, ?, ?, ?, ?)",
                            [datePreTrans, PrixPlace, noPlace, noRang, typePers, numDossier, dateRep])
             self.data.commit()
+            # On émet le signal indiquant la modification de la table
+            self.changedValue.emit()
         except Exception as e:
-            #NE DEVRAIT PAS ARRIVER
             display.refreshLabel(
                 self.ui.label_erreur_gest_res,
                 "Impossible d'achetez ce ticket. ",
             )
+            print(repr(e))
         else:
             self.l.append((datePreTrans, PrixPlace, noPlace, noRang, typePers, numDossier, dateRep))
-            print(self.l)
+            # print(self.l)
             cursor = self.data.cursor()
             result = cursor.execute("SELECT noTrans, noRang, noPlace, typePers "
                                     "FROM LesVentes WHERE noDossier = ?",
@@ -199,6 +230,56 @@ class AppGestRes(QDialog):
             i = display.refreshGenericData(self.ui.table_currentDoss, result)
             if i == 0:
                 display.refreshLabel(self.ui.erreur_gest_res, "Aucun ajout dans le dossier")
+            self.refreshResult()
+    def confirmez_payez(self):
+        # print(self.ui.compte_dossier.value()) == print(self.CurrentDossier) C'est vrai
+        if self.l:
+            try:
+                cursor = self.data.cursor()
+                cursor.execute("SELECT prixDossier FROM [LesDossiers] WHERE noDossier = ?", [(self.CurrentDossier)])
+                res = cursor.fetchall()
+                #PRIX TOTAL = print(round(res[0][0],2))
+            except Exception as e:
+                display.refreshLabel(
+                    self.ui.label_erreur_gest_res,
+                    "Impossible de créer ce dossier : " + repr(e),
+                )
+            else:
+                self.ouvrir_msg_fin()
+
+    def ouvrir_msg_fin(self):
+        if self.page_fin_dialog is not None:
+            self.page_fin_dialog.close()
+        self.page_fin_dialog = App_Msg_fin(self.data, self.CurrentDossier)
+        self.page_fin_dialog.show()
+
+    def closeEvent(self, event):
+
+        # On ferme les éventuelles fenêtres encore ouvertes
+        if self.page_fin_dialog is not None:
+            self.page_fin_dialog.close()
+        # On laisse l'évènement de clôture se terminer normalement
+        event.accept()
+
+class App_Msg_fin(QDialog):
+
+    def __init__(self, data:sqlite3.Connection, CurrentDossier):
+        super(QDialog, self).__init__()
+        self.ui = uic.loadUi("gui/Gest_Res_fin.ui", self)
+        self.spinBox.setValue(CurrentDossier)
+        self.data = data
+
+
+    # def maj_view(self):
+    #     cursor = self.data.cursor()
+    #     cursor.execute("DROP VIEW IF EXISTS [LesDossiers]")
+    #     cursor.execute(
+    #         "CREATE VIEW [LesDossiers] AS "
+    #         "select noDossier, sum(prixTotal) as prixDossier "
+    #         "from NumeroDossier join LesVentes using (noDossier) "
+    #         "GROUP BY noDossier"
+    #     )
+    #     self.data.commit()
 
 #     # en cas de clic sur le bouton ajouter
 #     def addRep(self):

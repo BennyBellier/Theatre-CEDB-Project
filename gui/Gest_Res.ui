@@ -98,6 +98,9 @@
           <property name="text">
            <string/>
           </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
        </layout>
@@ -724,6 +727,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_confirmez</sender>
+   <signal>clicked()</signal>
+   <receiver>GestRes</receiver>
+   <slot>confirmez_payez()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>668</x>
+     <y>418</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>529</x>
+     <y>256</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_confirmez</sender>
+   <signal>clicked()</signal>
+   <receiver>GestRes</receiver>
+   <slot>ouvrir_msg_fin()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>668</x>
+     <y>418</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>529</x>
+     <y>256</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>selectedLine()</slot>
@@ -733,5 +768,7 @@
   <slot>calcul_prix()</slot>
   <slot>add_doss()</slot>
   <slot>refreshResult()</slot>
+  <slot>confirmez_payez()</slot>
+  <slot>ouvrir_msg_fin()</slot>
  </slots>
 </ui>
