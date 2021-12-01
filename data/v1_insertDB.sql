@@ -19,7 +19,7 @@ insert into LesSpectacles(nomSpec, prixBaseSpec) values ('Laura Laune', 8.45);
 -- Recuperation des valeurs de la BD V0
 insert into LesRepresentations(dateRep, promoRep, noSpec)
 WITH noSpecParNomSpec AS (SELECT nomspec, nospec FROM LesSpectacles)
-SELECT daterep, promorep, S.nospec
+SELECT daterep, (1-promorep), S.nospec
 FROM V0_Lesrepresentations JOIN noSpecParNomSPec S USING (nomspec);
 
 -- insert into LesZones (noZone, catZone) values (1, 'orchestre');
@@ -52,40 +52,30 @@ insert into NumeroDossier (noDossier) values (4);
 insert into NumeroDossier (noDossier) values (5);
 insert into NumeroDossier (noDossier) values (6);
 
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 16:45:15', 14, 1, 'adhérent', 1, '24/12/2019 17:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 16:45:15', 13, 1, 'sénior', 1, '24/12/2019 17:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 16:50:23', 10, 6, 'ordinaire', 2, '24/12/2019 17:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 1, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 2, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 3, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 4, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 5, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 6, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 7, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 8, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 9, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 10, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 11, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 12, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 13, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 14, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 15, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 16, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 17, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 18, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 19, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 20, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 21, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 22, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 23, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 24, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 25, 7, 'scolaire', 3, '24/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('25/12/2019 19:55:10', 12, 20, 'militaire', 4, '25/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('25/12/2019 19:55:10', 13, 20, 'ordinaire', 4, '25/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('21/12/2019 19:45:36', 9, 2, 'sénior', 5, '21/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('21/12/2019 19:45:36', 10, 2, 'sénior', 5, '21/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('21/12/2019 19:57:24', 17, 1, 'étudiant', 6, '21/12/2019 20:00');
-insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('21/12/2019 19:57:24', 18, 1, 'étudiant', 6, '21/12/2019 20:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 16:45:15', 1, 1, 'adhérent', 1, '24/12/2019 17:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 16:45:15', 2, 1, 'sénior', 1, '24/12/2019 17:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 16:50:23', 1, 2, 'ordinaire', 2, '24/12/2019 17:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 1, 1, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 2, 1, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 1, 2, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 2, 2, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 3, 1, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 3, 2, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 4, 1, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 4, 2, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 5, 1, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 5, 2, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 1, 3, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 2, 3, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 3, 3, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 4, 3, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('24/12/2019 19:40:52', 5, 3, 'scolaire', 3, '24/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('25/12/2019 19:55:10', 1, 2, 'militaire', 4, '25/12/2019 20:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('25/12/2019 19:55:10', 3, 3, 'ordinaire', 4, '25/12/2019 20:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('21/12/2019 19:45:36', 4, 4, 'sénior', 5, '26/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('21/12/2019 19:45:36', 3, 1, 'sénior', 5, '26/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('21/12/2019 19:57:24', 2, 1, 'étudiant', 6, '26/12/2019 21:00');
+insert into LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep) values ('21/12/2019 19:57:24', 5, 4, 'étudiant', 6, '26/12/2019 21:00');
 
 -- Recuperation des valeurs de la BD V0
 -- insert into LesVentes(

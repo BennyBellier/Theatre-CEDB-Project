@@ -99,7 +99,7 @@ GROUP BY noDossier;
 
 -- Creation de la vue Vente avec le prix du ticket calculer
 create view [LesVentes] as
-SELECT noTrans, dateTrans, noPlace, noRang, typePers, noDossier, dateRep, (prixBaseSpec * (1-promoRep) * (1-tarifReduit) * tauxZone) as prixTicket
+SELECT noTrans, dateTrans, noPlace, noRang, typePers, noDossier, dateRep, (prixBaseSpec * (1-promoRep) * (1-tarifReduit) * tauxZone) AS prixTicket
 FROM LesTickets LEFT JOIN LesRepresentations USING (dateRep)
 LEFT JOIN LesPlaces USING (noplace, norang)
 LEFT JOIN LesZones USING (noZone)
