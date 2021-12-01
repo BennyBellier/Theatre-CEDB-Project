@@ -532,19 +532,6 @@
             </widget>
            </item>
            <item>
-            <spacer name="verticalSpacer_14">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
             <widget class="QLabel" name="label_11">
              <property name="text">
               <string/>
@@ -578,14 +565,21 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_ajouter">
+            <widget class="QPushButton" name="ajouter">
              <property name="text">
               <string>Ajouter</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_confirmez">
+            <widget class="QPushButton" name="supprimer">
+             <property name="text">
+              <string>Supprimez</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="confirmez">
              <property name="text">
               <string>Confirmez et Payez</string>
              </property>
@@ -837,7 +831,7 @@
    <sender>tableGestRes</sender>
    <signal>pressed(QModelIndex)</signal>
    <receiver>GestRes</receiver>
-   <slot>active_select_ligne()</slot>
+   <slot>active_select_ligne_date()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>343</x>
@@ -850,7 +844,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_confirmez</sender>
+   <sender>confirmez</sender>
    <signal>clicked()</signal>
    <receiver>GestRes</receiver>
    <slot>confirmez_payez()</slot>
@@ -866,7 +860,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_ajouter</sender>
+   <sender>ajouter</sender>
    <signal>clicked()</signal>
    <receiver>GestRes</receiver>
    <slot>add_doss()</slot>
@@ -993,14 +987,63 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>supprimer</sender>
+   <signal>clicked()</signal>
+   <receiver>GestRes</receiver>
+   <slot>supp_doss()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>973</x>
+     <y>660</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>859</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>table_currentDoss</sender>
+   <signal>pressed(QModelIndex)</signal>
+   <receiver>GestRes</receiver>
+   <slot>active_select_supp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1375</x>
+     <y>363</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>859</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>confirmez</sender>
+   <signal>clicked()</signal>
+   <receiver>GestRes</receiver>
+   <slot>update()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>973</x>
+     <y>689</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>859</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>active_select_ligne()</slot>
-  <slot>slot2()</slot>
+  <slot>active_select_ligne_date()</slot>
+  <slot>supp_doss()</slot>
   <slot>add_doss()</slot>
   <slot>refreshnbRang()</slot>
   <slot>calcul_prix()</slot>
   <slot>refreshnbPlace()</slot>
   <slot>confirmez_payez()</slot>
+  <slot>active_select_supp()</slot>
  </slots>
 </ui>

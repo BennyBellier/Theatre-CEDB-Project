@@ -15,7 +15,10 @@ class AppGestRes(QDialog):
     reponse = False
     add_doss_table = True
     CurrentDossier = 0
-    select_ligne = False
+    select_ligne_date = False
+    select_ligne_supp = False
+    #selectedLines = None
+    l_supp = []
     l_rang = []
     prixBaseRep = 0
     promo_rep = 0
@@ -32,7 +35,7 @@ class AppGestRes(QDialog):
         self.initComboBox()
         self.ouvre_gest_res_window()
 
-###VERIFICATION :
+    ###VERIFICATION :
     def calcul_possible(self):
         # ICI SEUL LE CAS DU GENRE EST POSSIBLE, le choix des places et des rangs est obligé par l'appli quand on choisi une date.
         if not self.CurrentRow.currentText().strip():
@@ -65,7 +68,7 @@ class AppGestRes(QDialog):
             return False
         return True
 
-### INITIALISATION DE VALEURS
+    ### INITIALISATION DE VALEURS
 
     def initComboBox(self):
         cursor = self.data.cursor()
@@ -143,7 +146,7 @@ class AppGestRes(QDialog):
         self.data.commit()
         self.changedValue.emit()
 
-#FONCTION PERMETTANT DE LE FONCTIONNEMENT DE L'APPLICATION
+    # FONCTION PERMETTANT DE LE FONCTIONNEMENT DE L'APPLICATION
 
     def ouvre_gest_res_window(self):
         self.l = []
@@ -171,17 +174,15 @@ class AppGestRes(QDialog):
             if i == 0:
                 display.refreshLabel(self.ui.label_table_erreur, "Aucune représentation n'est programmé")
 
-
-
     # Fonction potentiellement inutile mais permet de mieux comprendre
-    def active_select_ligne(self):
-        self.select_ligne = True
+    def active_select_ligne_date(self):
+        self.select_ligne_date = True
         self.Refresh_date()
 
     def Refresh_date(self):
-        if self.select_ligne:
+        if self.select_ligne_date:
             self.selectedLine()
-            self.select_ligne = False
+            self.select_ligne_date = False
 
     def selectedLine(self):
         # display.refreshLabel(self.ui.label_erreur_gest_res, "")
@@ -229,8 +230,6 @@ class AppGestRes(QDialog):
         else:
             self.CurrentPrice.setValue(float(0))
 
-
-
     def doss_exist(self, numDossier):
         cursor = self.data.cursor()
         try:
@@ -265,16 +264,55 @@ class AppGestRes(QDialog):
             self.data.commit()
             self.changedValue.emit()
             self.l.append((datePreTrans, noPlace, noRang, typePers, numDossier, dateRep))
-            result = cursor.execute("SELECT noTrans, noRang, noPlace, typePers "
-                                    "FROM LesVentes WHERE noDossier = ?",
-                                    [numDossier])
-            i = display.refreshGenericData(self.ui.table_currentDoss, result)
-            if i == 0:
-                display.refreshLabel(self.ui.erreur_gest_res, "Aucun ajout dans le dossier")
+            self.table_doss(numDossier)
             self.refreshnbRang()
             # RAFRAICHIR A GAUCHE :
             self.fenetre_representation()
             self.prix_total_doss.setValue(self.renvoi_prix_dossier())
+
+    def table_doss(self, numDoss):
+        print(numDoss)
+        cursor = self.data.cursor()
+        result = cursor.execute("SELECT noTrans, noRang, noPlace, typePers "
+                                "FROM LesVentes WHERE noDossier = %d" %numDoss)
+        i = display.refreshGenericData(self.ui.table_currentDoss, result)
+        if i == 0:
+            display.refreshLabel(self.ui.label_erreur_gest_res, "")
+
+    def supp_doss(self):
+        cursor = self.data.cursor()
+        if self.select_ligne_supp :
+            print(self.selectednoTrans)
+            self.select_ligne_supp = False
+            try:
+                cursor.execute("DELETE FROM LesTickets "
+                               "WHERE noTrans = ?", [self.selectednoTrans])
+            except Exception as e:
+                display.refreshLabel(self.ui.label_erreur_gest_res, "Impossible de supprimer " + repr(e))
+            else:
+                self.data.commit()
+                self.changedValue.emit()
+                self.table_doss(self.ui.compte_dossier.value())
+        else :
+            display.refreshLabel(self.ui.label_erreur_gest_res, "Selectionnez un ticket a supprimer ")
+
+
+
+    def active_select_supp(self):
+        self.select_ligne_supp = True
+        self.selectedLines = sorted(
+            set(
+                index.row()
+                for index in self.ui.table_currentDoss.selectionModel().selectedIndexes()
+            )
+        )
+        self.selectednoTrans = self.ui.table_currentDoss.item(self.selectedLines[0], 0).text()
+        #ICI REUSSIR A RECUPERER PLUSIEUR NO TRANS DANS UNE LISTE
+        # if len(self.selectedLines) > 0:
+        # for i in range(len(self.selectedLines)):
+        #     self.l_supp.append(self.ui.table_currentDoss.item(self.selectedLines[i], 0).text())
+        #
+        # print(self.l_supp)
 
     def confirmez_payez(self):
         if self.l:
@@ -288,7 +326,8 @@ class AppGestRes(QDialog):
             else:
                 self.update_date_transac()
                 self.l = []
-                self.ui.table_currentDoss.clear()
+                self.table_doss(self.ui.compte_dossier.value()+ 1)
+                # self.ui.table_currentDoss.clear()
                 self.ouvre_gest_res_window()
         else:
             display.refreshLabel(
