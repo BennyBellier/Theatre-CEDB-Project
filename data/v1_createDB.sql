@@ -93,7 +93,7 @@ group by nomSpec, dateRep;
 
 -- TODO 1.5 : Créer une vue  avec le noDos et le montant total correspondant.
 create view [LesDossiers] as
-select noDossier, sum(prixTicket) as prixDossier
+select noDossier, count(noTrans) as nbTicket, sum(prixTicket) as prixDossier
 from NumeroDossier join [LesVentes] using (noDossier)
 GROUP BY noDossier;
 

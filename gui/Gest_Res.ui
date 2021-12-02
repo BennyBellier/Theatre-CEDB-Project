@@ -417,6 +417,19 @@
             </spacer>
            </item>
            <item>
+            <spacer name="verticalSpacer_19">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <widget class="QLabel" name="label_date_erreur">
              <property name="text">
               <string/>
@@ -453,6 +466,19 @@
             </spacer>
            </item>
            <item>
+            <spacer name="verticalSpacer_25">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <widget class="QLabel" name="label_rang_erreur">
              <property name="text">
               <string/>
@@ -464,6 +490,19 @@
            </item>
            <item>
             <spacer name="verticalSpacer_24">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_14">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
@@ -525,6 +564,19 @@
             </spacer>
            </item>
            <item>
+            <spacer name="verticalSpacer_26">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <widget class="QLabel" name="label_genre_erreur">
              <property name="text">
               <string/>
@@ -535,7 +587,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_11">
+            <widget class="QLabel" name="label_espace">
              <property name="text">
               <string/>
              </property>
@@ -577,7 +629,14 @@
            <item>
             <widget class="QPushButton" name="supprimer">
              <property name="text">
-              <string>Supprimez</string>
+              <string>Supprimer</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="tout_supprimer">
+             <property name="text">
+              <string>Tout supprimer</string>
              </property>
             </widget>
            </item>
@@ -983,7 +1042,7 @@
    <sender>CloseButton</sender>
    <signal>clicked()</signal>
    <receiver>GestRes</receiver>
-   <slot>close()</slot>
+   <slot>fermer_OK()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>859</x>
@@ -1043,6 +1102,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tout_supprimer</sender>
+   <signal>clicked()</signal>
+   <receiver>GestRes</receiver>
+   <slot>all_supp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>973</x>
+     <y>660</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>859</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>active_select_ligne_date()</slot>
@@ -1053,5 +1128,8 @@
   <slot>refreshnbPlace()</slot>
   <slot>confirmez_payez()</slot>
   <slot>active_select_supp()</slot>
+  <slot>slot1()</slot>
+  <slot>fermer_OK()</slot>
+  <slot>all_supp()</slot>
  </slots>
 </ui>

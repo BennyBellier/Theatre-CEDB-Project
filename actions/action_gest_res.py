@@ -34,6 +34,7 @@ class AppGestRes(QDialog):
         self.ui = uic.loadUi("gui/Gest_Res.ui", self)
         self.data = data
         self.initComboBox()
+        self.initTimeDate()
         self.ouvre_gest_res_window()
 
     ###VERIFICATION :
@@ -74,7 +75,53 @@ class AppGestRes(QDialog):
             return False
         return True
 
+    def active_select_supp(self):
+        self.l_supp = []
+        self.select_ligne_supp = True
+        self.selectedLines = sorted(
+            set(
+                index.row()
+                for index in self.ui.table_currentDoss.selectionModel().selectedIndexes()
+            )
+        )
+        for item in self.selectedLines:
+            self.l_supp.append(self.ui.table_currentDoss.item(item, 0).text())
+
+    def supp_liste_dossier(self):
+        #EN FAISANT ça ON A UN PB SI PLUSIEURS PLACES ACHETEZ A LA MEME SECONDE, sleep() rajouter dans add_doss
+        for k in self.l_supp:
+            i = 0
+            while i < (len(self.l)):
+                if self.l[i][0] == int(k):
+                    self.l.remove(self.l[i])
+                    break
+                i+=1
+
+    def active_select_ligne_date(self):
+        self.select_ligne_date = True
+        self.Refresh_date()
+
+    def Refresh_date(self):
+        if self.select_ligne_date:
+            self.selectedLine()
+            self.select_ligne_date = False
+
+    def fermer_OK(self):
+        if self.table_doss(self.ui.compte_dossier.value()):
+            display.refreshLabel(self.ui.label_erreur_gest_res, "Veuillez supprimez tous les tickets avant de fermer")
+        else:
+            self.close()
+
     ### INITIALISATION DE VALEURS
+    def initTimeDate(self):
+        datetime_object = str(datetime.now())
+        date = datetime_object.split(" ")[0].split("-")
+        time = datetime_object.split(" ")[1].split(":")
+        self.CurrentTimeEdit.setDateTime(
+            datetime(
+                int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1])
+            )
+        )
 
     def initComboBox(self):
         cursor = self.data.cursor()
@@ -100,20 +147,6 @@ class AppGestRes(QDialog):
         res = cursor.fetchall()
         for item in res:
             self.l_rang.append(item[0])
-
-    def refreshnbRang(self):
-        self.CurrentRow.clear()
-        self.init_list_rang()
-        cursor = self.data.cursor()
-        cursor.execute("SELECT DISTINCT noRang FROM LesTickets "
-                       "GROUP BY noRang, dateRep HAVING dateRep = ? and (5 - count(noPlace)) = 0 ",
-                       [self.CurrentTimeEdit.text()])
-        res = cursor.fetchall()
-        for item in res:
-            self.l_rang.remove(item[0])
-        for item in self.l_rang:
-            self.CurrentRow.addItem(str(item))
-        self.l_rang = []
 
     def init_prix_spec_promo_rep(self):
         cursor = self.data.cursor()
@@ -164,17 +197,38 @@ class AppGestRes(QDialog):
             self.data.commit()
             self.changedValue.emit()
 
+    def selectedLine(self):
+        # display.refreshLabel(self.ui.label_erreur_gest_res, "")
+        self.selectedLines = sorted(
+            set(
+                index.row()
+                for index in self.ui.tableGestRes.selectionModel().selectedIndexes()
+            )
+        )
+
+        self.selectedDate = self.ui.tableGestRes.item(self.selectedLines[0], 1).text()
+        try:
+            timedate = self.selectedDate.split(" ")
+            date = timedate[0].split("/")
+            time = timedate[1].split(":")
+            self.CurrentTimeEdit.setDateTime(
+                datetime(
+                    int(date[2]), int(date[1]), int(date[0]), int(time[0]), int(time[1])
+                )
+            )
+        except Exception as e:
+            display.refreshLabel(self.ui.label_table_erreur, "Impossible de sélectionner cette représentation")
+        else:
+            display.refreshLabel(self.ui.label_table_erreur, "")
+
     # FONCTION PERMETTANT DE LE FONCTIONNEMENT DE L'APPLICATION
 
     def ouvre_gest_res_window(self):
         self.l = []
-        # Initialise le compteur avec le dossier suivant:
         self.init_dossier_courant()
         self.compte_dossier.setValue(self.CurrentDossier)
         self.prix_total_doss.setValue(0)
         self.fenetre_representation()
-
-        # self.refreshResult()
 
     def fenetre_representation(self):
         display.refreshLabel(self.ui.label_table_erreur, "")
@@ -192,38 +246,19 @@ class AppGestRes(QDialog):
             if i == 0:
                 display.refreshLabel(self.ui.label_table_erreur, "Aucune représentation n'est programmé")
 
-    # Fonction potentiellement inutile mais permet de mieux comprendre
-    def active_select_ligne_date(self):
-        self.select_ligne_date = True
-        self.Refresh_date()
-
-    def Refresh_date(self):
-        if self.select_ligne_date:
-            self.selectedLine()
-            self.select_ligne_date = False
-
-    def selectedLine(self):
-        # display.refreshLabel(self.ui.label_erreur_gest_res, "")
-        self.selectedLines = sorted(
-            set(
-                index.row()
-                for index in self.ui.tableGestRes.selectionModel().selectedIndexes()
-            )
-        )
-        self.selectedDate = self.ui.tableGestRes.item(self.selectedLines[0], 1).text()
-        try:
-            timedate = self.selectedDate.split(" ")
-            date = timedate[0].split("/")
-            time = timedate[1].split(":")
-            self.CurrentTimeEdit.setDateTime(
-                datetime(
-                    int(date[2]), int(date[1]), int(date[0]), int(time[0]), int(time[1])
-                )
-            )
-        except Exception as e:
-            display.refreshLabel(self.ui.label_table_erreur, "Impossible de sélectionner cette représentation")
-        else:
-            display.refreshLabel(self.ui.label_table_erreur, "")
+    def refreshnbRang(self):
+        self.CurrentRow.clear()
+        self.init_list_rang()
+        cursor = self.data.cursor()
+        cursor.execute("SELECT DISTINCT noRang FROM LesTickets "
+                       "GROUP BY noRang, dateRep HAVING dateRep = ? and (5 - count(noPlace)) = 0 ",
+                       [self.CurrentTimeEdit.text()])
+        res = cursor.fetchall()
+        for item in res:
+            self.l_rang.remove(item[0])
+        for item in self.l_rang:
+            self.CurrentRow.addItem(str(item))
+        self.l_rang = []
 
     def refreshnbPlace(self):
         self.CurrentPlace.clear()
@@ -235,7 +270,6 @@ class AppGestRes(QDialog):
                         self.ui.CurrentRow.currentText().strip(), self.CurrentTimeEdit.text()])
         res = cursor.fetchall()
         if res == []:
-            # CE CAS N'ARRIVE JAMAIS GRACE A LA FCT refreshnbRANG
             display.refreshLabel(self.ui.label_rang_erreur, "Rang complet ou indisponible")
         else:
             display.refreshLabel(self.ui.label_rang_erreur, "")
@@ -247,9 +281,13 @@ class AppGestRes(QDialog):
         result = cursor.execute("SELECT noTrans, dateRep, noRang, noPlace, typePers "
                                 "FROM LesVentes WHERE noDossier = %d" %numDoss)
         i = display.refreshGenericData(self.ui.table_currentDoss, result)
-        if i == 0:
-            display.refreshLabel(self.ui.label_erreur_gest_res, "")
         self.prix_total_doss.setValue(self.renvoi_prix_dossier())
+        if i == 0:
+            self.l = []
+            display.refreshLabel(self.ui.label_erreur_gest_res, "")
+            return False
+        else:
+            return True
 
     def calcul_prix(self):
         cursor = self.data.cursor()
@@ -262,16 +300,14 @@ class AppGestRes(QDialog):
         else:
             self.CurrentPrice.setValue(float(0))
 
-
+     #AJOUT/SUPPRESSION/CONFIRMATION
 
     def add_doss(self):
-        # time.sleep(1)
         cursor = self.data.cursor()
         if not self.ajout_possible():
             display.refreshLabel(self.ui.label_erreur_gest_res, "Veuillez remplir tous les champs correctement")
             return
         noRang, noPlace, typePers, datePreTrans, numDossier, dateRep = self.recup_donne()
-        # PEUT ETRE INUTILE
         try:
             self.doss_exist(numDossier)
             cursor.execute("INSERT INTO LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep)"
@@ -286,38 +322,9 @@ class AppGestRes(QDialog):
             cursor.execute("SELECT noTrans FROM LesTickets WHERE dateTrans = ?", [datePreTrans])
             res = cursor.fetchall()
             self.l.append((res[0][0],datePreTrans, noPlace, noRang, typePers, numDossier, dateRep))
-
-            print("AJOUT: ",  self.l)
             self.refreshnbRang()
-            # RAFRAICHIR A GAUCHE :
             self.fenetre_representation()
             self.table_doss(numDossier)
-
-
-
-
-    def supp_liste_dossier(self):
-        #EN FAISANT ça ON A UN PB SI PLUSIEURS PLACES ACHETEZ A LA MEME SECONDE, sleep() rajouter dans add_doss
-        for i in range(len(self.l)):
-            if self.l[i][0] == int(self.selectednoTrans):
-                self.l.remove(self.l[i])
-
-
-    def active_select_supp(self):
-        self.l_supp = []
-        self.select_ligne_supp = True
-        self.selectedLines = sorted(
-            set(
-                index.row()
-                for index in self.ui.table_currentDoss.selectionModel().selectedIndexes()
-            )
-        )
-
-        #ICI REUSSIR A RECUPERER PLUSIEUR NO TRANS DANS UNE LISTE
-        for item in self.selectedLines:
-            self.l_supp.append(self.ui.table_currentDoss.item(item, 0).text())
-        self.selectednoTrans = self.l_supp[0]
-        # print(self.l_supp)
 
 
     def supp_doss(self):
@@ -325,8 +332,9 @@ class AppGestRes(QDialog):
         if self.select_ligne_supp :
             self.select_ligne_supp = False
             try:
-                cursor.execute("DELETE FROM LesTickets "
-                               "WHERE noTrans = ?", [self.selectednoTrans])
+                for item in self.l_supp:
+                    cursor.execute("DELETE FROM LesTickets "
+                               "WHERE noTrans = ?", [item])
             except Exception as e:
                 display.refreshLabel(self.ui.label_erreur_gest_res, "Impossible de supprimer " + repr(e))
             else:
@@ -336,14 +344,29 @@ class AppGestRes(QDialog):
                 self.fenetre_representation()
                 self.refreshnbRang()
                 self.table_doss(self.ui.compte_dossier.value())
-                print("SUPPR: ", self.l)
         else:
             if self.l:
                 display.refreshLabel(self.ui.label_erreur_gest_res, "Selectionnez un ticket a supprimer. ")
             else:
                 display.refreshLabel(self.ui.label_erreur_gest_res, "Ajoutez dabord un ticket. ")
 
-
+    def all_supp(self):
+        cursor = self.data.cursor()
+        try:
+            cursor.execute("SELECT nbTicket FROM [LesDossiers] "
+                           "WHERE noDossier = ?", [self.ui.compte_dossier.value()])
+            nbTicket = cursor.fetchall()[0][0]
+        except Exception as e:
+            display.refreshLabel(self.ui.label_erreur_gest_res, "Rien a supprimer ")
+        else:
+            for i in range(nbTicket):
+                cursor.execute("DELETE FROM LesTickets "
+                           "WHERE noDossier = ? ", [self.ui.compte_dossier.value()])
+            self.data.commit()
+            self.changedValue.emit()
+            self.fenetre_representation()
+            self.refreshnbRang()
+            self.table_doss(self.ui.compte_dossier.value())
 
 
     def confirmez_payez(self):
@@ -353,20 +376,15 @@ class AppGestRes(QDialog):
                 cursor.execute("SELECT prixDossier FROM [LesDossiers] WHERE noDossier = ?", [(self.CurrentDossier)])
             except Exception as e:
                 display.refreshLabel(
-                    self.ui.label_erreur_gest_res,
-                    "Impossible de créer ce dossier : " + repr(e))
+                    self.ui.label_erreur_gest_res,"Impossible de créer ce dossier : " + repr(e))
             else:
                 self.update_date_transac()
                 self.l = []
                 self.table_doss(self.ui.compte_dossier.value()+ 1)
-                # self.ui.table_currentDoss.clear()
                 self.ouvre_gest_res_window()
         else:
             display.refreshLabel(
-                self.ui.label_erreur_gest_res,
-                "Achetez au moins une place.")
-
-    # def fermer_OK(self):
+                self.ui.label_erreur_gest_res,"Achetez au moins une place.")
 
 #     def closeEvent(self, event):
 #
