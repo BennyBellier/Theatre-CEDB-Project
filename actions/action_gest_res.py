@@ -18,14 +18,8 @@ class AppGestRes(QDialog):
     CurrentDossier = 0
     select_ligne_date = False
     select_ligne_supp = False
-    #selectedLines = None
     l_supp = []
     l_rang = []
-    prixBaseRep = 0
-    promo_rep = 0
-    tauxZone = 0
-    tarif_reduit = 0
-
     # Création d'un signal destiné à être émis lorsque la taFble est modifiée
     changedValue = pyqtSignal()
 
@@ -154,23 +148,24 @@ class AppGestRes(QDialog):
                        "JOIN LesRepresentations USING(noSpec) WHERE dateRep = ? ",
                        [self.CurrentTimeEdit.text()])
         prix_spec_et_promo_rep = cursor.fetchall()
-        self.prixBaseRep = prix_spec_et_promo_rep[0][0]
+        return prix_spec_et_promo_rep[0][0], (prix_spec_et_promo_rep[0][1])
 
-        self.promo_rep = (prix_spec_et_promo_rep[0][1])
+
 
     def init_tarif_reduit_taux_zone(self):
         cursor = self.data.cursor()
-        if int(self.CurrentRow.currentText().strip()) == 3:
-            self.tauxZone = 1.5
-        elif int(self.CurrentRow.currentText().strip()) == 4:
-            self.tauxZone = 2
-        else:
-            self.tauxZone = 1
         cursor.execute(
             "SELECT tarifReduit FROM LesReductions WHERE typePers = ? ",
             [self.CurrentGender.currentText().strip()])
         res = cursor.fetchall()
-        self.tarif_reduit = res[0][0]
+        tarif_reduit = res[0][0]
+        if int(self.CurrentRow.currentText().strip()) == 3:
+            return 1.5, tarif_reduit
+        elif int(self.CurrentRow.currentText().strip()) == 4:
+            return 2, tarif_reduit
+        else:
+            return 1, tarif_reduit
+
 
     def renvoi_prix_dossier(self):
         cursor = self.data.cursor()
@@ -293,9 +288,10 @@ class AppGestRes(QDialog):
         cursor = self.data.cursor()
         if self.calcul_possible():
             if self.date_OK():
-                self.init_prix_spec_promo_rep()
+                prixbaserep, promo_rep = self.init_prix_spec_promo_rep()
+                tauxZone, tarif_reduit = self.init_tarif_reduit_taux_zone()
                 self.init_tarif_reduit_taux_zone()
-                prix = self.prixBaseRep * (1 - self.promo_rep) * (1 - self.tarif_reduit) * self.tauxZone
+                prix = prixbaserep * (1 - promo_rep) * (1 - tarif_reduit) * tauxZone
                 self.CurrentPrice.setValue(float(prix))
         else:
             self.CurrentPrice.setValue(float(0))
