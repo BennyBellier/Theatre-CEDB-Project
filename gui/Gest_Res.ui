@@ -87,7 +87,7 @@
          </column>
          <column>
           <property name="text">
-           <string>Places vide</string>
+           <string>Nombres de places dispos</string>
           </property>
          </column>
         </widget>
@@ -102,6 +102,9 @@
          </property>
          <property name="text">
           <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -684,7 +687,12 @@
          </attribute>
          <column>
           <property name="text">
-           <string>NoTrans</string>
+           <string>N°Trans</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Date Représentation</string>
           </property>
          </column>
          <column>
