@@ -17,12 +17,6 @@ class AppGestRep(QDialog):
     fct_verif_supp_dialog = None
     fct_ajout_spectacle_dialog = None
 
-    # valeur pour effectuer le Ctrl + z
-    ancientNom = ""
-    ancientDate = ""
-    ancientPrix = 0
-    ancientPromo = 0
-
     # On initialise la selection des lignes pour affiche une erreur si aucune ligne n'est slectionner
     selectedLines = None
 
@@ -35,7 +29,7 @@ class AppGestRep(QDialog):
         self.data = data
         self.refreshResult()
 
-    # Fonction de mise à joru de l'affichage
+    # Fonction de mise à jour de l'affichage
     @pyqtSlot()
     def refreshResult(self):
         try:
@@ -133,33 +127,39 @@ class AppGestRep(QDialog):
         # Verifications des contraintes pour les nouvelles valeurs
         # Spectacles
         if not self.newNom:
-            self.Creation_Spectacles()
+            self.insertSpectacle = False
+            self.newNom = self.Creation_Spectacles()
+        else:
+            self.insertSpectacle = True
 
-        # Date de la Representation
-        if self.newDate != self.selectedDate:
-            if self.VerifDateRep():
-                if self.insertSQL(self.newDate, str(self.newPromo), self.newNoSpec):
-                    self.selectedLines = None  # deselection des lignes
-                    self.refreshResult()  # on met à jour la fenetre pour avoir la nouvelle entree d'afficher
+        if self.insertSpectacle:
+            # Date de la Representation
+            if hasattr(self, "selectedDate"):
+                if self.newDate != self.selectedDate:
+                    self.addRepNext()
+                else:
+                    display.refreshLabel(self.ui.label_modif, "un spectacle utilise déjà cette horaire")
+            else:
+                self.addRepNext()
 
-    def insertSQL(self, date=None, promo=None, noSpec=None, add=True):
+    def addRepNext(self):
+        if self.VerifDateRep():
+            if self.insertSQL(self.newDate, str(self.newPromo), self.getNoSpec()):
+                self.selectedLines = None  # deselection des lignes
+                self.refreshResult()  # on met à jour la fenetre pour avoir la nouvelle entree d'afficher
+
+    def insertSQL(self, date=None, promo=None, noSpec=None):
         display.refreshLabel(self.ui.label_modif, "")
         try:
             cursor = self.data.cursor()
             cursor.execute(
-                "INSERT INTO LesRepresentations(?, ?, ?)", [date, promo, noSpec]
+                "INSERT INTO LesRepresentations VALUES (?, ?, ?)", [date, promo, noSpec]
             )
         except Exception as e:
-            if add:
-                display.refreshLabel(
-                    self.ui.label_modif, "Erreur lors de l'insertion dans la table"
-                )
-                print(repr(e))
-            else:
-                display.refreshLabel(
-                    self.ui.label_modif, "Impossible de modifier cette représentation"
-                )
-                print(repr(e))
+            display.refreshLabel(
+                self.ui.label_modif, "Erreur lors de l'insertion dans la table"
+            )
+            print(repr(e))
             return False
         else:
             self.data.commit()
@@ -275,17 +275,18 @@ class AppGestRep(QDialog):
 
     # Recuperation du numero du spectacle en fontion du nom a ajouter
     def getNoSpec(self, nom=None):
-        if nom is not None:
-            cursor = self.data.cursor()
-            cursor.execute("SELECT noSpec FROM LesSpectacles WHERE nomSpec = ?", (nom,))
-            return sorted(set(index[0] for index in cursor.fetchall()))[0]
+        cursor = self.data.cursor()
+        cursor.execute(
+            "SELECT noSpec FROM LesSpectacles WHERE nomSpec = ?", (self.newNom,)
+        )
+        return sorted(set(index[0] for index in cursor.fetchall()))[0]
 
     # Verification de la date de representation
     def VerifDateRep(self):
         cursor = self.data.cursor()
         cursor.execute(
             "SELECT dateRep FROM LesRepresentations WHERE dateRep = ?",
-            str(self.newDate),
+            [str(self.newDate)],
         )
         if len(sorted(set(item[0] for item in cursor.fetchall()))) != 0:
             display.refreshLabel(
@@ -295,7 +296,8 @@ class AppGestRep(QDialog):
             return False
         # Recuperation des date de representations pour un meme spectacles
         cursor.execute(
-            "SELECT dateRep FROM lesRepresentation WHERE noSpec = ?", self.getNoSpec()
+            "SELECT dateRep FROM lesRepresentations WHERE noSpec = ?",
+            [str(self.getNoSpec())],
         )
         for day in sorted(set(item[0] for item in cursor.fetchall())):
             if day.split(" ")[0] == self.newDate.split(" ")[0]:
@@ -313,6 +315,7 @@ class AppGestRep(QDialog):
             self.fct_ajout_spectacle_dialog.close()
         self.fct_ajout_spectacle_dialog = AppAjoutSpectacle(self.data)
         self.fct_ajout_spectacle_dialog.exec_()
+        self.insertSpectacle = self.fct_ajout_spectacle_dialog.insert
         return self.fct_ajout_spectacle_dialog.spec
 
     # Affichage de la fenetre lors de la suppression
@@ -323,10 +326,6 @@ class AppGestRep(QDialog):
         self.fct_verif_supp_dialog.exec_()
         self.response = self.fct_verif_supp_dialog.response
         self.prevent_delete = self.fct_verif_supp_dialog.prevent_delete
-
-    # en cas d'appuie sur les toucher Ctrl + z
-    def CtrlZ(self):
-        pass
 
     #################################################################################################
     # Fonctions Conditionnel
@@ -379,6 +378,7 @@ class AppAjoutSpectacle(QDialog):
     """
 
     spec = ""
+    insert = True
 
     def __init__(self, data: sqlite3.Connection):
         super(QDialog, self).__init__()
@@ -390,31 +390,43 @@ class AppAjoutSpectacle(QDialog):
     def addSpec(self):
         self.spec = self.ui.lineEditSpec.text().strip()
         self.prix = self.ui.doubleSpinBoxPrix.value()
-        if not self.alreadyExist():
-            try:
-                cursor = self.data.cursor()
-                cursor.execute(
-                    "INSERT INTO LesSpectacles(nomSpec, prixBaseSpec) VALUES(?, ?)",
-                    [self.spec, str(self.prix)],
-                )
-            except Exception as e:
-                display.refreshLabel(
-                    self.ui.label_error,
-                    "Erreur lors de l'ajout du spectacle, veuillez réessayer !",
-                )
-                print(repr(e))
+
+        if len(self.spec) > 0:
+            if not self.alreadyExist():
+                try:
+                    cursor = self.data.cursor()
+                    cursor.execute(
+                        "INSERT INTO LesSpectacles(nomSpec, prixBaseSpec) VALUES(?, ?)",
+                        [self.spec, str(self.prix)],
+                    )
+                except Exception as e:
+                    display.refreshLabel(
+                        self.ui.label_error,
+                        "Erreur lors de l'ajout du spectacle, veuillez réessayer !",
+                    )
+                    print(repr(e))
+                else:
+                    display.refreshLabel(
+                        self.ui.label_error, "Spectacle ajouté avec succés"
+                    )
+                    self.data.commit()
+                    self.close()
             else:
-                display.refreshLabel(
-                    self.ui.label_error, "Spectacle ajouté avec succés"
-                )
-                self.data.commit()
-                self.close()
+                display.refreshLabel(self.ui.label_error, "Ce nom existe déjà")
+                self.insert = False
+        else:
+            display.refreshLabel(
+                self.ui.label_error, "Impossible d'ajouter un nom de spectacle vide"
+            )
+            self.insert = False
 
     def alreadyExist(self):
         cursor = self.data.cursor()
         cursor.execute("SELECT nomSpec, prixBaseSpec FROM LesSpectacles")
         for item in cursor.fetchall():
-            return item == (self.spec, str(self.prix))
+            if item == (self.spec, str(self.prix)):
+                return False
+            return True
 
 
 class AppVerifSupp(QDialog):
