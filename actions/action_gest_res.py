@@ -265,7 +265,7 @@ class AppGestRes(QDialog):
 
 
     def add_doss(self):
-        time.sleep(1)
+        # time.sleep(1)
         cursor = self.data.cursor()
         if not self.ajout_possible():
             display.refreshLabel(self.ui.label_erreur_gest_res, "Veuillez remplir tous les champs correctement")
@@ -287,24 +287,24 @@ class AppGestRes(QDialog):
             res = cursor.fetchall()
             self.l.append((res[0][0],datePreTrans, noPlace, noRang, typePers, numDossier, dateRep))
 
-
+            print("AJOUT: ",  self.l)
             self.refreshnbRang()
             # RAFRAICHIR A GAUCHE :
             self.fenetre_representation()
-            print("AJOUT :", self.l)
             self.table_doss(numDossier)
 
 
 
 
     def supp_liste_dossier(self):
-        #EN FAISANT ça ON A UN PB SI PLUSIEURS PLACES ACHETEZ A LA MEME SECONDE
+        #EN FAISANT ça ON A UN PB SI PLUSIEURS PLACES ACHETEZ A LA MEME SECONDE, sleep() rajouter dans add_doss
         for i in range(len(self.l)):
             if self.l[i][0] == int(self.selectednoTrans):
                 self.l.remove(self.l[i])
 
 
     def active_select_supp(self):
+        self.l_supp = []
         self.select_ligne_supp = True
         self.selectedLines = sorted(
             set(
@@ -312,12 +312,11 @@ class AppGestRes(QDialog):
                 for index in self.ui.table_currentDoss.selectionModel().selectedIndexes()
             )
         )
-        self.selectednoTrans = self.ui.table_currentDoss.item(self.selectedLines[0], 0).text()
+
         #ICI REUSSIR A RECUPERER PLUSIEUR NO TRANS DANS UNE LISTE
-        # if len(self.selectedLines) > 0:
-        # for i in range(len(self.selectedLines)):
-        #     self.l_supp.append(self.ui.table_currentDoss.item(self.selectedLines[i], 0).text())
-        #
+        for item in self.selectedLines:
+            self.l_supp.append(self.ui.table_currentDoss.item(item, 0).text())
+        self.selectednoTrans = self.l_supp[0]
         # print(self.l_supp)
 
 
@@ -337,6 +336,7 @@ class AppGestRes(QDialog):
                 self.fenetre_representation()
                 self.refreshnbRang()
                 self.table_doss(self.ui.compte_dossier.value())
+                print("SUPPR: ", self.l)
         else:
             if self.l:
                 display.refreshLabel(self.ui.label_erreur_gest_res, "Selectionnez un ticket a supprimer. ")
@@ -347,7 +347,6 @@ class AppGestRes(QDialog):
 
 
     def confirmez_payez(self):
-        print(self.l)
         if self.l:
             try:
                 cursor = self.data.cursor()
@@ -414,7 +413,6 @@ class AppGestRes(QDialog):
 #                 "Veuillez selectionner une ou plusieurs ligne(s) à supprimer !",
 #             )
 #         else:
-#             print(self.selectedLines)
 #             for row in self.selectedLines:
 #                 cursor = self.data.cursor()
 #                 cursor.execute(
@@ -444,7 +442,6 @@ class AppGestRes(QDialog):
 #             self.fct_verif_supp_dialog.close()
 #         self.fct_verif_supp_dialog = AppVerifSupp(nomSpec, dateRep, promo)
 #         self.response, self.prevent_delete = AppVerifSupp().value()
-#         print(prevent_delete)
 #         self.fct_verif_supp_dialog.show()
 #
 #     # en cas d'appuie sur les toucher Ctrl + z
