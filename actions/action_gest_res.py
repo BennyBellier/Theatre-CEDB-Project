@@ -185,7 +185,7 @@ class AppGestRes(QDialog):
     def doss_exist(self):
         cursor = self.data.cursor()
         try:
-            cursor.execute("INSERT INTO NumeroDossier (noDossier) DEFAULT VALUES")
+            cursor.execute("INSERT INTO NumeroDossier DEFAULT VALUES")
         except Exception as e:
             display.refreshLabel(self.ui.label_erreur_gest_res, "")
         else:
