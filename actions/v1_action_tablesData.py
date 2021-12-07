@@ -57,6 +57,9 @@ class AppTablesDataV1(QDialog):
         self.refreshTable(self.ui.label_lesreducs, self.ui.tableReductions,
                           "SELECT typePers, tarifReduit "
                           "FROM LesReductions")
+        self.refreshTable(self.ui.label_tic, self.ui.table_lestickets,
+                          "SELECT noTrans, dateTrans, noPlace, noRang, typePers, "
+                          "noDossier, dateRep FROM LesTickets")
         # TODO 1.4 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
         self.refreshTable(self.ui.label_dossiers, self.ui.tableDossiers,
                           "SELECT noDossier, round(prixDossier, 2) "
@@ -64,6 +67,11 @@ class AppTablesDataV1(QDialog):
         self.refreshTable(self.ui.label_salle, self.ui.tableSalle,
                           "SELECT  nomSpec, dateRep, nbPlaceDisponibles "
                           "FROM Salle")
+        self.refreshTable(self.ui.label_ventes, self.ui.tableVentes,
+                          "SELECT noTrans, dateTrans, noPlace, noRang, typePers, "
+                          "noDossier, dateRep, prixTicket FROM LesVentes")
+
+
         # TODO 1.5 : modifier pour afficher les nouveaux éléments (il faut aussi changer le fichier .ui correspondant)
 
     def refreshSpectaclesData(self):

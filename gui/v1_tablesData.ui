@@ -27,7 +27,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTabWidget" name="tabWidget">
+    <widget class="QTabWidget" name="qtabwidget">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -44,7 +44,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>7</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="LesSpectacles">
       <property name="maximumSize">
@@ -130,11 +130,11 @@
          <property name="sortingEnabled">
           <bool>true</bool>
          </property>
-         <attribute name="horizontalHeaderMinimumSectionSize">
-          <number>50</number>
-         </attribute>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>200</number>
+         </attribute>
+         <attribute name="horizontalHeaderMinimumSectionSize">
+          <number>50</number>
          </attribute>
          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
           <bool>true</bool>
@@ -257,14 +257,14 @@
          <attribute name="horizontalHeaderCascadingSectionResizes">
           <bool>true</bool>
          </attribute>
-         <attribute name="horizontalHeaderMinimumSectionSize">
-          <number>50</number>
-         </attribute>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>150</number>
          </attribute>
          <attribute name="horizontalHeaderHighlightSections">
           <bool>true</bool>
+         </attribute>
+         <attribute name="horizontalHeaderMinimumSectionSize">
+          <number>50</number>
          </attribute>
          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
           <bool>true</bool>
@@ -360,11 +360,11 @@
          <property name="sortingEnabled">
           <bool>true</bool>
          </property>
-         <attribute name="horizontalHeaderMinimumSectionSize">
-          <number>50</number>
-         </attribute>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>200</number>
+         </attribute>
+         <attribute name="horizontalHeaderMinimumSectionSize">
+          <number>50</number>
          </attribute>
          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
           <bool>true</bool>
@@ -463,11 +463,11 @@
          <property name="sortingEnabled">
           <bool>true</bool>
          </property>
-         <attribute name="horizontalHeaderMinimumSectionSize">
-          <number>50</number>
-         </attribute>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>200</number>
+         </attribute>
+         <attribute name="horizontalHeaderMinimumSectionSize">
+          <number>50</number>
          </attribute>
          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
           <bool>true</bool>
@@ -552,11 +552,11 @@
          <property name="sortingEnabled">
           <bool>true</bool>
          </property>
-         <attribute name="horizontalHeaderMinimumSectionSize">
-          <number>50</number>
-         </attribute>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>200</number>
+         </attribute>
+         <attribute name="horizontalHeaderMinimumSectionSize">
+          <number>50</number>
          </attribute>
          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
           <bool>true</bool>
@@ -641,14 +641,14 @@
          <property name="sortingEnabled">
           <bool>true</bool>
          </property>
-         <attribute name="horizontalHeaderMinimumSectionSize">
-          <number>50</number>
-         </attribute>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>200</number>
          </attribute>
          <attribute name="horizontalHeaderHighlightSections">
           <bool>true</bool>
+         </attribute>
+         <attribute name="horizontalHeaderMinimumSectionSize">
+          <number>50</number>
          </attribute>
          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
           <bool>true</bool>
@@ -723,6 +723,59 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="LesTickets">
+      <attribute name="title">
+       <string>LesTickets</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_12">
+       <item>
+        <widget class="QTableWidget" name="table_lestickets">
+         <column>
+          <property name="text">
+           <string>N°Transac</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>DateTransac</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>n°Place</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>n°Rang</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>TypePers</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>n°Dossier</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>dateRep</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_tic">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="Salle">
       <attribute name="title">
        <string>[Salle]</string>
@@ -733,11 +786,11 @@
          <property name="sortingEnabled">
           <bool>true</bool>
          </property>
-         <attribute name="horizontalHeaderMinimumSectionSize">
-          <number>50</number>
-         </attribute>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>200</number>
+         </attribute>
+         <attribute name="horizontalHeaderMinimumSectionSize">
+          <number>50</number>
          </attribute>
          <attribute name="horizontalHeaderStretchLastSection">
           <bool>true</bool>
@@ -784,11 +837,11 @@
          <property name="sortingEnabled">
           <bool>true</bool>
          </property>
-         <attribute name="horizontalHeaderMinimumSectionSize">
-          <number>50</number>
-         </attribute>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>150</number>
+         </attribute>
+         <attribute name="horizontalHeaderMinimumSectionSize">
+          <number>50</number>
          </attribute>
          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
           <bool>true</bool>
@@ -821,6 +874,73 @@
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="LesVentes">
+      <property name="minimumSize">
+       <size>
+        <width>1007</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <attribute name="title">
+       <string>[LesVentes]</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_11">
+       <item>
+        <widget class="QTableWidget" name="tableVentes">
+         <column>
+          <property name="text">
+           <string>noTrans</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>DateTransac</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>n°Place</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>n°Rang</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>TypePers</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>n°Dossier</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>dateRep</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>PrixTicket</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_ventes">
+         <property name="text">
+          <string/>
          </property>
         </widget>
        </item>
@@ -870,22 +990,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>recherche_spectacles_2</sender>
-   <signal>clicked()</signal>
-   <receiver>tablesData</receiver>
-   <slot>refreshSpectaclesData()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>968</x>
-     <y>69</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>515</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>CloseButton</sender>
    <signal>clicked()</signal>
    <receiver>tablesData</receiver>
@@ -894,6 +998,22 @@
     <hint type="sourcelabel">
      <x>515</x>
      <y>576</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>515</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>recherche_spectacles_2</sender>
+   <signal>clicked()</signal>
+   <receiver>tablesData</receiver>
+   <slot>refreshSpectaclesData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>968</x>
+     <y>69</y>
     </hint>
     <hint type="destinationlabel">
      <x>515</x>
