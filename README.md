@@ -28,8 +28,8 @@ Projet d'informatisation d'un système de réservation de spectacle dans un thê
       - [x] Domaines
       - [x] Contraintes d'intégrités
       - [x] Possibles vues
-- [ ] IMPLÉMENTATION
-  - [ ] Question 4
+- [x] IMPLÉMENTATION
+  - [x] Question 4
     - [x] Partie 0
       - [x] Génération du projet
       - [x] Vérification code fournie
@@ -41,4 +41,4 @@ Projet d'informatisation d'un système de réservation de spectacle dans un thê
       - [x] Prise en compte des évenements associés à des nouvelles actions
     - [x] Partie 3
       - [x] Imaginations de nouvelles fonctionnalités de l'applications
-      - [ ] Proposition d'un **Trigger pertinent**
+      - [x] Proposition d'un **Trigger pertinent**
