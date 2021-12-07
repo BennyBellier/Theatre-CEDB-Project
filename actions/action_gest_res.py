@@ -230,7 +230,7 @@ class AppGestRes(QDialog):
         try:
             cursor = self.data.cursor()
             result = cursor.execute(
-                "SELECT nomSpec, DateRep, nbPlaceDisponibles FROM Salle")
+                "SELECT nomSpec, DateRep, nbPlaceDisponibles FROM Salle WHERE dateRep NOT NULL")
         except Exception as e:
             self.ui.tableGestRes.setRowCount(0)
             display.refreshLabel(self.ui.label_table_erreur,
