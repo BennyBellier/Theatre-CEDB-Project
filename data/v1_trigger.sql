@@ -1,6 +1,6 @@
 -- TRIGGER gérant
 
-CREATE TRIGGER date_Rep
+CREATE TRIGGER trig_same_date
 BEFORE INSERT ON LesRepresentations
 WHEN (SELECT COUNT(*)
         FROM LesRepresentations
@@ -9,7 +9,16 @@ BEGIN
     SELECT RAISE(ABORT, 'Une representation utilise deja cette date');
 END;\
 
-CREATE TRIGGER PlaceOccupe
+CREATE TRIGGER trig_RepresentationObsolete
+BEFORE INSERT ON lesRepresentations
+WHEN (SELECT COUNT(*)
+        FROM LesRepresentations
+        WHERE NEW.dateRep <= DATE()) > 0
+BEGIN
+    SELECT RAISE(ABORT, 'Erreur : la date spécifié est est déjà passé');
+END;\
+
+CREATE TRIGGER trig_PlaceOccupe
 BEFORE INSERT ON LesTickets
 WHEN (SELECT COUNT(*)
         FROM LesTickets

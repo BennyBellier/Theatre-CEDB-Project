@@ -21,7 +21,7 @@ create table LesRepresentations (
 );
 
 create table TypeZones (
-    catZone varchar (50) not null primary key,
+    catZone varchar (50) primary key,
     tauxZone decimal (4,2) not null,
     constraint ck_pl_tauxZone check (tauxZone >= 0),
     constraint ck_pl_cat check (catZone in ('orchestre', 'balcon', 'poulailler'))

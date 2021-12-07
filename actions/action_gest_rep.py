@@ -126,25 +126,30 @@ class AppGestRep(QDialog):
         self.newDate = self.ui.CurrentTimeEdit.dateTime().toString(
             self.CurrentTimeEdit.displayFormat()
         )
+        self.newDate = '-'.join(reversed(self.newDate.split(' ')[0].split('/')))
         self.newPromo = self.ui.CurrentPromotion.value() / 100
 
-        # Verifications des contraintes pour les nouvelles valeurs
-        # Spectacles
-        if not self.newNom:
-            self.insertSpectacle = False
-            self.newNom = self.Creation_Spectacles()
+        # Verification si la date est déjà passé
+        if self.newDate <= str(datetime.datetime.now().strftime('%Y-%m-%d')):
+            display.refreshLabel(self.ui.label_modif, "Cette date de représentation est déjà passé veuillez selectionner une date future.")
         else:
-            self.insertSpectacle = True
-
-        if self.insertSpectacle:
-            # Date de la Representation
-            if hasattr(self, "selectedDate"):
-                if self.newDate != self.selectedDate:
-                    self.addRepNext()
-                else:
-                    display.refreshLabel(self.ui.label_modif, "un spectacle utilise déjà cette horaire")
+            # Verifications des contraintes pour les nouvelles valeurs
+            # Spectacles
+            if not self.newNom:
+                self.insertSpectacle = False
+                self.newNom = self.Creation_Spectacles()
             else:
-                self.addRepNext()
+                self.insertSpectacle = True
+
+            if self.insertSpectacle:
+                # Date de la Representation
+                if hasattr(self, "selectedDate"):
+                    if self.newDate != self.selectedDate:
+                        self.addRepNext()
+                    else:
+                        display.refreshLabel(self.ui.label_modif, "un spectacle utilise déjà cette horaire")
+                else:
+                    self.addRepNext()
 
     def addRepNext(self):
         if self.VerifDateRep():
@@ -161,7 +166,7 @@ class AppGestRep(QDialog):
             )
         except Exception as e:
             display.refreshLabel(
-                self.ui.label_modif, "Erreur lors de l'insertion dans la table : ", repr(e)
+                self.ui.label_modif, "Erreur lors de l'insertion dans la table : " + repr(e)
             )
             return False
         else:
