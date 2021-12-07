@@ -182,10 +182,10 @@ class AppGestRes(QDialog):
         self.data.commit()
         self.changedValue.emit()
 
-    def doss_exist(self, numDossier):
+    def doss_exist(self):
         cursor = self.data.cursor()
         try:
-            cursor.execute("INSERT INTO NumeroDossier (noDossier) VALUES (?)", [numDossier])
+            cursor.execute("INSERT INTO NumeroDossier (noDossier) DEFAULT VALUES")
         except Exception as e:
             display.refreshLabel(self.ui.label_erreur_gest_res, "")
         else:
@@ -305,7 +305,7 @@ class AppGestRes(QDialog):
             return
         noRang, noPlace, typePers, datePreTrans, numDossier, dateRep = self.recup_donne()
         try:
-            self.doss_exist(numDossier)
+            self.doss_exist()
             cursor.execute("INSERT INTO LesTickets (dateTrans, noPlace, noRang, typePers, noDossier, dateRep)"
                            "VALUES (?, ?, ?, ?, ?, ?)",
                            [datePreTrans, noPlace, noRang, typePers, numDossier, dateRep])

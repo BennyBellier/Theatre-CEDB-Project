@@ -5,32 +5,30 @@ PRAGMA foreign_keys = ON;
 -- FAIS 1.3 : Créer les tables manquantes et modifier celles ci-dessous
 
 create table LesSpectacles (
-    noSpec integer primary key autoincrement not null,
+    noSpec integer primary key,
     nomSpec varchar(50) not null unique,
     prixBaseSpec decimal (6,2) not null,
     constraint ck_spec_prixBaseSpec check (prixBaseSpec >= 0)
 );
 
 create table LesRepresentations (
-    dateRep date not null,
+    dateRep date primary key,
     promoRep decimal (4,2) not null,
     noSpec integer not null,
-    constraint pk_rep_dateRep primary key (dateRep),
     constraint ck_rep_promoRep check (promoRep >= 0 and promoRep <=1),
     constraint fk_noSpec foreign key (noSpec)
     references LesSpectacles(noSpec)
 );
 
 create table TypeZones (
-    catZone varchar (50) not null,
+    catZone varchar (50) not null primary key,
     tauxZone decimal (4,2) not null,
-    constraint pk_pl_catZ primary key (catZone),
     constraint ck_pl_tauxZone check (tauxZone >= 0),
     constraint ck_pl_cat check (catZone in ('orchestre', 'balcon', 'poulailler'))
 );
 
 create table LesZones (
-    noZone integer primary key autoincrement not null,
+    noZone integer primary key,
     catZone varchar (50) not null,
     constraint ck_pl_noZone check (noZone > 0),
     constraint fk_typZ foreign key (catZone) references TypeZones(catZone)
@@ -52,14 +50,13 @@ create table NumeroDossier (
 );
 
 create table LesReductions (
-    typePers varchar (50) not null,
+    typePers varchar (50) primary key,
     tarifReduit decimal (4,2) not null,
-    constraint pk_pl_LesReducs primary key (typePers),
     constraint ck_pl_typeP check (typePers in ('ordinaire', 'adhérent', 'étudiant','scolaire', 'militaire', 'sénior'))
 );
 
 create table LesTickets (
-    noTrans integer primary key autoincrement not null,
+    noTrans integer primary key,
     dateTrans date not null,
     noPlace integer not null,
     noRang integer not null,
