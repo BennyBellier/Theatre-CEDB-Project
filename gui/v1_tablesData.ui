@@ -44,7 +44,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>7</number>
      </property>
      <widget class="QWidget" name="LesSpectacles">
       <property name="maximumSize">
@@ -725,7 +725,7 @@
      </widget>
      <widget class="QWidget" name="Salle">
       <attribute name="title">
-       <string>Salle</string>
+       <string>[Salle]</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_10">
        <item>
@@ -776,7 +776,7 @@
      </widget>
      <widget class="QWidget" name="LesDossiers">
       <attribute name="title">
-       <string>LesDossiers</string>
+       <string>[LesDossiers]</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_9">
        <item>

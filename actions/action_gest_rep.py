@@ -13,6 +13,9 @@ class AppGestRep(QDialog):
     Fenêtre de gestion des représentations : ajout, modification, suppression
     """
 
+    # Création d'un signal destiné à être émis lorsque la table est modifiée
+    changedValue = pyqtSignal()
+
     # on prévoit les variables pour acceuillir les fenetres supplementaires
     fct_verif_supp_dialog = None
     fct_ajout_spectacle_dialog = None
@@ -77,6 +80,7 @@ class AppGestRep(QDialog):
 
     # lorsque qu'une case est selectionner alors on recupere les elements de la ligne
     def selectedLine(self):
+        display.refreshLabel(self.ui.label_modif, "");
         self.selectedLines = sorted(
             set(
                 index.row()
@@ -163,6 +167,7 @@ class AppGestRep(QDialog):
             return False
         else:
             self.data.commit()
+            self.changedValue.emit()
             return True
 
     # en cas de clic sur le bouton modifier
@@ -194,9 +199,10 @@ class AppGestRep(QDialog):
                         "Impossible de modifier cette représentation, veuillez réessayer !",
                     )
                     print(repr(e))
-                    return
                 else:
                     self.data.commit()  # on commit la suppression
+                    self.changedValue.emit()
+                    print("Delete complete")
                     try:
                         cursor.execute(
                             "INSERT INTO LesRepresentations VALUES (?, ?, ?)",
@@ -220,14 +226,18 @@ class AppGestRep(QDialog):
                             ],
                         )
                         self.data.commit()
+                        self.changedValue.emit()
                     else:
                         self.data.commit()
+                        self.changedValue.emit()
                         self.selectedLines = None
                         self.refreshResult()
             else:
                 display.refreshLabel(
                     self.ui.label_modif, "Aucunes modifications à faire"
                 )
+        else:
+            display.refreshLabel(self.ui.label_modif, "Veuillez sélectionner une entrée")
 
     # en cas de clic sur le bouton supprimer
     def deleteRep(self):
@@ -425,8 +435,8 @@ class AppAjoutSpectacle(QDialog):
         cursor.execute("SELECT nomSpec, prixBaseSpec FROM LesSpectacles")
         for item in cursor.fetchall():
             if item == (self.spec, str(self.prix)):
-                return False
-            return True
+                return True
+        return False
 
 
 class AppVerifSupp(QDialog):

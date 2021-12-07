@@ -121,6 +121,9 @@ class AppWindow(QMainWindow):
             # On exécute les requêtes du fichier de création
             db.updateDBfile(self.data, "data/v1_createDB.sql")
 
+            # On exécute les requêtes de création de trigger
+            db.updateDBtrigger(self.data, "data/v1_trigger.sql")
+
         except Exception as e:
              # En cas d'erreur, on affiche un message
             display.refreshLabel(self.ui.label_2,

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1035</width>
+    <width>1226</width>
     <height>435</height>
    </rect>
   </property>
@@ -61,7 +61,7 @@
           <number>50</number>
          </attribute>
          <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>130</number>
+          <number>180</number>
          </attribute>
          <attribute name="horizontalHeaderStretchLastSection">
           <bool>true</bool>
@@ -252,7 +252,7 @@
              <item>
               <widget class="QLabel" name="label_5">
                <property name="text">
-                <string>Prix :</string>
+                <string>Prix fixe :</string>
                </property>
                <property name="textFormat">
                 <enum>Qt::AutoText</enum>
@@ -381,6 +381,12 @@
              </item>
              <item>
               <widget class="QDoubleSpinBox" name="CurrentPrice">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
                <property name="readOnly">
                 <bool>true</bool>
                </property>

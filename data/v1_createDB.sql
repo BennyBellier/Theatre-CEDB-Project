@@ -1,3 +1,7 @@
+-- Activation des foreigns keys
+
+PRAGMA foreign_keys = ON;
+
 -- FAIS 1.3 : Créer les tables manquantes et modifier celles ci-dessous
 
 create table LesSpectacles (
@@ -108,25 +112,4 @@ LEFT JOIN LesReductions USING (typePers)
 LEFT JOIN LesSpectacles USING (noSpec);
 
 -- TODO 3.3 : Ajouter les éléments nécessaires pour créer le trigger (attention, syntaxe SQLite différent qu'Oracle)
-
---CREATE TRIGGER heure_depasse
---    AFTER UPDATE of dateTrans ON LesTickets
---    WHEN dateTrans = NEW.dateTrans
---BEGIN
---    UPDATE LesTickets
---        SET dateTrans = NEW.dateTrans
---        WHERE (NEW.dateTrans < LesTickets.dateRep) and (NEW.noTrans = LesTicketses.noTrans);
---END;
-----        DECLARE
-----            val NUMBER;
-----            loupe EXCEPTION;
---        BEGIN
---        UPDATE dateTrans SET dateTrans=NEW.dateTrans
-----        FROM LesTickets T
---        WHERE NEW.dateTrans < T.dateRep and NEW.noTrans = T.noTrans;
-----    IF (val > 0) THEN
-----        RAISE loupe;
-----    EXCEPTION
-----        WHEN loupe THEN
-----            raise\_application\_error (-20001, 'error');
---    END;
+-- voir le fichier v1_trigger
