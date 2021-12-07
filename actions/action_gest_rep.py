@@ -161,9 +161,8 @@ class AppGestRep(QDialog):
             )
         except Exception as e:
             display.refreshLabel(
-                self.ui.label_modif, "Erreur lors de l'insertion dans la table"
+                self.ui.label_modif, "Erreur lors de l'insertion dans la table : ", repr(e)
             )
-            print(repr(e))
             return False
         else:
             self.data.commit()
@@ -196,13 +195,11 @@ class AppGestRep(QDialog):
                 except Exception as e:
                     display.refreshLabel(
                         self.ui.label_modif,
-                        "Impossible de modifier cette représentation, veuillez réessayer !",
+                        "Impossible de modifier cette représentation, veuillez réessayer !", repr(e)
                     )
-                    print(repr(e))
                 else:
                     self.data.commit()  # on commit la suppression
                     self.changedValue.emit()
-                    print("Delete complete")
                     try:
                         cursor.execute(
                             "INSERT INTO LesRepresentations VALUES (?, ?, ?)",
@@ -412,9 +409,8 @@ class AppAjoutSpectacle(QDialog):
                 except Exception as e:
                     display.refreshLabel(
                         self.ui.label_error,
-                        "Erreur lors de l'ajout du spectacle, veuillez réessayer !",
+                        "Erreur lors de l'ajout du spectacle, veuillez réessayer !", repr(e)
                     )
-                    print(repr(e))
                 else:
                     display.refreshLabel(
                         self.ui.label_error, "Spectacle ajouté avec succés"
