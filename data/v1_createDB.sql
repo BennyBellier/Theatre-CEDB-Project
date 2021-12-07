@@ -6,9 +6,8 @@ PRAGMA foreign_keys = ON;
 
 create table LesSpectacles (
     noSpec integer primary key autoincrement not null,
-    nomSpec varchar(50) not null,
+    nomSpec varchar(50) not null unique,
     prixBaseSpec decimal (6,2) not null,
-    constraint ck_rep_noSpec check (noSpec > 0),
     constraint ck_spec_prixBaseSpec check (prixBaseSpec >= 0)
 );
 
@@ -17,18 +16,9 @@ create table LesRepresentations (
     promoRep decimal (4,2) not null,
     noSpec integer not null,
     constraint pk_rep_dateRep primary key (dateRep),
-    constraint ck_rep_noSpec check (noSpec > 0), --pas forcement nécessaire puisqu'il doit verifier qu'il est dans LesSpectacles mais au moins erreur plus précise
     constraint ck_rep_promoRep check (promoRep >= 0 and promoRep <=1),
     constraint fk_noSpec foreign key (noSpec)
     references LesSpectacles(noSpec)
-);
-
-create table LesZones (
-    noZone integer not null,
-    catZone varchar (50) not null,
-    constraint pk_pl_noZ primary key (noZone),
-    constraint ck_pl_noZone check (noZone > 0),
-    constraint ck_pl_cat check (catZone in ('orchestre', 'balcon', 'poulailler'))
 );
 
 create table TypeZones (
@@ -36,9 +26,14 @@ create table TypeZones (
     tauxZone decimal (4,2) not null,
     constraint pk_pl_catZ primary key (catZone),
     constraint ck_pl_tauxZone check (tauxZone >= 0),
-    constraint ck_pl_cat check (catZone in ('orchestre', 'balcon', 'poulailler')),
-    constraint fk_typZ foreign key (catZone)
-    references LesZones(noZone)
+    constraint ck_pl_cat check (catZone in ('orchestre', 'balcon', 'poulailler'))
+);
+
+create table LesZones (
+    noZone integer primary key autoincrement not null,
+    catZone varchar (50) not null,
+    constraint ck_pl_noZone check (noZone > 0),
+    constraint fk_typZ foreign key (catZone) references TypeZones(catZone)
 );
 
 create table LesPlaces (
@@ -48,14 +43,12 @@ create table LesPlaces (
     constraint pk_pl_noP_noR primary key (noPlace, noRang),
     constraint ck_pl_noP check (noPlace > 0),
     constraint ck_pl_noR check (noRang > 0),
-    constraint ck_pl_noZone check (noZone > 0), --PAS FORCEMENT NECESSAIRE ?
     constraint fk_LesPlaces foreign key (noZone)
     references LesZones(noZone)
 );
 
 create table NumeroDossier (
-    noDossier integer,
-    constraint pk_pl_noP_noR primary key (noDossier)
+    noDossier integer primary key
 );
 
 create table LesReductions (
@@ -75,16 +68,15 @@ create table LesTickets (
     dateRep date not null,
     constraint ck_pl_noP check (noPlace > 0),
     constraint ck_pl_noR check (noRang > 0),
-    constraint ck_pl_typeP check (typePers in ('ordinaire', 'adhérent', 'étudiant','scolaire', 'militaire', 'sénior')), --PAS FORCEMENT
     constraint ck_pl_noD check (noDossier > 0),
     constraint fk_dateRep foreign key (dateRep)
     references LesRepresentations(dateRep),
     constraint fk_noP_noR foreign key (noPlace,noRang)
     references LesPlaces(noPlace,noRang),
     constraint fk_typeP foreign key (typePers)
-    references LesRéductions(typePers),
+    references LesReductions(typePers),
     constraint fk_noD foreign key (noDossier)
-    references LesDosssiers(noD)
+    references NumeroDossier(noDossier)
 );
 
 
@@ -112,4 +104,4 @@ LEFT JOIN LesReductions USING (typePers)
 LEFT JOIN LesSpectacles USING (noSpec);
 
 -- TODO 3.3 : Ajouter les éléments nécessaires pour créer le trigger (attention, syntaxe SQLite différent qu'Oracle)
--- voir le fichier v1_trigger
+-- voir le fichier v1_trigger.sql

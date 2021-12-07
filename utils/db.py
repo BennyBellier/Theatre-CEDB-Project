@@ -13,7 +13,7 @@ def updateDBfile(data: sqlite3.Connection, file):
     # Exécution de toutes les requêtes du tableau
     cursor = data.cursor()
     for query in sqlQueries:
-        print(query, "\n")
+        print(query)
         cursor.execute(query)
 
 
@@ -28,5 +28,4 @@ def updateDBtrigger(data: sqlite3.Connection, file):
     # Exécution de toutes les requêtes du tableau
     cursor = data.cursor()
     for query in sqlQueries:
-        print(query, "\n")
         cursor.execute(query)

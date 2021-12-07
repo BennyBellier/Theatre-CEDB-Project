@@ -131,3 +131,4 @@ dmypy.json
 .vscode/
 
 theatre.db
+data/theatre.db-journal

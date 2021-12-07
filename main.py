@@ -1,5 +1,6 @@
 
 import sys, sqlite3
+import traceback
 from utils import db
 from utils import display
 from PyQt5.QtWidgets import QMainWindow, QApplication
@@ -147,7 +148,7 @@ class AppWindow(QMainWindow):
         except Exception as e:
             # En cas d'erreur, on affiche un message
             display.refreshLabel(self.ui.label_2, "L'erreur suivante s'est produite lors de l'insertion des données V1 : "+repr(e)+".")
-
+            
         else:
             # Si tout s'est bien passé, on affiche le message de succès et on commit
             display.refreshLabel(self.ui.label_2, "Un jeu de test V1 a été inséré dans la base avec succès.")
