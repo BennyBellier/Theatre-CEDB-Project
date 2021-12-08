@@ -126,11 +126,11 @@ class AppGestRep(QDialog):
         self.newDate = self.ui.CurrentTimeEdit.dateTime().toString(
             self.CurrentTimeEdit.displayFormat()
         )
-        self.newDate = '-'.join(reversed(self.newDate.split(' ')[0].split('/')))
+        verifDate = self.newDate
         self.newPromo = self.ui.CurrentPromotion.value() / 100
 
         # Verification si la date est déjà passé
-        if self.newDate <= str(datetime.datetime.now().strftime('%Y-%m-%d')):
+        if datetime.datetime.strptime(verifDate, '%d/%m/%Y %H:%M') <= datetime.datetime.now():
             display.refreshLabel(self.ui.label_modif, "Cette date de représentation est déjà passé veuillez selectionner une date future.")
         else:
             # Verifications des contraintes pour les nouvelles valeurs

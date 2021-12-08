@@ -10,7 +10,6 @@ Nous nous sommes basé sur le fichier "Theatre_UML.drawio.svg", pour construire 
 
 Nous avons trois triggers :
  - trig_same_date : permet de vérifier que deux représentation ne sont pas à la même date.
- - trig_RepresentationObsolete : permet de vérifier que la représentation que l'on souhaite ajouté, n'est pas à une date antérieur à celle de l'ajout.
  - trig_PlaceOccupe : permet de vérifier qu'une place choisit n'est pas déjà occupé pour la même représentation.
 
 ## Gestion des représentations

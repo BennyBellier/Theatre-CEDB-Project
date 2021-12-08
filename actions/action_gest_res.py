@@ -4,8 +4,6 @@ from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import QDateTime
-import datetime
-import time
 from PyQt5 import uic
 from datetime import datetime
 from time import strftime
@@ -58,8 +56,12 @@ class AppGestRes(QDialog):
         res = cursor.fetchall()
         for item in res:
             if item[0] == self.CurrentTimeEdit.text():
-                display.refreshLabel(self.ui.label_date_erreur, "Date correcte")
-                return True
+                if datetime.strptime(self.CurrentTimeEdit.text(), '%d/%m/%Y %H:%M') > datetime.now():
+                    display.refreshLabel(self.ui.label_date_erreur, "Date correcte")
+                    return True
+                else:
+                    display.refreshLabel(self.ui.label_date_erreur, "Représentation obsolète")
+                    return False
             else:
                 display.refreshLabel(self.ui.label_date_erreur, "Date incorrecte")
         return False
