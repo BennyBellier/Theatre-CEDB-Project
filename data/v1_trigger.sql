@@ -26,3 +26,12 @@ WHEN (SELECT COUNT(*)
 BEGIN
     SELECT RAISE(ABORT, 'Erreur : place déjà occupé !');
 END;\
+
+CREATE TRIGGER trig_TicketLate
+BEFORE INSERT ON lesTickets
+WHEN (SELECT COUNT(*)
+        FROM LesTickets
+        WHERE NEW.dateTrans > dateRep) > 0
+BEGIN
+    SELECT RAISE(ABORT, 'Erreur : la date spécifié est est déjà passé');
+END;\
