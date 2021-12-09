@@ -23,7 +23,17 @@ Si vous voulez supprimer une ou plusieurs représentations, il suffit de les sel
 
 ## Gestion des réservations
 
----
+Pour la partie réservation de places, nous fonctionnons sous forme de dossier crée en fonction des places achetées par la personne. 
+Pour ajouter une place au dossier, il faut soit choisir une représentation dans la fenêtre de gauche en la sélectionnant et en s'assurant que la date n'est pas dépassée ou alors choisir la date manuellement. 
+Il faut ensuite indiquer parmis les rangs disponibles la place que l'on souhaite réserver. 
+Pour finir, en ajoutant le genre de personne qui réserve la place, le prix du ticket est affiché. 
+Si aucune erreur n'est détectée, il est possible d'ajouter cette place au dossier en cours. 
+
+On peut annuler un ou plusieus tickets en sélectionnant dans la fenêtre de droite la/les place(s) a annuler. Une fois selectionnées, il suffit de cliquer sur le bouton supprimer. 
+Ne sélectionner pas plusieurs lignes avec la souris mais plutôt avec la touche "CTRL" de votre clavier.
+Si toute fois vous souhaitez annuler tous les tickets, vous pouvez utilisez le bouton "Tout supprimer".
+
+Une fois que votre dossier est complet, il vous suffit de cliquer sur "Confirmez et payez" pour commencer a créer un nouveau dossier.
 
 # Todo List
 
