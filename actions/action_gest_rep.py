@@ -439,6 +439,12 @@ class AppAjoutSpectacle(QDialog):
                 return True
         return False
 
+    def closeEvent(self, event):
+        if len(self.ui.lineEditSpec.text().strip()) == 0:
+            self.insert = False
+
+        event.accept()
+
 
 class AppVerifSupp(QDialog):
     """
