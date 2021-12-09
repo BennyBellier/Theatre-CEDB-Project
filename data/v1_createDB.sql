@@ -82,6 +82,7 @@ create view [Salle] as
 select nomSpec, dateRep, (20 - count(noTrans)) as nbPlaceDisponibles, count(noTrans) as nbPlacesOccupe
 from LesSpectacles left join LesRepresentations using (noSpec)
 left join LesVentes using (dateRep)
+where dateRep is not null
 group by nomSpec, dateRep;
 
 -- TODO 1.5 : Créer une vue  avec le noDos et le montant total correspondant.

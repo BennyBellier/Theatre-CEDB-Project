@@ -27,8 +27,8 @@ noPlace, noRang -> noZone
 On trouve un doublon, catZone et noZone, indique de manière différente la même chose.
 
 **$Les Ventes$**
-noTrans -> dateTrans, prixTotal, noPlaces, noDossier<br/>
-noDossier -> noPlaces
+noTrans -> dateTrans, prixTicket, noPlaces, noDossier<br/>
+noDossier -> noPlaces, prixTotal
 
 **$Les Reductions$**
 dateRep -> tauxRep<br/>
@@ -48,8 +48,8 @@ LesZones(**noZone**, catZone)<br/>
 TypeZones(**catZone**, tauxZone)
 
 **$Les Ventes$**<br/>
-LesVentes(**noTrans**, dateTrans, noPlaces, noDossier, PrixTotal)<br/>
-LesDossiers(**noDossier**, noPlaces)
+LesVentes(**noTrans**, dateTrans, noPlaces, noDossier, PrixTicket)<br/>
+LesDossiers(**noDossier**, noPlaces, prixTotal)
 
 **$Les Reductions$**<br/>
 LesReductions(**typePers**, tarifReduit)<br/>

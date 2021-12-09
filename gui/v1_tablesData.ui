@@ -44,7 +44,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>9</number>
      </property>
      <widget class="QWidget" name="LesSpectacles">
       <property name="sizePolicy">
