@@ -44,7 +44,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>9</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="LesSpectacles">
       <property name="sizePolicy">
@@ -736,6 +736,9 @@
       <layout class="QVBoxLayout" name="verticalLayout_12">
        <item>
         <widget class="QTableWidget" name="table_lestickets">
+         <property name="sortingEnabled">
+          <bool>true</bool>
+         </property>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>150</number>
          </attribute>
@@ -910,6 +913,9 @@
       <layout class="QVBoxLayout" name="verticalLayout_11">
        <item>
         <widget class="QTableWidget" name="tableVentes">
+         <property name="sortingEnabled">
+          <bool>true</bool>
+         </property>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>150</number>
          </attribute>

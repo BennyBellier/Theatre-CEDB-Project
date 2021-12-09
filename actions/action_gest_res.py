@@ -52,7 +52,7 @@ class AppGestRes(QDialog):
 
     def date_OK(self):
         cursor = self.data.cursor()
-        cursor.execute("SELECT dateRep FROM LesRepresentations ")
+        cursor.execute("SELECT dateRep FROM LesRepresentations")
         res = cursor.fetchall()
         for item in res:
             if item[0] == self.CurrentTimeEdit.text():
@@ -232,7 +232,7 @@ class AppGestRes(QDialog):
         try:
             cursor = self.data.cursor()
             result = cursor.execute(
-                "SELECT nomSpec, DateRep, nbPlaceDisponibles FROM Salle WHERE dateRep NOT NULL")
+                "SELECT nomSpec, DateRep, nbPlaceDisponibles FROM Salle WHERE dateRep IS NOT NULL")
         except Exception as e:
             self.ui.tableGestRes.setRowCount(0)
             display.refreshLabel(self.ui.label_table_erreur,
@@ -383,124 +383,3 @@ class AppGestRes(QDialog):
         else:
             display.refreshLabel(
                 self.ui.label_erreur_gest_res,"Achetez au moins une place.")
-
-#     def closeEvent(self, event):
-#
-#         # On ferme les éventuelles fenêtres encore ouvertes
-#         if self.page_fin_dialog is not None:
-#             self.page_fin_dialog.close()
-#         # On laisse l'évènement de clôture se terminer normalement
-#         event.accept()
-#
-# class App_Msg_fin(QDialog):
-#
-#     def __init__(self, data:sqlite3.Connection, CurrentDossier):
-#         super(QDialog, self).__init__()
-#         self.ui = uic.loadUi("gui/Gest_Res_fin.ui", self)
-#         self.spinBox.setValue(CurrentDossier)
-#         self.data = data
-
-
-# def maj_view(self):
-#     cursor = self.data.cursor()
-#     cursor.execute("DROP VIEW IF EXISTS [LesDossiers]")
-#     cursor.execute(
-#         "CREATE VIEW [LesDossiers] AS "
-#         "select noDossier, sum(prixTotal) as prixDossier "
-#         "from NumeroDossier join LesVentes using (noDossier) "
-#         "GROUP BY noDossier"
-#     )
-#     self.data.commit()
-
-#     # en cas de clic sur le bouton ajouter
-#     def addRep(self):
-#         pass
-#
-#     # en cas de clic sur le bouton modifier
-#     def modifRep(self):
-#         pass
-#
-#     # en cas de clic sur le bouton supprimer
-#     def deleteRep(self):
-#         display.refreshLabel(self.ui.label_modif, "")
-#         if self.selectedLines == None:
-#             display.refreshLabel(
-#                 self.ui.label_modif,
-#                 "Veuillez selectionner une ou plusieurs ligne(s) à supprimer !",
-#             )
-#         else:
-#             for row in self.selectedLines:
-#                 cursor = self.data.cursor()
-#                 cursor.execute(
-#                     "SELECT noSpec FROM LesSpectacles WHERE nomSpec = ?",
-#                     (self.ui.tableGestRep.item(row, 0).text(),),
-#                 )
-#                 delete_number = cursor.fetchall()
-#                 if self.prevent_delete:
-#                     self.openVerifSupp(
-#                         delete_number[0][0],
-#                         self.ui.tableGestRep.item(row, 1).text(),
-#                         self.ui.tableGestRep.item(row, 3).text(),
-#                     )
-#                 result = cursor.execute(
-#                     "DELETE FROM LesRepresentations WHERE noSpec = ? and dateRep = ? and promorep = ?",
-#                     [
-#                         delete_number[0][0],
-#                         self.ui.tableGestRep.item(row, 1).text(),
-#                         self.ui.tableGestRep.item(row, 3).text(),
-#                     ],
-#                 )
-#             self.data.commit()
-#             self.refreshResult()
-#
-#     def openVerifSupp(self, nomSpec, dateRep, promo):
-#         if self.fct_verif_supp_dialog is not None:
-#             self.fct_verif_supp_dialog.close()
-#         self.fct_verif_supp_dialog = AppVerifSupp(nomSpec, dateRep, promo)
-#         self.response, self.prevent_delete = AppVerifSupp().value()
-#         self.fct_verif_supp_dialog.show()
-#
-#     # en cas d'appuie sur les toucher Ctrl + z
-#     def CtrlZ(self):
-#         pass
-#
-#     #################################################################################################
-#     # Cloture des fenetres
-#     #################################################################################################
-#
-#     def closeEvent(self, event):
-#
-#         # On ferme les éventuelles fenêtres encore ouvertes
-#         if self.fct_verif_supp_dialog is not None:
-#             self.fct_verif_supp_dialog.close()
-#
-#         # On laisse l'évènement de clôture se terminer normalement
-#         event.accept()
-#
-#
-# class AppVerifSupp(AppGestRep):
-#     """
-#     Fenêtre d'avertissement avant suppression
-#     """
-#
-#     response = 0
-#     prevent_delete = 1
-#
-#     def __init__(self, nomSpec, dateRep, promo):
-#         self.ui = uic.loadUI("gui/dialogue_verif.ui", self)
-#         display.refreshLabel(self.ui.label_nomRep, nomSpec)
-#         display.refreshLabel(
-#             self.ui.label_dateRep, "Date de la Représentation : " + dateRep
-#         )
-#         display.refreshLabel(
-#             self.ui.label_promoRep, "Promotion de la représentation : " + promo
-#         )
-#
-#     def value(self):
-#         return self.response, self.prevent_delete
-#
-#     def delete(self):
-#         self.response = 1
-#
-#     def always_delete(self):
-#         self.prevent_delete = 0
